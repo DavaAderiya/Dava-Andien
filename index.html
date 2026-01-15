@@ -977,39 +977,33 @@
             background: #e0e0e0;
         }
         
-        /* Notifikasi */
-        .notification {
+        /* Notifikasi - DIUBAH: Notifikasi di dalam modal form */
+        .form-notification {
             position: fixed;
-            top: 90px;
-            right: 25px;
-            background: #4CAF50;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: #ff4d73;
             color: var(--white);
-            padding: 1.2rem 1.7rem;
+            padding: 1rem 1.5rem;
             border-radius: 0.8rem;
             box-shadow: 0 0.8rem 1.8rem rgba(0, 0, 0, 0.2);
-            z-index: 1000;
+            z-index: 2000;
             display: flex;
             align-items: center;
             gap: 0.8rem;
-            transform: translateX(150%);
             transition: transform 0.5s ease;
-            max-width: 320px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
         }
         
-        .notification.show {
-            transform: translateX(0);
+        .form-notification.show {
+            transform: translateX(-50%) translateY(0);
         }
         
-        .notification-icon {
+        .form-notification-icon {
             font-size: 1.5rem;
-        }
-        
-        .notification.error {
-            background: var(--primary-color);
-        }
-        
-        .notification.success {
-            background: #4CAF50;
         }
         
         /* Editor Modal */
@@ -1955,12 +1949,10 @@
                 justify-content: center;
             }
             
-            /* Notification */
-            .notification {
+            /* Form notification */
+            .form-notification {
                 max-width: 90%;
-                right: 5%;
-                left: 5%;
-                top: 1rem;
+                width: 90%;
             }
             
             /* Upload options */
@@ -2293,13 +2285,13 @@
         </footer>
     </div>
     
-    <!-- Notifikasi -->
-    <div class="notification" id="notification">
-        <div class="notification-icon">
-            <i class="fas fa-check-circle"></i>
+    <!-- Notifikasi Form Upload - DIUBAH: Notifikasi khusus untuk form -->
+    <div class="form-notification" id="formNotification">
+        <div class="form-notification-icon">
+            <i class="fas fa-exclamation-circle"></i>
         </div>
-        <div class="notification-content">
-            <p id="notificationText">Operasi berhasil!</p>
+        <div class="form-notification-content">
+            <p id="formNotificationText">Pilih file terlebih dahulu!</p>
         </div>
     </div>
     
@@ -2374,33 +2366,33 @@
             
             <!-- Indikator Tipe -->
             <div class="type-indicator">
-                <button class="type-btn active" data-type="photo">
+                <button type="button" class="type-btn active" data-type="photo">
                     <i class="fas fa-image"></i> Foto
                 </button>
-                <button class="type-btn" data-type="video">
+                <button type="button" class="type-btn" data-type="video">
                     <i class="fas fa-video"></i> Video
                 </button>
-                <button class="type-btn" data-type="memory">
+                <button type="button" class="type-btn" data-type="memory">
                     <i class="fas fa-heart"></i> Memori
                 </button>
             </div>
             
             <!-- SECTION UPLOAD FILE DARI PERANGKAT -->
-            <div class="upload-section">
+            <div class="upload-section" id="uploadSection">
                 <h3 class="upload-title"><i class="fas fa-upload"></i> Unggah dari Perangkat Anda</h3>
                 
                 <div class="upload-options">
-                    <button class="upload-option-btn active" id="uploadOption1">
+                    <button type="button" class="upload-option-btn active" id="uploadOption1">
                         <i class="fas fa-images"></i>
                         <span>Pilih dari Galeri</span>
                         <small>Foto & Video</small>
                     </button>
-                    <button class="upload-option-btn" id="uploadOption2">
+                    <button type="button" class="upload-option-btn" id="uploadOption2">
                         <i class="fas fa-camera"></i>
                         <span>Ambil Foto/Video</span>
                         <small>Kamera</small>
                     </button>
-                    <button class="upload-option-btn" id="uploadOption3">
+                    <button type="button" class="upload-option-btn" id="uploadOption3">
                         <i class="fas fa-link"></i>
                         <span>Gunakan URL</span>
                         <small>Link Online</small>
@@ -2535,7 +2527,7 @@
                 {
                     id: 1,
                     title: "Pertama Kali Bertemu",
-                    description: "Pertama kali kita bertemu, aku tak menyangka bahwa dirimu akan menjadi bagian terpenting dalam hidupku. Senyummu membuat hariku cerah.",
+                    description: "Pertama kali kita bertemu, aku tak menyangka bahwa dirimu akan menjadi bagian terpenting dalam hidupku. Senyummu membuat hariku cerha.",
                     photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80"
                 }
             ]
@@ -2567,6 +2559,7 @@
         let currentContentType = 'photo';
         let currentUploadMode = 'gallery'; // gallery, camera, url
         let uploadedFiles = [];
+        let uploadedDataURLs = [];
 
         // Elemen DOM
         const loginScreen = document.getElementById('loginScreen');
@@ -2584,8 +2577,10 @@
         const modalClose = document.getElementById('modalClose');
         const navLinks = document.querySelectorAll('.nav-link');
         const sidebarLinks = document.querySelectorAll('.sidebar-link');
-        const notification = document.getElementById('notification');
-        const notificationText = document.getElementById('notificationText');
+        
+        // Notifikasi Form - DIUBAH
+        const formNotification = document.getElementById('formNotification');
+        const formNotificationText = document.getElementById('formNotificationText');
         
         // Sidebar elements
         const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -2652,6 +2647,7 @@
         const progressText = document.getElementById('progressText');
         const urlInputGroup = document.getElementById('urlInputGroup');
         const uploadedFilesInput = document.getElementById('uploadedFiles');
+        const uploadSection = document.getElementById('uploadSection');
         
         // Title animation elements
         const word1 = document.getElementById('word1');
@@ -2660,21 +2656,22 @@
         const word4 = document.getElementById('word4');
         const subtitleText = document.getElementById('subtitleText');
 
-        // Fungsi untuk menampilkan notifikasi
-        function showNotification(message, type = 'success') {
-            notificationText.textContent = message;
-            notification.className = `notification ${type}`;
-            notification.classList.add('show');
+        // Fungsi untuk menampilkan notifikasi di dalam form - DIUBAH
+        function showFormNotification(message, type = 'error') {
+            formNotificationText.textContent = message;
+            formNotification.className = `form-notification ${type}`;
+            formNotification.classList.add('show');
             
-            const icon = notification.querySelector('.notification-icon i');
+            const icon = formNotification.querySelector('.form-notification-icon i');
             if (type === 'success') {
                 icon.className = 'fas fa-check-circle';
             } else {
                 icon.className = 'fas fa-exclamation-circle';
             }
             
+            // Auto hide setelah 3 detik
             setTimeout(() => {
-                notification.classList.remove('show');
+                formNotification.classList.remove('show');
             }, 3000);
         }
 
@@ -3385,18 +3382,29 @@
             });
         }
 
-        // FUNGSI UPLOAD FILE DARI PERANGKAT
+        // FUNGSI UPLOAD FILE DARI PERANGKAT - DIPERBAIKI
         function setupUploadSystem() {
             // Setup upload option buttons
-            uploadOption1.addEventListener('click', () => {
+            uploadOption1.addEventListener('click', function() {
                 setUploadMode('gallery');
+                // Langsung buka file picker saat klik
+                fileInput.click();
             });
             
-            uploadOption2.addEventListener('click', () => {
+            uploadOption2.addEventListener('click', function() {
                 setUploadMode('camera');
+                // Coba buka kamera
+                if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+                    cameraInput.click();
+                } else {
+                    // Fallback ke galeri jika kamera tidak support
+                    showFormNotification('Kamera tidak tersedia. Membuka galeri...', 'info');
+                    setUploadMode('gallery');
+                    fileInput.click();
+                }
             });
             
-            uploadOption3.addEventListener('click', () => {
+            uploadOption3.addEventListener('click', function() {
                 setUploadMode('url');
             });
             
@@ -3435,32 +3443,53 @@
             clearPreview();
         }
         
-        // Fungsi untuk membuka file picker
-        function openFilePicker() {
-            if (currentUploadMode === 'gallery') {
-                fileInput.click();
-            } else if (currentUploadMode === 'camera') {
-                // Coba buka kamera
-                if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-                    cameraInput.click();
-                } else {
-                    // Fallback ke galeri jika kamera tidak support
-                    showNotification('Kamera tidak tersedia. Membuka galeri...', 'info');
-                    fileInput.click();
-                }
-            }
-        }
-        
-        // Fungsi untuk menangani pemilihan file
+        // Fungsi untuk menangani pemilihan file - DIPERBAIKI
         function handleFileSelect(e) {
             const files = e.target.files;
             if (files.length === 0) return;
             
             uploadedFiles = Array.from(files);
+            uploadedDataURLs = []; // Reset Data URLs
+            
+            // Tampilkan preview terlebih dahulu
             showPreview(uploadedFiles);
+            
+            // Konversi semua file ke Data URL
+            convertFilesToDataURLs(files).then(() => {
+                console.log("Semua file berhasil dikonversi:", uploadedDataURLs.length);
+            }).catch(error => {
+                console.error("Error mengonversi file:", error);
+            });
             
             // Reset input file agar bisa memilih file yang sama lagi
             e.target.value = '';
+        }
+        
+        // Fungsi untuk mengonversi file ke Data URL - DIPERBAIKI
+        function convertFilesToDataURLs(files) {
+            uploadedDataURLs = [];
+            const conversionPromises = [];
+            
+            Array.from(files).forEach((file, index) => {
+                const promise = new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        uploadedDataURLs[index] = e.target.result;
+                        console.log(`File ${index + 1} (${file.type}) berhasil dikonversi ke Data URL`);
+                        resolve(e.target.result);
+                    };
+                    reader.onerror = function(e) {
+                        console.error(`Error membaca file ${index + 1}:`, e);
+                        uploadedDataURLs[index] = null;
+                        reject(e);
+                    };
+                    reader.readAsDataURL(file);
+                });
+                conversionPromises.push(promise);
+            });
+            
+            // Return promise untuk menunggu semua file selesai dikonversi
+            return Promise.all(conversionPromises);
         }
         
         // Fungsi untuk menampilkan preview file
@@ -3511,6 +3540,7 @@
         // Fungsi untuk menghapus file dari preview
         function removeFile(index) {
             uploadedFiles.splice(index, 1);
+            uploadedDataURLs.splice(index, 1);
             
             // Update preview
             if (uploadedFiles.length === 0) {
@@ -3524,43 +3554,8 @@
         function clearPreview() {
             previewContainer.innerHTML = '';
             uploadedFiles = [];
+            uploadedDataURLs = [];
             uploadPreview.classList.remove('active');
-        }
-        
-        // Fungsi untuk mengupload file (simulasi)
-        function uploadFiles() {
-            return new Promise((resolve, reject) => {
-                if (uploadedFiles.length === 0) {
-                    reject(new Error('Tidak ada file yang dipilih'));
-                    return;
-                }
-                
-                // Simulasi progress
-                let progress = 0;
-                const interval = setInterval(() => {
-                    progress += 10;
-                    progressFill.style.width = `${progress}%`;
-                    progressText.textContent = `Mengunggah... ${progress}%`;
-                    
-                    if (progress >= 100) {
-                        clearInterval(interval);
-                        uploadProgress.classList.remove('active');
-                        resolve(uploadedFiles);
-                    }
-                }, 100);
-                
-                uploadProgress.classList.add('active');
-            });
-        }
-        
-        // Fungsi untuk mengonversi file ke Data URL
-        function fileToDataURL(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(file);
-            });
         }
 
         // Fungsi untuk memuat daftar item di editor
@@ -3881,7 +3876,6 @@
                 
                 loadEditorLists();
                 reloadAllContent();
-                showNotification('Item berhasil dihapus!', 'success');
             }
         }
 
@@ -3906,7 +3900,6 @@
                 
                 // Reload konten utama
                 reloadAllContent();
-                showNotification('Item berhasil dihapus!', 'success');
             }
         }
 
@@ -3980,7 +3973,7 @@
             }
         }
 
-        // Fungsi untuk menangani submit form (VERSI BARU DENGAN UPLOAD)
+        // Fungsi untuk menangani submit form - DIPERBAIKI
         async function handleFormSubmit(e) {
             e.preventDefault();
             
@@ -3989,147 +3982,161 @@
             const url = itemUrl.value.trim();
             const description = itemDescription.value.trim();
             
+            console.log("=== SUBMIT FORM ===");
+            console.log("Mode upload:", currentUploadMode);
+            console.log("Tipe konten:", currentContentType);
+            console.log("File count:", uploadedFiles.length);
+            console.log("DataURL count:", uploadedDataURLs.length);
+            
             // Validasi berdasarkan mode upload
             if (currentUploadMode === 'url') {
+                // Mode URL: validasi URL
                 if (!url) {
-                    showNotification('URL wajib diisi!', 'error');
-                    itemUrl.classList.add('shake');
-                    setTimeout(() => itemUrl.classList.remove('shake'), 500);
+                    showFormNotification('URL wajib diisi!', 'error');
                     return;
                 }
             } else {
-                // Mode upload file
-                if (uploadedFiles.length === 0) {
-                    showNotification('Pilih file terlebih dahulu!', 'error');
+                // Mode upload file: validasi file
+                const validDataURLs = uploadedDataURLs.filter(url => url && url.startsWith('data:'));
+                console.log("Valid DataURLs:", validDataURLs.length);
+                
+                if (validDataURLs.length === 0 && uploadedFiles.length === 0) {
+                    showFormNotification('Pilih file terlebih dahulu!', 'error');
+                    return;
+                }
+                
+                if (validDataURLs.length === 0 && uploadedFiles.length > 0) {
+                    showFormNotification('File masih diproses. Tunggu sebentar...', 'info');
                     
-                    // Highlight upload section
-                    const uploadSection = document.querySelector('.upload-section');
-                    uploadSection.style.borderColor = '#ff4d73';
-                    uploadSection.classList.add('shake');
+                    // Tunggu dan coba lagi
                     setTimeout(() => {
-                        uploadSection.style.borderColor = 'var(--secondary-color)';
-                        uploadSection.classList.remove('shake');
+                        const readyDataURLs = uploadedDataURLs.filter(url => url && url.startsWith('data:'));
+                        if (readyDataURLs.length > 0) {
+                            console.log("File sudah siap, submit otomatis...");
+                            handleFormSubmit(e);
+                        } else {
+                            showFormNotification('Gagal membaca file. Coba pilih file lain.', 'error');
+                        }
                     }, 1000);
-                    
                     return;
                 }
             }
             
-            // Upload files jika ada
-            let uploadedUrls = [];
-            if (uploadedFiles.length > 0 && currentUploadMode !== 'url') {
-                try {
-                    // Simulasi upload (di dunia nyata, ini akan mengupload ke server)
-                    showNotification('Mengunggah file...', 'info');
-                    
-                    // Konversi file ke Data URL (simulasi)
-                    for (let i = 0; i < uploadedFiles.length; i++) {
-                        const dataURL = await fileToDataURL(uploadedFiles[i]);
-                        uploadedUrls.push(dataURL);
-                    }
-                    
-                } catch (error) {
-                    showNotification('Gagal mengunggah file: ' + error.message, 'error');
-                    return;
-                }
-            }
+            // Tampilkan progress
+            uploadProgress.classList.add('active');
+            progressFill.style.width = '30%';
+            progressText.textContent = 'Menyimpan...';
             
-            if (isEditing) {
-                // Edit item
-                const index = memoriesData[type].findIndex(item => item.id === currentEditId);
-                
-                if (index !== -1) {
-                    if (type === 'memories') {
-                        memoriesData[type][index] = {
-                            id: currentEditId,
-                            title: title || undefined,
-                            description: description || undefined,
-                            photo: currentUploadMode === 'url' ? url : uploadedUrls[0] || memoriesData[type][index].photo
-                        };
-                    } else {
-                        memoriesData[type][index] = {
-                            id: currentEditId,
-                            title: title || undefined,
-                            description: description || undefined,
-                            src: currentUploadMode === 'url' ? url : uploadedUrls[0] || memoriesData[type][index].src
-                        };
+            try {
+                if (isEditing) {
+                    // Edit item
+                    const index = memoriesData[type].findIndex(item => item.id === currentEditId);
+                    
+                    if (index !== -1) {
+                        if (type === 'memories') {
+                            memoriesData[type][index] = {
+                                id: currentEditId,
+                                title: title || undefined,
+                                description: description || undefined,
+                                photo: currentUploadMode === 'url' ? url : uploadedDataURLs[0] || memoriesData[type][index].photo
+                            };
+                        } else {
+                            memoriesData[type][index] = {
+                                id: currentEditId,
+                                title: title || undefined,
+                                description: description || undefined,
+                                src: currentUploadMode === 'url' ? url : uploadedDataURLs[0] || memoriesData[type][index].src
+                            };
+                        }
+                        
+                        saveMemoriesData(memoriesData);
+                        progressFill.style.width = '100%';
+                        progressText.textContent = 'Berhasil disimpan!';
+                        
+                        setTimeout(() => {
+                            uploadProgress.classList.remove('active');
+                            reloadAllContent();
+                            formModal.style.display = 'none';
+                            clearPreview();
+                        }, 500);
                     }
-                    
-                    saveMemoriesData(memoriesData);
-                    reloadAllContent();
-                    formModal.style.display = 'none';
-                    
-                    const successMessage = type === 'photos' ? 'Foto berhasil diperbarui!' : 
-                                         type === 'videos' ? 'Video berhasil diperbarui!' : 
-                                         'Memori berhasil diperbarui!';
-                    showNotification(successMessage, 'success');
-                }
-            } else {
-                // Tambah item baru
-                let newId = 1;
-                if (memoriesData[type].length > 0) {
-                    newId = Math.max(...memoriesData[type].map(item => item.id)) + 1;
-                }
-                
-                if (type === 'memories') {
-                    // Untuk memori, gunakan file pertama
-                    memoriesData[type].push({
-                        id: newId,
-                        title: title || undefined,
-                        description: description || undefined,
-                        photo: currentUploadMode === 'url' ? url : uploadedUrls[0]
-                    });
                 } else {
-                    // Untuk foto/video, buat semua file yang diupload
-                    if (currentUploadMode === 'url') {
-                        // Mode URL: tambahkan satu item
+                    // Tambah item baru
+                    let newId = 1;
+                    if (memoriesData[type].length > 0) {
+                        newId = Math.max(...memoriesData[type].map(item => item.id)) + 1;
+                    }
+                    
+                    if (type === 'memories') {
+                        // Untuk memori, gunakan file pertama
+                        const validDataURLs = uploadedDataURLs.filter(url => url && url.startsWith('data:'));
                         memoriesData[type].push({
                             id: newId,
                             title: title || undefined,
                             description: description || undefined,
-                            src: url
+                            photo: currentUploadMode === 'url' ? url : (validDataURLs[0] || '')
                         });
                     } else {
-                        // Mode upload file: tambahkan semua file
-                        for (let i = 0; i < uploadedUrls.length; i++) {
-                            const file = uploadedFiles[i];
-                            const isImage = file.type.startsWith('image/');
-                            const isVideo = file.type.startsWith('video/');
+                        // Untuk foto/video
+                        if (currentUploadMode === 'url') {
+                            // Mode URL: tambahkan satu item
+                            memoriesData[type].push({
+                                id: newId,
+                                title: title || undefined,
+                                description: description || undefined,
+                                src: url
+                            });
+                        } else {
+                            // Mode upload file: tambahkan semua file yang valid
+                            let addedCount = 0;
                             
-                            // Hanya tambahkan jika sesuai tipe
-                            if ((type === 'photos' && isImage) || (type === 'videos' && isVideo)) {
-                                memoriesData[type].push({
-                                    id: newId + i,
-                                    title: title || (isImage ? 'Foto Kenangan' : 'Video Kenangan'),
-                                    description: description || undefined,
-                                    src: uploadedUrls[i]
-                                });
+                            // Filter hanya DataURL yang valid
+                            const validDataURLs = uploadedDataURLs.filter(url => url && url.startsWith('data:'));
+                            
+                            for (let i = 0; i < validDataURLs.length; i++) {
+                                const file = uploadedFiles[i];
+                                const isImage = file && file.type && file.type.startsWith('image/');
+                                const isVideo = file && file.type && file.type.startsWith('video/');
+                                
+                                // Hanya tambahkan jika sesuai tipe
+                                if ((type === 'photos' && isImage) || (type === 'videos' && isVideo)) {
+                                    memoriesData[type].push({
+                                        id: newId + addedCount,
+                                        title: title || (isImage ? 'Foto Kenangan' : 'Video Kenangan'),
+                                        description: description || undefined,
+                                        src: validDataURLs[i]
+                                    });
+                                    addedCount++;
+                                }
                             }
+                            
+                            if (addedCount === 0) {
+                                showFormNotification('Tidak ada file yang valid untuk tipe ini', 'error');
+                                uploadProgress.classList.remove('active');
+                                return;
+                            }
+                            
+                            console.log(`Berhasil menambahkan ${addedCount} file`);
                         }
                     }
+                    
+                    saveMemoriesData(memoriesData);
+                    progressFill.style.width = '100%';
+                    progressText.textContent = 'Berhasil disimpan!';
+                    
+                    setTimeout(() => {
+                        uploadProgress.classList.remove('active');
+                        reloadAllContent();
+                        formModal.style.display = 'none';
+                        clearPreview();
+                    }, 500);
                 }
                 
-                saveMemoriesData(memoriesData);
-                reloadAllContent();
-                formModal.style.display = 'none';
-                
-                let successMessage = '';
-                if (currentUploadMode === 'url') {
-                    successMessage = type === 'photos' ? 'Foto berhasil ditambahkan!' : 
-                                   type === 'videos' ? 'Video berhasil ditambahkan!' : 
-                                   'Memori berhasil ditambahkan!';
-                } else {
-                    const count = uploadedFiles.length;
-                    successMessage = type === 'photos' ? `${count} foto berhasil ditambahkan!` : 
-                                   type === 'videos' ? `${count} video berhasil ditambahkan!` : 
-                                   'Memori berhasil ditambahkan!';
-                }
-                
-                showNotification(successMessage, 'success');
+            } catch (error) {
+                console.error("Error saat menyimpan:", error);
+                showFormNotification('Terjadi kesalahan saat menyimpan', 'error');
+                uploadProgress.classList.remove('active');
             }
-            
-            // Reset form
-            clearPreview();
         }
 
         // Fungsi untuk reload semua konten
@@ -4185,15 +4192,6 @@
 
         itemForm.addEventListener('submit', handleFormSubmit);
 
-        // Tambahkan event listener untuk tombol upload di dalam upload section
-        document.querySelector('.upload-section').addEventListener('click', function(e) {
-            if (e.target.classList.contains('upload-option-btn') && 
-                !e.target.id.includes('uploadOption')) {
-                // Jika klik di area tombol upload (bukan tombol pilihan)
-                openFilePicker();
-            }
-        });
-
         // Inisialisasi
         window.addEventListener('DOMContentLoaded', () => {
             setupNavigation();
@@ -4206,11 +4204,9 @@
             console.log("Website Dava & Andiena siap digunakan!");
             console.log("Password: 10022009");
             console.log("FITUR UPLOAD FILE:");
-            console.log("1. Pilih 'Pilih dari Galeri' untuk membuka galeri foto/video");
-            console.log("2. Di HP: akan terbuka galeri sistem");
-            console.log("3. Di Desktop: akan terbuka file explorer");
-            console.log("4. Anda bisa memilih beberapa file sekaligus");
-            console.log("5. File akan disimpan di localStorage sebagai Data URL");
+            console.log("1. Klik 'Pilih dari Galeri' untuk langsung membuka file picker");
+            console.log("2. File akan tersimpan permanen di localStorage");
+            console.log("3. Notifikasi hanya muncul di dalam form upload");
         });
 
         // Ekspor fungsi untuk debugging
@@ -4221,12 +4217,14 @@
                     localStorage.removeItem('davaAndienaMemories');
                     memoriesData = getMemoriesData();
                     reloadAllContent();
-                    showNotification('Data direset!', 'success');
                 }
             },
-            simulateUpload: () => {
-                // Simulasi klik file input
-                fileInput.click();
+            debug: () => {
+                console.log("=== DEBUG ===");
+                console.log("Uploaded files:", uploadedFiles);
+                console.log("Uploaded DataURLs:", uploadedDataURLs);
+                console.log("Memories data:", memoriesData);
+                console.log("Current upload mode:", currentUploadMode);
             }
         };
     </script>
