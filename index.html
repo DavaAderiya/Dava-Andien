@@ -16,7 +16,7 @@
             --white: #ffffff;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
-        }
+        } 
         
         * {
             margin: 0;
@@ -133,7 +133,7 @@
             min-height: 1rem;
         }
         
-        /* Animasi Judul Setelah Login */
+        /* Animasi Judul Setelah Login - DIKECILKAN UNTUK MOBILE */
         .title-animation {
             position: fixed;
             top: 0;
@@ -166,20 +166,20 @@
             width: 90%;
             max-width: 800px;
             text-align: center;
-            padding: 2rem;
+            padding: 1rem;
         }
         
         .title-word {
             font-family: 'Dancing Script', cursive;
-            font-size: 3.2rem;
             color: var(--white);
             opacity: 0;
             transform: translateY(30px);
             display: inline-block;
-            margin-right: 1rem;
+            margin-right: 0.8rem;
             text-shadow: 0.2rem 0.2rem 0.5rem rgba(0, 0, 0, 0.5);
             font-weight: bold;
             position: relative;
+            font-size: 2.5rem; /* Ukuran default untuk desktop */
         }
         
         @keyframes titleWordIn {
@@ -206,18 +206,18 @@
         
         .subtitle-text {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.2rem;
             color: rgba(255, 255, 255, 0.9);
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             opacity: 0;
             text-align: center;
             max-width: 700px;
-            padding: 0 1.5rem;
+            padding: 0 1rem;
             line-height: 1.5;
             text-shadow: 0.05rem 0.05rem 0.2rem rgba(0, 0, 0, 0.3);
             font-weight: 300;
             transform: translateY(20px);
             transition: opacity 0.8s ease, transform 0.8s ease;
+            font-size: 1rem; /* Ukuran default */
         }
         
         .title-animation.visible .subtitle-text {
@@ -228,7 +228,7 @@
         .heart-animation {
             position: absolute;
             color: rgba(255, 184, 198, 0.8);
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             opacity: 0;
             animation: floatHeart 3s ease infinite;
             z-index: 1;
@@ -247,7 +247,39 @@
             }
             100% {
                 opacity: 0;
-                transform: translateY(-120px) rotate(360deg) scale(1);
+                transform: translateY(-100px) rotate(360deg) scale(1);
+            }
+        }
+        
+        /* Responsif untuk animasi judul */
+        @media (max-width: 768px) {
+            .title-word {
+                font-size: 1.8rem !important; /* Dikecilkan untuk mobile */
+                margin-right: 0.4rem;
+                margin-bottom: 0;
+            }
+            
+            .subtitle-text {
+                font-size: 0.85rem;
+                margin-top: 1rem;
+                padding: 0 0.8rem;
+            }
+            
+            .title-text-container {
+                padding: 0.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .title-word {
+                font-size: 1.5rem !important; /* Lebih kecil untuk ponsel kecil */
+                margin-right: 0.3rem;
+            }
+            
+            .subtitle-text {
+                font-size: 0.75rem;
+                margin-top: 0.8rem;
+                padding: 0 0.5rem;
             }
         }
         
@@ -745,113 +777,107 @@
             font-size: 0.9rem;
         }
         
-        /* Album Tabs */
-        .album-tabs-container {
-            margin-top: 2rem;
-            background: var(--white);
-            border-radius: 1.2rem;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
-        
-        .album-tabs {
+        /* ALBUM BARU - FOTO DAN VIDEO DIGABUNG */
+        .album-container {
             display: flex;
-            background: #f9f9f9;
-            border-bottom: 2px solid #eee;
             flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
         
-        .album-tab {
+        .album-column {
             flex: 1;
-            min-width: 120px;
-            padding: 1rem;
-            text-align: center;
-            cursor: pointer;
-            font-weight: 600;
-            color: #666;
-            transition: var(--transition);
-            border-bottom: 3px solid transparent;
+            min-width: 300px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
+            gap: 1.5rem;
         }
         
-        .album-tab i {
+        .album-section {
+            background: var(--white);
+            border-radius: 1.2rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .album-section-title {
             font-size: 1.3rem;
             color: var(--primary-color);
-        }
-        
-        .album-tab.active {
-            color: var(--primary-color);
-            border-bottom: 3px solid var(--primary-color);
-            background: var(--white);
-        }
-        
-        .album-tab-content {
-            display: none;
-            padding: 1.5rem;
-        }
-        
-        .album-tab-content.active {
-            display: block;
-        }
-        
-        .album-manage-header {
+            margin-bottom: 1.2rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.7rem;
         }
         
-        .album-title {
-            font-family: 'Dancing Script', cursive;
+        .album-section-title i {
             font-size: 1.5rem;
-            color: var(--primary-color);
         }
         
-        .manage-buttons {
+        /* TOMBOL ANIMASI UNIK DI BAWAH ALBUM */
+        .album-action-buttons {
             display: flex;
-            gap: 0.8rem;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 3rem;
             flex-wrap: wrap;
         }
         
-        .action-btn {
+        .action-animation-btn {
+            position: relative;
+            padding: 1rem 1.8rem;
+            border: none;
+            border-radius: 3rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ff4d73 100%);
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            overflow: hidden;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1rem;
-            border-radius: 2rem;
-            font-weight: 500;
-            transition: var(--transition);
-            cursor: pointer;
-            font-size: 0.85rem;
-            border: none;
+            gap: 0.7rem;
+            box-shadow: 0 0.5rem 1.5rem rgba(255, 107, 139, 0.4);
         }
         
-        .action-btn.primary {
-            background: var(--primary-color);
-            color: var(--white);
-            box-shadow: 0 0.2rem 0.6rem rgba(255, 107, 139, 0.3);
+        .action-animation-btn:hover {
+            transform: translateY(-0.3rem) scale(1.05);
+            box-shadow: 0 0.8rem 2rem rgba(255, 107, 139, 0.6);
         }
         
-        .action-btn.primary:hover {
-            background: #ff4d73;
-            transform: translateY(-0.15rem);
-            box-shadow: 0 0.3rem 1rem rgba(255, 107, 139, 0.4);
+        .action-animation-btn:active {
+            transform: translateY(-0.1rem) scale(1.02);
         }
         
-        .action-btn.secondary {
-            background: #f5f5f5;
-            color: #555;
-            border: 1px solid #ddd;
+        .action-animation-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
         }
         
-        .action-btn.secondary:hover {
-            background: #e0e0e0;
+        .action-animation-btn:hover::before {
+            left: 100%;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 107, 139, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 1rem rgba(255, 107, 139, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 107, 139, 0);
+            }
         }
         
         /* Modal */
@@ -1098,6 +1124,7 @@
             color: var(--primary-color);
         }
         
+        /* File input bisa multiple */
         .hidden-file-input {
             display: none;
         }
@@ -1149,6 +1176,38 @@
             align-items: center;
             font-size: 0.8rem;
             font-weight: bold;
+        }
+        
+        /* Progress Bar untuk Upload */
+        .upload-progress {
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .upload-progress.active {
+            display: block;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 0.6rem;
+            background: #eee;
+            border-radius: 0.3rem;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), #ff9eb5);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #666;
         }
         
         .url-input-group {
@@ -1325,11 +1384,24 @@
             border-top: 0.3rem solid var(--secondary-color);
         }
         
+        /* FOOTER ICON LOVE YANG BERGERAK */
         .footer-decoration {
             position: absolute;
             font-size: 3rem;
-            color: rgba(255, 107, 139, 0.08);
+            color: rgba(255, 107, 139, 0.15);
             z-index: 0;
+            animation: heartBeat 2s infinite ease-in-out;
+        }
+        
+        @keyframes heartBeat {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.15;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.25;
+            }
         }
         
         .decoration-1 {
@@ -1523,23 +1595,24 @@
                 display: flex;
             }
             
+            /* HAPUS LIMIT 2 COLUMN PADA MOBILE */
             .gallery-container, #albumPhotosContainer {
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 0.6rem;
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+                gap: 0.8rem !important;
             }
             
             .photo-item {
-                height: 140px;
+                height: 160px !important;
             }
             
             .video-container, #albumVideosContainer {
-                grid-template-columns: 1fr;
-                gap: 1.2rem;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
+                gap: 1.2rem !important;
             }
             
             .memory-container, #albumMemoriesContainer {
-                grid-template-columns: 1fr;
-                gap: 1.2rem;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+                gap: 1.2rem !important;
             }
             
             .memory-card {
@@ -1550,16 +1623,25 @@
                 height: 120px;
             }
             
-            .album-tabs {
+            /* Album layout untuk mobile */
+            .album-container {
                 flex-direction: column;
             }
             
-            .album-tab {
-                padding: 0.8rem;
+            .album-column {
+                min-width: 100%;
             }
             
-            .album-tab-content {
-                padding: 1.2rem;
+            /* Tombol animasi untuk mobile */
+            .album-action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-animation-btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
             }
             
             .upload-options {
@@ -1647,9 +1729,11 @@
             </div>
             <ul class="sidebar-list">
                 <li class="sidebar-item"><a href="#gallery" class="sidebar-link"><i class="fas fa-images"></i> Galeri Foto</a></li>
-                <li class="sidebar-item"><a href="#videos" class="sidebar-link"><i class="fas fa-video"></i> Video Kenangan</a></li>
+                <li class="sidebar-item"><a href="#videos" class="sidebar-link"><i class="fas fa-video"></i> Video</a></li>
                 <li class="sidebar-item"><a href="#memories" class="sidebar-link"><i class="fas fa-heart"></i> Memori Spesial</a></li>
-                <li class="sidebar-item"><a href="#album" class="sidebar-link"><i class="fas fa-gift"></i> Album Cinta</a></li>
+                <li class="sidebar-item"><a href="#album" class="sidebar-link"><i class="fas fa-gift"></i> Album Dava & Andien</a></li>
+                <!-- MENU KELOLA ALBUM BARU -->
+                <li class="sidebar-item"><a href="#manage-album" class="sidebar-link manage-album-btn"><i class="fas fa-cog"></i> Kelola Album</a></li>
             </ul>
         </div>
         
@@ -1667,23 +1751,25 @@
         <nav class="nav-container">
             <ul class="nav-list">
                 <li class="nav-item"><a href="#gallery" class="nav-link active"><i class="fas fa-images"></i> Galeri Foto</a></li>
-                <li class="nav-item"><a href="#videos" class="nav-link"><i class="fas fa-video"></i> Video Kenangan</a></li>
+                <li class="nav-item"><a href="#videos" class="nav-link"><i class="fas fa-video"></i> Video</a></li>
                 <li class="nav-item"><a href="#memories" class="nav-link"><i class="fas fa-heart"></i> Memori Spesial</a></li>
-                <li class="nav-item"><a href="#album" class="nav-link"><i class="fas fa-gift"></i> Album Cinta</a></li>
+                <li class="nav-item"><a href="#album" class="nav-link"><i class="fas fa-gift"></i> Album Dava & Andien</a></li>
+                <!-- MENU KELOLA ALBUM BARU -->
+                <li class="nav-item"><a href="#manage-album" class="nav-link manage-album-btn"><i class="fas fa-cog"></i> Kelola Album</a></li>
             </ul>
         </nav>
         
-        <!-- Gallery Section -->
+        <!-- Galeri Foto - JUDUL DIUBAH -->
         <section class="section" id="gallery">
-            <h2 class="section-title">Galeri Foto Kenangan</h2>
+            <h2 class="section-title">Galeri Foto</h2>
             <div class="gallery-container" id="galleryContainer">
                 <!-- Photos will be loaded here -->
             </div>
         </section>
         
-        <!-- Videos Section -->
+        <!-- Video - JUDUL DIUBAH -->
         <section class="section" id="videos" style="background: #f9f9f9;">
-            <h2 class="section-title">Video Kenangan</h2>
+            <h2 class="section-title">Video</h2>
             <div class="video-container" id="videoContainer">
                 <!-- Videos will be loaded here -->
             </div>
@@ -1697,74 +1783,56 @@
             </div>
         </section>
         
-        <!-- Album Section -->
+        <!-- Album Section BARU - FOTO DAN VIDEO DIGABUNG -->
         <section class="section" id="album">
-            <h2 class="section-title">Album Cinta Kita</h2>
-            <div class="album-tabs-container">
-                <div class="album-tabs">
-                    <div class="album-tab active" data-tab="photos">
-                        <i class="fas fa-images"></i>
-                        <span>Album Foto</span>
-                    </div>
-                    <div class="album-tab" data-tab="videos">
-                        <i class="fas fa-video"></i>
-                        <span>Album Video</span>
-                    </div>
-                    <div class="album-tab" data-tab="memories">
-                        <i class="fas fa-heart"></i>
-                        <span>Album Memori</span>
+            <h2 class="section-title">Album Dava & Andien</h2>
+            
+            <div class="album-container">
+                <!-- Foto Album -->
+                <div class="album-column">
+                    <div class="album-section">
+                        <h3 class="album-section-title"><i class="fas fa-images"></i> Foto Kenangan</h3>
+                        <div class="gallery-container" id="albumPhotosContainer">
+                            <!-- Album photos will be loaded here -->
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Photos Tab -->
-                <div class="album-tab-content active" id="photosTab">
-                    <div class="album-manage-header">
-                        <h3 class="album-title">Album Foto Kenangan</h3>
-                        <div class="manage-buttons">
-                            <button class="action-btn primary" id="addPhotoBtn">
-                                <i class="fas fa-plus"></i> Tambah Foto
-                            </button>
+                <!-- Video Album -->
+                <div class="album-column">
+                    <div class="album-section">
+                        <h3 class="album-section-title"><i class="fas fa-video"></i> Video Kenangan</h3>
+                        <div class="video-container" id="albumVideosContainer">
+                            <!-- Album videos will be loaded here -->
                         </div>
                     </div>
-                    <div class="gallery-container" id="albumPhotosContainer">
-                        <!-- Album photos will be loaded here -->
-                    </div>
-                </div>
-                
-                <!-- Videos Tab -->
-                <div class="album-tab-content" id="videosTab">
-                    <div class="album-manage-header">
-                        <h3 class="album-title">Album Video Kenangan</h3>
-                        <div class="manage-buttons">
-                            <button class="action-btn primary" id="addVideoBtn">
-                                <i class="fas fa-plus"></i> Tambah Video
-                            </button>
+                    
+                    <div class="album-section">
+                        <h3 class="album-section-title"><i class="fas fa-heart"></i> Memori Spesial</h3>
+                        <div class="memory-container" id="albumMemoriesContainer">
+                            <!-- Album memories will be loaded here -->
                         </div>
                     </div>
-                    <div class="video-container" id="albumVideosContainer">
-                        <!-- Album videos will be loaded here -->
-                    </div>
                 </div>
-                
-                <!-- Memories Tab -->
-                <div class="album-tab-content" id="memoriesTab">
-                    <div class="album-manage-header">
-                        <h3 class="album-title">Album Memori Spesial</h3>
-                        <div class="manage-buttons">
-                            <button class="action-btn primary" id="addMemoryBtn">
-                                <i class="fas fa-plus"></i> Tambah Memori
-                            </button>
-                        </div>
-                    </div>
-                    <div class="memory-container" id="albumMemoriesContainer">
-                        <!-- Album memories will be loaded here -->
-                    </div>
-                </div>
+            </div>
+            
+            <!-- TOMBOL ANIMASI UNIK DI BAWAH ALBUM -->
+            <div class="album-action-buttons">
+                <button class="action-animation-btn pulse-animation" id="addToAlbumBtn">
+                    <i class="fas fa-plus-circle"></i> Tambah ke Album
+                </button>
+                <button class="action-animation-btn" id="viewAllBtn">
+                    <i class="fas fa-eye"></i> Lihat Semua
+                </button>
+                <button class="action-animation-btn" id="shareAlbumBtn">
+                    <i class="fas fa-share-alt"></i> Bagikan Album
+                </button>
             </div>
         </section>
         
         <!-- Footer -->
         <footer>
+            <!-- ICON LOVE YANG BERGERAK -->
             <div class="footer-decoration decoration-1">❤</div>
             <div class="footer-decoration decoration-2">❤</div>
             
@@ -1781,9 +1849,9 @@
                     <h3 class="footer-title">Kenangan Indah</h3>
                     <ul class="footer-links">
                         <li><a href="#gallery"><i class="fas fa-images"></i> Galeri Foto</a></li>
-                        <li><a href="#videos"><i class="fas fa-video"></i> Video Kenangan</a></li>
+                        <li><a href="#videos"><i class="fas fa-video"></i> Video</a></li>
                         <li><a href="#memories"><i class="fas fa-heart"></i> Memori Spesial</a></li>
-                        <li><a href="#album"><i class="fas fa-gift"></i> Album Cinta</a></li>
+                        <li><a href="#album"><i class="fas fa-gift"></i> Album Dava & Andien</a></li>
                     </ul>
                 </div>
                 
@@ -1825,7 +1893,7 @@
     <div class="video-modal" id="videoModal">
         <div class="video-modal-content">
             <div class="video-modal-header">
-                <h3 class="video-modal-title" id="videoModalTitle">Video Kenangan</h3>
+                <h3 class="video-modal-title" id="videoModalTitle">Video</h3>
                 <button class="video-modal-close" id="videoModalClose">
                     <i class="fas fa-times"></i>
                 </button>
@@ -1847,7 +1915,7 @@
                 <button class="close-btn" id="closeFormBtn">&times;</button>
             </div>
             
-            <!-- Upload Section -->
+            <!-- Upload Section - DIPERBAIKI UNTUK MULTIPLE FILE DAN VIDEO -->
             <div class="upload-section" id="uploadSection">
                 <h3 class="upload-title"><i class="fas fa-upload"></i> Unggah dari Perangkat Anda</h3>
                 
@@ -1869,8 +1937,16 @@
                     </button>
                 </div>
                 
-                <!-- Hidden File Input -->
+                <!-- Hidden File Input - BISA MULTIPLE, BISA FOTO DAN VIDEO -->
                 <input type="file" class="hidden-file-input" id="fileInput" accept="image/*,video/*" multiple>
+                
+                <!-- Progress Bar -->
+                <div class="upload-progress" id="uploadProgress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">Memproses file...</div>
+                </div>
                 
                 <!-- Preview -->
                 <div class="upload-preview" id="uploadPreview">
@@ -1887,7 +1963,7 @@
                             <i class="fas fa-link"></i> URL Gambar/Video
                         </label>
                         <input type="text" class="form-input" id="itemUrl" placeholder="Masukkan URL gambar atau video">
-                        <small style="color: #666; margin-top: 0.5rem;">Contoh: https://example.com/foto.jpg atau data:image/jpeg;base64,...</small>
+                        <small style="color: #666; margin-top: 0.5rem;">Contoh: https://example.com/foto.jpg atau https://www.youtube.com/watch?v=...</small>
                     </div>
                 </div>
             </div>
@@ -1948,7 +2024,7 @@
                 {
                     id: 1,
                     src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-                    title: "Video Kenangan Spesial",
+                    title: "Video Spesial",
                     description: "Video kenangan indah kita bersama"
                 }
             ],
@@ -1964,7 +2040,6 @@
 
         // ==================== STATE APLIKASI ====================
         let memoriesData = JSON.parse(localStorage.getItem('davaAndienaMemories')) || defaultData;
-        let currentAlbumType = 'photos';
         let isEditing = false;
         let currentEditId = null;
         let currentEditType = null;
@@ -1986,15 +2061,17 @@
         const subtitleText = document.getElementById('subtitleText');
         
         // Album elements
-        const albumTabs = document.querySelectorAll('.album-tab');
         const albumPhotosContainer = document.getElementById('albumPhotosContainer');
         const albumVideosContainer = document.getElementById('albumVideosContainer');
         const albumMemoriesContainer = document.getElementById('albumMemoriesContainer');
         
-        // Tombol tambah
-        const addPhotoBtn = document.getElementById('addPhotoBtn');
-        const addVideoBtn = document.getElementById('addVideoBtn');
-        const addMemoryBtn = document.getElementById('addMemoryBtn');
+        // Tombol animasi baru
+        const addToAlbumBtn = document.getElementById('addToAlbumBtn');
+        const viewAllBtn = document.getElementById('viewAllBtn');
+        const shareAlbumBtn = document.getElementById('shareAlbumBtn');
+        
+        // Tombol kelola album di navbar
+        const manageAlbumBtns = document.querySelectorAll('.manage-album-btn');
         
         // Modal elements
         const formModal = document.getElementById('formModal');
@@ -2018,18 +2095,13 @@
         const previewContainer = document.getElementById('previewContainer');
         const urlInputGroup = document.getElementById('urlInputGroup');
         const uploadedFilesData = document.getElementById('uploadedFilesData');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
         
         // Notifikasi
         const formNotification = document.getElementById('formNotification');
         const formNotificationText = document.getElementById('formNotificationText');
-        
-        // Navigation
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarClose = document.getElementById('sidebarClose');
-        const sidebarOverlay = document.getElementById('sidebarOverlay');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const sidebarLinks = document.querySelectorAll('.sidebar-link');
 
         // ==================== FUNGSI UTAMA ====================
         
@@ -2106,7 +2178,7 @@
             }, 2500);
         }
         
-        // Buhat hati berjatuhan
+        // Buat hati berjatuhan
         function createFloatingHearts() {
             const floatingHearts = document.getElementById('floatingHearts');
             floatingHearts.innerHTML = '';
@@ -2136,47 +2208,47 @@
             loadAlbumMemories();
         }
         
-        // Load foto ke galeri utama
+        // Load foto ke galeri utama - TIDAK ADA LIMIT UNTUK MOBILE
         function loadGalleryPhotos() {
             const container = document.getElementById('galleryContainer');
             container.innerHTML = '';
             
             if (memoriesData.photos.length === 0) {
-                container.innerHTML = '<div class="empty-state"><i class="fas fa-images"></i><h3>Belum ada foto</h3><p>Tambahkan foto di Album Cinta!</p></div>';
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-images"></i><h3>Belum ada foto</h3><p>Tambahkan foto di Album Dava & Andien!</p></div>';
                 return;
             }
             
-            memoriesData.photos.slice(0, 6).forEach(photo => {
+            memoriesData.photos.forEach(photo => {
                 container.appendChild(createPhotoElement(photo, 'gallery'));
             });
         }
         
-        // Load video ke galeri utama
+        // Load video ke galeri utama - TIDAK ADA LIMIT UNTUK MOBILE
         function loadGalleryVideos() {
             const container = document.getElementById('videoContainer');
             container.innerHTML = '';
             
             if (memoriesData.videos.length === 0) {
-                container.innerHTML = '<div class="empty-state"><i class="fas fa-video"></i><h3>Belum ada video</h3><p>Tambahkan video di Album Cinta!</p></div>';
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-video"></i><h3>Belum ada video</h3><p>Tambahkan video di Album Dava & Andien!</p></div>';
                 return;
             }
             
-            memoriesData.videos.slice(0, 4).forEach(video => {
+            memoriesData.videos.forEach(video => {
                 container.appendChild(createVideoElement(video, 'gallery'));
             });
         }
         
-        // Load memori ke galeri utama
+        // Load memori ke galeri utama - TIDAK ADA LIMIT UNTUK MOBILE
         function loadGalleryMemories() {
             const container = document.getElementById('memoryContainer');
             container.innerHTML = '';
             
             if (memoriesData.memories.length === 0) {
-                container.innerHTML = '<div class="empty-state"><i class="fas fa-heart"></i><h3>Belum ada memori</h3><p>Tambahkan memori di Album Cinta!</p></div>';
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-heart"></i><h3>Belum ada memori</h3><p>Tambahkan memori di Album Dava & Andien!</p></div>';
                 return;
             }
             
-            memoriesData.memories.slice(0, 3).forEach(memory => {
+            memoriesData.memories.forEach(memory => {
                 container.appendChild(createMemoryElement(memory, 'gallery'));
             });
         }
@@ -2191,13 +2263,8 @@
                         <div class="empty-state-icon"><i class="fas fa-images"></i></div>
                         <h3>Album Foto Kosong</h3>
                         <p>Tambahkan foto pertama Anda untuk mengisi album ini.</p>
-                        <button class="action-btn primary" style="margin-top: 1.2rem;" id="addFirstPhotoBtn">
-                            <i class="fas fa-plus"></i> Tambah Foto Pertama
-                        </button>
                     </div>
                 `;
-                
-                document.getElementById('addFirstPhotoBtn')?.addEventListener('click', () => openAddForm('photos'));
                 return;
             }
             
@@ -2216,13 +2283,8 @@
                         <div class="empty-state-icon"><i class="fas fa-video"></i></div>
                         <h3>Album Video Kosong</h3>
                         <p>Tambahkan video pertama Anda untuk mengisi album ini.</p>
-                        <button class="action-btn primary" style="margin-top: 1.2rem;" id="addFirstVideoBtn">
-                            <i class="fas fa-plus"></i> Tambah Video Pertama
-                        </button>
                     </div>
                 `;
-                
-                document.getElementById('addFirstVideoBtn')?.addEventListener('click', () => openAddForm('videos'));
                 return;
             }
             
@@ -2241,13 +2303,8 @@
                         <div class="empty-state-icon"><i class="fas fa-heart"></i></div>
                         <h3>Album Memori Kosong</h3>
                         <p>Tambahkan memori pertama Anda untuk mengisi album ini.</p>
-                        <button class="action-btn primary" style="margin-top: 1.2rem;" id="addFirstMemoryBtn">
-                            <i class="fas fa-plus"></i> Tambah Memori Pertama
-                        </button>
                     </div>
                 `;
-                
-                document.getElementById('addFirstMemoryBtn')?.addEventListener('click', () => openAddForm('memories'));
                 return;
             }
             
@@ -2263,9 +2320,9 @@
             const div = document.createElement('div');
             div.className = 'photo-item';
             div.innerHTML = `
-                <img src="${photo.src}" alt="${photo.title}" class="photo-img">
+                <img src="${photo.src}" alt="${photo.title}" class="photo-img" onerror="handleImageError(this)">
                 <div class="photo-caption">
-                    <h3>${photo.title || 'Foto Kenangan'}</h3>
+                    <h3>${photo.title || 'Foto'}</h3>
                     ${photo.description ? `<p class="photo-description">${photo.description}</p>` : ''}
                 </div>
                 ${context === 'album' ? `
@@ -2317,8 +2374,9 @@
             
             div.innerHTML = `
                 <div class="video-player-container">
-                    ${thumbnail ? `<img src="${thumbnail}" class="video-thumbnail">` : 
+                    ${thumbnail ? `<img src="${thumbnail}" class="video-thumbnail" onerror="handleImageError(this)">` : 
                       video.src.startsWith('data:video/') ? `<video class="video-thumbnail"><source src="${video.src}"></video>` :
+                      video.src.startsWith('http') ? `<div style="background:#ff6b8b;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:white;"><i class="fas fa-video"></i></div>` :
                       '<div style="background:#ff6b8b;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:white;"><i class="fas fa-video"></i></div>'}
                     <div class="video-play-overlay">
                         <div class="video-play-btn">
@@ -2327,7 +2385,7 @@
                     </div>
                 </div>
                 <div class="video-caption">
-                    <h3>${video.title || 'Video Kenangan'}</h3>
+                    <h3>${video.title || 'Video'}</h3>
                     ${video.description ? `<p class="video-description">${video.description}</p>` : ''}
                 </div>
                 ${context === 'album' ? `
@@ -2369,7 +2427,7 @@
             div.className = 'memory-card';
             div.innerHTML = `
                 <div class="memory-photo-container">
-                    <img src="${memory.photo}" alt="${memory.title}" class="memory-photo">
+                    <img src="${memory.photo}" alt="${memory.title}" class="memory-photo" onerror="handleImageError(this)">
                 </div>
                 <div class="memory-icon">
                     <i class="fas fa-heart"></i>
@@ -2413,6 +2471,13 @@
             return div;
         }
         
+        // Handle image error
+        function handleImageError(img) {
+            img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY2YjhjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+            img.style.objectFit = 'contain';
+            img.style.padding = '1rem';
+        }
+        
         // ==================== FUNGSI VIDEO ====================
         
         // Ekstrak ID YouTube
@@ -2429,28 +2494,45 @@
             const title = document.getElementById('videoModalTitle');
             const desc = document.getElementById('videoModalDescription');
             
-            title.textContent = video.title || 'Video Kenangan';
+            title.textContent = video.title || 'Video';
             desc.textContent = video.description || 'Tidak ada deskripsi';
             
             const isYouTube = video.src.includes('youtube.com') || video.src.includes('youtu.be');
             const videoId = isYouTube ? extractYouTubeId(video.src) : null;
             
             if (isYouTube && videoId) {
-                player.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allowfullscreen></iframe>`;
+                player.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
             } else if (video.src.startsWith('data:video/')) {
                 player.innerHTML = `<video controls autoplay style="width:100%;height:100%;"><source src="${video.src}" type="video/mp4"></video>`;
+            } else if (video.src.startsWith('http')) {
+                // Coba embed video dari URL
+                if (video.src.includes('.mp4') || video.src.includes('.webm') || video.src.includes('.ogg')) {
+                    player.innerHTML = `<video controls autoplay style="width:100%;height:100%;"><source src="${video.src}" type="video/mp4"></video>`;
+                } else {
+                    player.innerHTML = `
+                        <div style="display: flex; justify-content: center; align-items: center; height: 100%; color: white; flex-direction: column; gap: 1rem;">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem;"></i>
+                            <p>Format video tidak didukung. Coba gunakan link YouTube atau .mp4.</p>
+                        </div>
+                    `;
+                }
             } else {
-                player.innerHTML = `<video controls autoplay style="width:100%;height:100%;"><source src="${video.src}" type="video/mp4"></video>`;
+                player.innerHTML = `
+                    <div style="display: flex; justify-content: center; align-items: center; height: 100%; color: white; flex-direction: column; gap: 1rem;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem;"></i>
+                        <p>Tidak dapat memutar video.</p>
+                    </div>
+                `;
             }
             
             modal.style.display = 'flex';
         }
         
-        // ==================== UPLOAD SYSTEM ====================
+        // ==================== UPLOAD SYSTEM - TIDAK ADA LIMIT ====================
         
         // Setup upload system
         function setupUploadSystem() {
-            // Mode gallery
+            // Mode gallery - BISA MULTIPLE FILE
             uploadOption1.addEventListener('click', () => {
                 setUploadMode('gallery');
                 fileInput.click();
@@ -2467,7 +2549,7 @@
                 setUploadMode('url');
             });
             
-            // File input change
+            // File input change - BISA MULTIPLE FILE
             fileInput.addEventListener('change', handleFileSelect);
         }
         
@@ -2480,8 +2562,10 @@
             
             if (mode === 'gallery') {
                 uploadOption1.classList.add('active');
-                uploadPreview.style.display = 'block';
+                uploadPreview.style.display = uploadedFiles.length > 0 ? 'block' : 'none';
                 urlInputGroup.style.display = 'none';
+                // Reset URL field
+                itemUrl.value = '';
             } else if (mode === 'url') {
                 uploadOption3.classList.add('active');
                 uploadPreview.style.display = 'none';
@@ -2490,26 +2574,69 @@
             }
         }
         
-        // Handle file selection
+        // Handle file selection - TIDAK ADA LIMIT JUMLAH FILE
         function handleFileSelect(e) {
             const files = Array.from(e.target.files);
             if (files.length === 0) return;
             
-            uploadedFiles = files;
+            // Validasi tipe file
+            const validFiles = files.filter(file => 
+                file.type.startsWith('image/') || file.type.startsWith('video/')
+            );
+            
+            if (validFiles.length === 0) {
+                showNotification('Hanya file gambar (JPG, PNG) dan video (MP4) yang didukung!', 'error');
+                return;
+            }
+            
+            // Tampilkan progress
+            uploadProgress.classList.add('active');
+            progressFill.style.width = '0%';
+            progressText.textContent = 'Memproses file...';
+            
+            // Reset data
+            uploadedFiles = validFiles;
             uploadedDataURLs = [];
             clearPreview();
             
-            files.forEach((file, index) => {
+            // Proses file satu per satu
+            let processedCount = 0;
+            const totalFiles = validFiles.length;
+            
+            validFiles.forEach((file, index) => {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const dataUrl = e.target.result;
                     uploadedDataURLs[index] = dataUrl;
                     addPreview(file, dataUrl, index);
+                    
+                    // Update progress
+                    processedCount++;
+                    const progressPercent = (processedCount / totalFiles) * 100;
+                    progressFill.style.width = `${progressPercent}%`;
+                    
+                    if (processedCount === totalFiles) {
+                        progressText.textContent = 'File siap diupload!';
+                        setTimeout(() => {
+                            uploadProgress.classList.remove('active');
+                        }, 1000);
+                        
+                        // Tampilkan preview
+                        uploadPreview.classList.add('active');
+                    }
+                };
+                reader.onerror = function() {
+                    processedCount++;
+                    if (processedCount === totalFiles) {
+                        progressText.textContent = 'Ada file yang gagal diproses';
+                        setTimeout(() => {
+                            uploadProgress.classList.remove('active');
+                        }, 2000);
+                    }
                 };
                 reader.readAsDataURL(file);
             });
             
-            uploadPreview.classList.add('active');
             e.target.value = '';
         }
         
@@ -2530,20 +2657,13 @@
                     </video>
                     <button class="remove-preview" data-index="${index}">&times;</button>
                 `;
-            } else {
-                preview.innerHTML = `
-                    <div style="background:#eee;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;">
-                        <i class="fas fa-file" style="font-size:1.5rem;color:#777;"></i>
-                        <small>${file.name.substring(0, 10)}...</small>
-                    </div>
-                    <button class="remove-preview" data-index="${index}">&times;</button>
-                `;
             }
             
             previewContainer.appendChild(preview);
             
             // Remove button
-            preview.querySelector('.remove-preview').addEventListener('click', () => {
+            preview.querySelector('.remove-preview').addEventListener('click', (e) => {
+                e.stopPropagation();
                 removeFile(index);
             });
         }
@@ -2561,25 +2681,19 @@
             }
             
             uploadedFiles.forEach((file, idx) => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    addPreview(file, e.target.result, idx);
-                };
-                reader.readAsDataURL(file);
+                addPreview(file, uploadedDataURLs[idx], idx);
             });
         }
         
         // Clear preview
         function clearPreview() {
             previewContainer.innerHTML = '';
-            uploadedFiles = [];
-            uploadedDataURLs = [];
         }
         
-        // ==================== FORM HANDLING ====================
+        // ==================== FORM HANDLING - TIDAK ADA LIMIT ====================
         
-        // Buka form tambah
-        function openAddForm(type) {
+        // Buka form tambah (untuk tombol kelola album)
+        function openAddForm(type = null) {
             isEditing = false;
             currentEditId = null;
             currentEditType = null;
@@ -2587,15 +2701,19 @@
             // Reset form
             itemForm.reset();
             itemId.value = '';
-            itemType.value = type;
+            itemType.value = type || 'photos'; // Default ke photos
+            uploadedFiles = [];
+            uploadedDataURLs = [];
             clearPreview();
             setUploadMode('gallery');
+            uploadPreview.classList.remove('active');
             
-            // Set judul
+            // Set judul berdasarkan tipe
             let title = '';
-            if (type === 'photos') title = 'Tambah Foto Baru';
-            else if (type === 'videos') title = 'Tambah Video Baru';
-            else if (type === 'memories') title = 'Tambah Memori Baru';
+            if (type === 'photos') title = 'Tambah Foto';
+            else if (type === 'videos') title = 'Tambah Video';
+            else if (type === 'memories') title = 'Tambah Memori';
+            else title = 'Tambah ke Album';
             
             formTitle.textContent = title;
             formModal.style.display = 'flex';
@@ -2658,8 +2776,8 @@
             showNotification('Item berhasil dihapus!', 'success');
         }
         
-        // Handle form submit
-        itemForm.addEventListener('submit', function(e) {
+        // Handle form submit - TIDAK ADA LIMIT
+        itemForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const type = itemType.value;
@@ -2667,28 +2785,137 @@
             const description = itemDescription.value.trim();
             const url = itemUrl.value.trim();
             
-            // Validasi
+            // Validasi berdasarkan mode
             if (currentUploadMode === 'url') {
+                // Mode URL
                 if (!url) {
                     showNotification('URL wajib diisi!', 'error');
                     return;
                 }
+                
+                // Validasi URL
+                if (!isValidURL(url)) {
+                    showNotification('URL tidak valid. Harus dimulai dengan http://, https://, atau data:', 'error');
+                    return;
+                }
+                
+                // Cek apakah URL gambar valid (untuk foto dan memori)
+                if (type !== 'videos') {
+                    const isValidImage = await checkImageURL(url);
+                    if (!isValidImage) {
+                        showNotification('URL gambar tidak valid atau tidak dapat diakses!', 'error');
+                        return;
+                    }
+                }
+                
                 saveItem(type, title, description, url);
+                formModal.style.display = 'none';
+                showNotification('Item berhasil disimpan!', 'success');
             } else {
+                // Mode upload file
                 if (uploadedDataURLs.length === 0) {
                     showNotification('Pilih file terlebih dahulu!', 'error');
                     return;
                 }
                 
-                // Simpan semua file
-                uploadedDataURLs.forEach((dataUrl, index) => {
-                    saveItem(type, title, description, dataUrl, index);
-                });
+                // Tampilkan progress
+                uploadProgress.classList.add('active');
+                progressFill.style.width = '30%';
+                progressText.textContent = 'Menyimpan file...';
+                
+                // Simpan semua file - TIDAK ADA BATASAN JUMLAH
+                let savedCount = 0;
+                const totalFiles = uploadedDataURLs.length;
+                
+                for (let i = 0; i < uploadedDataURLs.length; i++) {
+                    const dataUrl = uploadedDataURLs[i];
+                    const file = uploadedFiles[i];
+                    
+                    // Tentukan tipe file
+                    let fileType = 'unknown';
+                    if (file.type.startsWith('image/')) fileType = 'image';
+                    else if (file.type.startsWith('video/')) fileType = 'video';
+                    
+                    // Tentukan tipe berdasarkan file jika tidak ditentukan
+                    let itemTypeToUse = type;
+                    if (!type || type === 'auto') {
+                        if (fileType === 'image') itemTypeToUse = 'photos';
+                        else if (fileType === 'video') itemTypeToUse = 'videos';
+                    }
+                    
+                    // Pastikan tipe file sesuai dengan tipe form
+                    if ((itemTypeToUse === 'photos' && fileType !== 'image') || 
+                        (itemTypeToUse === 'videos' && fileType !== 'video')) {
+                        continue; // Skip file yang tidak sesuai
+                    }
+                    
+                    // Tentukan judul berdasarkan file
+                    let itemTitleText = title;
+                    if (!itemTitleText && file) {
+                        if (fileType === 'image') {
+                            itemTitleText = itemTypeToUse === 'photos' ? 'Foto' : 'Memori Spesial';
+                        } else if (fileType === 'video') {
+                            itemTitleText = 'Video';
+                        } else {
+                            itemTitleText = 'File Kenangan';
+                        }
+                    }
+                    
+                    if (uploadedDataURLs.length > 1 && title) {
+                        itemTitleText = `${title} (${i + 1})`;
+                    } else if (uploadedDataURLs.length > 1 && !title) {
+                        itemTitleText = fileType === 'image' ? `Foto ${i + 1}` : `Video ${i + 1}`;
+                    }
+                    
+                    saveItem(itemTypeToUse, itemTitleText, description, dataUrl);
+                    
+                    // Update progress
+                    savedCount++;
+                    const progressPercent = 30 + (savedCount / totalFiles) * 70;
+                    progressFill.style.width = `${progressPercent}%`;
+                }
+                
+                progressText.textContent = 'Berhasil disimpan!';
+                setTimeout(() => {
+                    uploadProgress.classList.remove('active');
+                    // Reset form
+                    itemForm.reset();
+                    uploadedFiles = [];
+                    uploadedDataURLs = [];
+                    clearPreview();
+                    uploadPreview.classList.remove('active');
+                    formModal.style.display = 'none';
+                    showNotification(`Berhasil menambahkan ${savedCount} item!`, 'success');
+                }, 500);
             }
         });
         
+        // Validasi URL
+        function isValidURL(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return string.startsWith('data:');
+            }
+        }
+        
+        // Cek apakah URL gambar valid
+        async function checkImageURL(url) {
+            if (url.startsWith('data:')) return true;
+            
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => resolve(true);
+                img.onerror = () => resolve(false);
+                img.src = url;
+                // Timeout setelah 3 detik
+                setTimeout(() => resolve(false), 3000);
+            });
+        }
+        
         // Simpan item
-        function saveItem(type, title, description, mediaUrl, index = 0) {
+        function saveItem(type, title, description, mediaUrl) {
             if (isEditing) {
                 // Edit existing
                 const itemIndex = memoriesData[type].findIndex(item => item.id === currentEditId);
@@ -2703,7 +2930,7 @@
                     } else {
                         memoriesData[type][itemIndex] = {
                             id: currentEditId,
-                            title: title || (type === 'photos' ? 'Foto Kenangan' : 'Video Kenangan'),
+                            title: title || (type === 'photos' ? 'Foto' : 'Video'),
                             description: description || '',
                             src: mediaUrl
                         };
@@ -2713,17 +2940,12 @@
                 // Add new
                 let newId = 1;
                 if (memoriesData[type].length > 0) {
-                    newId = Math.max(...memoriesData[type].map(item => item.id)) + 1 + index;
-                }
-                
-                let itemTitle = title;
-                if (uploadedDataURLs.length > 1 && title) {
-                    itemTitle = `${title} (${index + 1})`;
+                    newId = Math.max(...memoriesData[type].map(item => item.id)) + 1;
                 }
                 
                 const newItem = {
                     id: newId,
-                    title: itemTitle || (type === 'photos' ? 'Foto Kenangan' : type === 'videos' ? 'Video Kenangan' : 'Memori Spesial'),
+                    title: title || (type === 'photos' ? 'Foto' : type === 'videos' ? 'Video' : 'Memori Spesial'),
                     description: description || ''
                 };
                 
@@ -2738,11 +2960,6 @@
             
             saveData();
             
-            // Reset form
-            itemForm.reset();
-            clearPreview();
-            formModal.style.display = 'none';
-            
             // Reload content
             if (type === 'photos') {
                 loadGalleryPhotos();
@@ -2754,44 +2971,81 @@
                 loadGalleryMemories();
                 loadAlbumMemories();
             }
-            
-            // Show notification
-            if (isEditing) {
-                showNotification('Item berhasil diperbarui!', 'success');
-                isEditing = false;
-            } else {
-                showNotification('Item berhasil ditambahkan!', 'success');
-            }
         }
         
-        // ==================== ALBUM TABS ====================
+        // ==================== TOMBOL ANIMASI DAN FUNGSI BARU ====================
         
-        function setupAlbumTabs() {
-            albumTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const tabId = tab.getAttribute('data-tab');
-                    
-                    // Update active tab
-                    albumTabs.forEach(t => t.classList.remove('active'));
-                    document.querySelectorAll('.album-tab-content').forEach(c => c.classList.remove('active'));
-                    
-                    tab.classList.add('active');
-                    document.getElementById(`${tabId}Tab`).classList.add('active');
-                    
-                    currentAlbumType = tabId;
-                });
+        function setupActionButtons() {
+            // Tombol "Tambah ke Album"
+            addToAlbumBtn.addEventListener('click', () => {
+                openAddForm();
             });
             
-            // Tombol tambah
-            addPhotoBtn.addEventListener('click', () => openAddForm('photos'));
-            addVideoBtn.addEventListener('click', () => openAddForm('videos'));
-            addMemoryBtn.addEventListener('click', () => openAddForm('memories'));
+            // Tombol "Lihat Semua"
+            viewAllBtn.addEventListener('click', () => {
+                // Scroll ke atas album
+                const albumSection = document.getElementById('album');
+                window.scrollTo({
+                    top: albumSection.offsetTop - 60,
+                    behavior: 'smooth'
+                });
+                
+                // Animasi tombol
+                viewAllBtn.classList.add('pulse-animation');
+                setTimeout(() => {
+                    viewAllBtn.classList.remove('pulse-animation');
+                }, 2000);
+            });
+            
+            // Tombol "Bagikan Album"
+            shareAlbumBtn.addEventListener('click', () => {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Album Dava & Andiena',
+                        text: 'Lihat album kenangan indah Dava & Andiena!',
+                        url: window.location.href
+                    })
+                    .then(() => showNotification('Album berhasil dibagikan!', 'success'))
+                    .catch(() => showNotification('Berbagi dibatalkan.', 'info'));
+                } else {
+                    // Fallback untuk browser yang tidak support Web Share API
+                    navigator.clipboard.writeText(window.location.href)
+                        .then(() => showNotification('Link album disalin ke clipboard!', 'success'))
+                        .catch(() => showNotification('Gagal menyalin link.', 'error'));
+                }
+            });
+            
+            // Tombol "Kelola Album" di navbar
+            manageAlbumBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    if (btn.getAttribute('href') === '#manage-album') {
+                        e.preventDefault();
+                        openAddForm();
+                        
+                        // Untuk sidebar, tutup sidebar setelah klik
+                        const sidebar = document.getElementById('sidebar');
+                        const sidebarOverlay = document.getElementById('sidebarOverlay');
+                        if (sidebar.classList.contains('open')) {
+                            sidebar.classList.remove('open');
+                            sidebarOverlay.classList.remove('active');
+                        }
+                    }
+                });
+            });
         }
         
         // ==================== NAVIGATION ====================
         
         function setupNavigation() {
+            // Hamburger menu
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const sidebar = document.getElementById('sidebar');
+            const sidebarClose = document.getElementById('sidebarClose');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            
             // Desktop navigation
+            const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     if (this.getAttribute('href').startsWith('#')) {
@@ -2918,16 +3172,17 @@
             });
             
             setupNavigation();
-            setupAlbumTabs();
+            setupActionButtons();
             setupUploadSystem();
             setupModals();
             
             // Set initial active nav
-            navLinks[0].classList.add('active');
-            sidebarLinks[0].classList.add('active');
+            document.querySelector('.nav-link').classList.add('active');
+            document.querySelector('.sidebar-link').classList.add('active');
             
             console.log("Website Dava & Andiena siap digunakan!");
             console.log("Password: 10022009");
+            console.log("Fitur: Album gabungan, Tombol animasi, Tidak ada limit upload");
         }
         
         // Debug functions
