@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Album Lengkap - Dava & Andiena</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap">
+    <style>
+        :root {
+            --primary-color: #ff6b8b;
+            --secondary-color: #ffc1cc;
+            --light-pink: #fff5f7;
+            --dark-bg: #0f3460;
+            --text-color: #333;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--white);
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-size: 14px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ff99ac 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            opacity: 1;
+            transition: opacity 0.8s ease;
+        }
+        
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-heart {
+            font-size: 5rem;
+            color: white;
+            margin-bottom: 2rem;
+            animation: heartbeat 1.2s infinite ease-in-out;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+        
+        .loading-text {
+            font-size: 1.5rem;
+            color: white;
+            font-family: 'Dancing Script', cursive;
+            animation: fadeInOut 2s infinite;
+        }
+        
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        
+        /* Header Album Sederhana */
+        .album-header {
+            position: relative;
+            padding: 2rem 1rem 1rem;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.7));
+            overflow: hidden;
+        }
+        
+        .album-main-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+        
+        .album-subtitle {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        /* Album Navigation - REVISI PERBESAR BACKGROUND */
+        .album-nav {
+            position: sticky;
+            top: 0;
+            background: rgba(26, 26, 46, 0.98);
+            backdrop-filter: blur(15px);
+            z-index: 100;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .album-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .album-nav-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .album-nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        /* Filter bar - Baris atas */
+        .album-filter {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.3rem;
+        }
+        
+        .album-filter::-webkit-scrollbar {
+            height: 4px;
+        }
+        
+        .album-filter::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+        
+        .album-filter::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 1.5rem;
+            background: rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 139, 0.3);
+        }
+        
+        /* View toggle bar - Baris bawah */
+        .view-toggle-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), #ff4d73);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(255, 107, 139, 0.3);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 107, 139, 0.4);
+        }
+        
+        .nav-btn.secondary {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Main Content */
+        .album-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+        }
+        
+        /* Grid View (Default) */
+        .grid-view {
+            display: block;
+        }
+        
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        /* Album Card */
+        .album-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            position: relative;
+            animation: cardAppear 0.6s ease forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .album-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 20px rgba(255, 107, 139, 0.2);
+        }
+        
+        .card-media {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .album-card:hover .card-img {
+            transform: scale(1.1);
+        }
+        
+        .card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+        
+        .album-card:hover .card-overlay {
+            transform: translateY(0);
+        }
+        
+        .card-title {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .card-btn {
+            padding: 0.3rem 0.6rem;
+            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .card-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
+        
+        .delete-btn:hover {
+            background: #ff4d73;
+        }
+        
+        .type-indicator {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            z-index: 2;
+        }
+        
+        .type-photo {
+            background: rgba(76, 175, 80, 0.9);
+        }
+        
+        .type-video {
+            background: rgba(33, 150, 243, 0.9);
+        }
+        
+        .type-memory {
+            background: rgba(156, 39, 176, 0.9);
+        }
+        
+        /* Gallery View */
+        .gallery-view {
+            display: none;
+        }
+        
+        .gallery-view.active {
+            display: block;
+        }
+        
+        .masonry-grid {
+            columns: 4 120px;
+            column-gap: 1rem;
+        }
+        
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+            border-radius: 0.8rem;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+            animation: masonryAppear 0.5s ease forwards;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        
+        @keyframes masonryAppear {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .masonry-item:hover {
+            transform: scale(1.03);
+        }
+        
+        .masonry-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0.8rem;
+        }
+        
+        /* Back to Home */
+        .back-home {
+            position: fixed;
+            bottom: 1rem;
+            left: 1rem;
+            z-index: 100;
+        }
+        
+        .back-btn {
+            width: 3.2rem;
+            height: 3.2rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), #ff4d73);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+        }
+        
+        .back-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(255, 107, 139, 0.4);
+        }
+        
+        /* Add Content Button */
+        .add-content-btn {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            z-index: 100;
+        }
+        
+        .add-btn {
+            width: 3.2rem;
+            height: 3.2rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+        }
+        
+        .add-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        
+        .modal-img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.8rem;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: -2rem;
+            right: 0;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: rgba(255, 107, 139, 0.8);
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .modal-close:hover {
+            background: var(--primary-color);
+            transform: rotate(90deg);
+        }
+        
+        /* Add Content Modal */
+        .form-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        
+        .form-content {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+        
+        .form-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #777;
+            cursor: pointer;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .close-btn:hover {
+            background: #f5f5f5;
+        }
+        
+        .upload-section {
+            margin-top: 1.2rem;
+            padding: 1rem;
+            background: #f9f9f9;
+            border-radius: 0.7rem;
+            border: 2px dashed var(--secondary-color);
+        }
+        
+        .upload-title {
+            font-size: 1rem;
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .upload-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.6rem;
+            margin-bottom: 1rem;
+        }
+        
+        .upload-option-btn {
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 0.7rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            text-align: center;
+        }
+        
+        .upload-option-btn:hover {
+            border-color: var(--primary-color);
+            background: var(--light-pink);
+            transform: translateY(-2px);
+        }
+        
+        .upload-option-btn.active {
+            border-color: var(--primary-color);
+            background: var(--light-pink);
+        }
+        
+        .upload-option-btn i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .hidden-file-input {
+            display: none;
+        }
+        
+        .upload-preview {
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .upload-preview.active {
+            display: block;
+        }
+        
+        .preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 0.6rem;
+            margin-top: 0.6rem;
+        }
+        
+        .preview-item {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .preview-img, .preview-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .remove-preview {
+            position: absolute;
+            top: 0.2rem;
+            right: 0.2rem;
+            background: rgba(255, 107, 139, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 1.5rem;
+            height: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.7rem;
+        }
+        
+        .url-input-group {
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-input, .form-textarea {
+            padding: 0.6rem;
+            border: 2px solid #ddd;
+            border-radius: 0.6rem;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .form-input:focus, .form-textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .form-btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.6rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .form-btn.primary {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .form-btn.primary:hover {
+            background: #ff4d73;
+        }
+        
+        .form-btn.secondary {
+            background: #f5f5f5;
+            color: #555;
+        }
+        
+        /* Floating Hearts */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .heart {
+            position: absolute;
+            color: rgba(255, 107, 139, 0.15);
+            font-size: 1rem;
+            animation: floatHeart 15s infinite linear;
+        }
+        
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            grid-column: 1 / -1;
+        }
+        
+        .empty-state-icon {
+            font-size: 3rem;
+            color: rgba(255, 107, 139, 0.3);
+            margin-bottom: 1rem;
+        }
+        
+        .empty-state h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .empty-state p {
+            max-width: 300px;
+            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+        
+        /* Delete Animation */
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.8); }
+        }
+        
+        /* ==================== RESPONSIVE UNTUK HP ==================== */
+        
+        /* Desktop & Tablet */
+        @media (min-width: 769px) {
+            .album-nav-controls {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 0.5rem;
+            }
+            
+            .view-toggle-bar {
+                justify-content: flex-end;
+            }
+        }
+        
+        /* Tablet & HP kecil */
+        @media (max-width: 768px) {
+            .album-main-title {
+                font-size: 2rem;
+            }
+            
+            .album-subtitle {
+                font-size: 0.8rem;
+            }
+            
+            /* NAVIGASI UNTUK HP - REVISI BARU */
+            .album-nav {
+                padding: 0.8rem;
+            }
+            
+            .album-nav-container {
+                flex-direction: column;
+                gap: 0.8rem;
+                align-items: stretch;
+            }
+            
+            .album-nav-title {
+                font-size: 1.4rem;
+                text-align: left;
+                margin-bottom: 0;
+                width: 100%;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .album-nav-controls {
+                width: 100%;
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            
+            .album-filter {
+                width: 100%;
+                justify-content: flex-start;
+                gap: 0.4rem;
+                overflow-x: auto;
+                padding-bottom: 0.4rem;
+            }
+            
+            .view-toggle-bar {
+                width: 100%;
+                justify-content: center;
+                margin-top: 0.5rem;
+                padding-top: 0.5rem;
+            }
+            
+            .nav-btn {
+                flex: 1;
+                justify-content: center;
+                font-size: 0.8rem;
+                padding: 0.5rem 0.8rem;
+            }
+            
+            /* Album grid untuk HP */
+            .album-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 0.8rem;
+            }
+            
+            .card-media {
+                height: 120px;
+            }
+            
+            /* Gallery view untuk HP */
+            .masonry-grid {
+                columns: 2 100px;
+                column-gap: 0.8rem;
+            }
+            
+            /* Modal untuk HP */
+            .form-content {
+                padding: 1rem;
+            }
+            
+            .upload-options {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* HP kecil (portrait) */
+        @media (max-width: 480px) {
+            .album-main-title {
+                font-size: 1.7rem;
+            }
+            
+            /* Navigation untuk HP kecil */
+            .album-nav-title {
+                font-size: 1.3rem;
+            }
+            
+            .album-filter {
+                gap: 0.3rem;
+            }
+            
+            .filter-btn {
+                padding: 0.4rem 0.7rem;
+                font-size: 0.75rem;
+            }
+            
+            .nav-btn {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.6rem;
+            }
+            
+            /* Album grid untuk HP kecil */
+            .album-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .masonry-grid {
+                columns: 1;
+            }
+            
+            .card-media {
+                height: 100px;
+            }
+            
+            /* Loading screen untuk HP */
+            .loading-heart {
+                font-size: 4rem;
+            }
+            
+            .loading-text {
+                font-size: 1.2rem;
+            }
+            
+            /* Tombol aksi untuk HP */
+            .back-home, .add-content-btn {
+                bottom: 0.8rem;
+            }
+            
+            .back-btn, .add-btn {
+                width: 2.8rem;
+                height: 2.8rem;
+                font-size: 1rem;
+            }
+        }
+        
+        /* HP sangat kecil */
+        @media (max-width: 360px) {
+            .album-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card-media {
+                height: 150px;
+            }
+            
+            .view-toggle-bar {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .nav-btn {
+                width: 100%;
+            }
+        }
+        
+        /* Untuk orientasi landscape HP */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .album-nav-container {
+                flex-direction: row;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .album-nav-title {
+                width: auto;
+                margin-right: 0;
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+            
+            .album-nav-controls {
+                flex: 1;
+                flex-direction: column;
+                align-items: flex-end;
+            }
+            
+            .album-filter {
+                justify-content: flex-end;
+            }
+            
+            .view-toggle-bar {
+                justify-content: flex-end;
+                margin-top: 0.3rem;
+                padding-top: 0.3rem;
+            }
+            
+            .album-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-heart">
+            <i class="fas fa-heart"></i>
+        </div>
+        <div class="loading-text">Memuat Album Kita...</div>
+    </div>
+    
+    <!-- Floating Hearts -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+    
+    <!-- Back to Home Button -->
+    <div class="back-home">
+        <button class="back-btn" id="backBtn" title="Kembali ke Beranda">
+            <i class="fas fa-home"></i>
+        </button>
+    </div>
+    
+    <!-- Add Content Button -->
+    <div class="add-content-btn">
+        <button class="add-btn" id="addContentBtn" title="Tambah Kenangan">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+    
+    <!-- Album Header -->
+    <header class="album-header">
+        <h1 class="album-main-title">Album Dava & Andiena</h1>
+        <p class="album-subtitle">Kumpulan foto, video, dan kenangan indah kita bersama</p>
+    </header>
+    
+    <!-- Album Navigation - REVISI BARU -->
+    <nav class="album-nav">
+        <div class="album-nav-container">
+            <div class="album-nav-title">Love Story</div>
+            
+            <div class="album-nav-controls">
+                <!-- Baris atas untuk filter -->
+                <div class="album-filter">
+                    <button class="filter-btn active" data-filter="all">Semua</button>
+                    <button class="filter-btn" data-filter="photos">Foto</button>
+                    <button class="filter-btn" data-filter="videos">Video</button>
+                    <button class="filter-btn" data-filter="memories">Memori Spesial</button>
+                    <button class="filter-btn" data-filter="favorites">Favorit</button>
+                </div>
+                
+                <!-- Baris bawah untuk view toggle -->
+                <div class="view-toggle-bar">
+                    <button class="nav-btn" id="viewToggleBtn">
+                        <i class="fas fa-th-large"></i> <span id="viewToggleText">Gallery</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="album-content">
+        <!-- Grid View (Default) -->
+        <div class="grid-view" id="gridView">
+            <div class="album-grid" id="albumGridContainer">
+                <!-- Album items akan dimuat di sini -->
+            </div>
+        </div>
+        
+        <!-- Gallery View -->
+        <div class="gallery-view" id="galleryView">
+            <div class="masonry-grid" id="masonryContainer">
+                <!-- Masonry items akan dimuat di sini -->
+            </div>
+        </div>
+    </main>
+    
+    <!-- Photo Modal -->
+    <div class="modal" id="photoModal">
+        <div class="modal-content">
+            <span class="modal-close" id="modalClose">&times;</span>
+            <img class="modal-img" id="modalImg" src="" alt="Foto Kenangan">
+        </div>
+    </div>
+    
+    <!-- Video Modal -->
+    <div class="video-modal modal" id="videoModal">
+        <div class="modal-content">
+            <span class="modal-close" id="videoModalClose">&times;</span>
+            <div class="video-modal-player" id="videoModalPlayer">
+                <!-- Video akan dimuat di sini -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Content Modal -->
+    <div class="form-modal" id="addContentModal">
+        <div class="form-content">
+            <div class="form-header">
+                <h3 class="form-title" id="formTitle">Tambah Kenangan</h3>
+                <button class="close-btn" id="closeFormBtn">&times;</button>
+            </div>
+            
+            <!-- Upload Section -->
+            <div class="upload-section" id="uploadSection">
+                <h3 class="upload-title"><i class="fas fa-upload"></i> Unggah Kenangan</h3>
+                
+                <div class="upload-options">
+                    <button type="button" class="upload-option-btn active" id="uploadOption1">
+                        <i class="fas fa-images"></i>
+                        <span>Pilih File</span>
+                        <small>Foto & Video</small>
+                    </button>
+                    <button type="button" class="upload-option-btn" id="uploadOption2">
+                        <i class="fas fa-link"></i>
+                        <span>Gunakan URL</span>
+                        <small>Link Online</small>
+                    </button>
+                </div>
+                
+                <!-- Hidden File Input -->
+                <input type="file" class="hidden-file-input" id="fileInput" accept="image/*,video/*" multiple>
+                
+                <!-- Preview -->
+                <div class="upload-preview" id="uploadPreview">
+                    <h4 style="font-size: 0.9rem; margin-bottom: 0.5rem;">Pratinjau:</h4>
+                    <div class="preview-container" id="previewContainer">
+                        <!-- Preview items akan ditambahkan di sini -->
+                    </div>
+                </div>
+                
+                <!-- URL Input -->
+                <div class="url-input-group" id="urlInputGroup">
+                    <div class="form-group">
+                        <label class="form-label" for="itemUrl">
+                            <i class="fas fa-link"></i> URL Gambar/Video
+                        </label>
+                        <input type="text" class="form-input" id="itemUrl" placeholder="Masukkan URL gambar atau video">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Form -->
+            <form class="editor-form" id="itemForm">
+                <input type="hidden" id="itemId" value="">
+                <input type="hidden" id="itemType" value="photos">
+                
+                <div class="form-group">
+                    <label class="form-label" for="itemTitle">
+                        <i class="fas fa-heading"></i> Judul
+                    </label>
+                    <input type="text" class="form-input" id="itemTitle" placeholder="Masukkan judul (opsional)">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="itemDescription">
+                        <i class="fas fa-align-left"></i> Deskripsi
+                    </label>
+                    <textarea class="form-textarea" id="itemDescription" placeholder="Tuliskan deskripsi (opsional)"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="form-btn secondary" id="cancelBtn">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                    <button type="submit" class="form-btn primary" id="saveBtn">
+                        <i class="fas fa-save"></i> Simpan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ==================== KONFIGURASI ====================
+        const STORAGE_KEY = 'davaAndienaMemories';
+        
+        // Data default jika belum ada di localStorage
+        const defaultData = {
+            photos: [
+                {
+                    id: 1,
+                    src: "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    title: "Pertemuan Pertama",
+                    description: "Momen pertama kali kita bertemu, senyummu begitu manis.",
+                    date: "10-02-2023",
+                    type: "photos",
+                    favorite: true
+                },
+                {
+                    id: 2,
+                    src: "https://images.unsplash.com/photo-1511988617509-a57c8a288659?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    title: "Bersantai di Pantai",
+                    description: "Hari yang indah di pantai bersama, matahari terbenam yang romantis.",
+                    date: "15-03-2023",
+                    type: "photos",
+                    favorite: true
+                },
+                {
+                    id: 3,
+                    src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    title: "Momen Berdua",
+                    description: "Saat-saat berdua yang selalu membuatku bahagia.",
+                    date: "20-03-2023",
+                    type: "photos",
+                    favorite: false
+                },
+                {
+                    id: 4,
+                    src: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    title: "Senyumanmu",
+                    description: "Senyumanmu adalah sumber kebahagiaanku.",
+                    date: "25-03-2023",
+                    type: "photos",
+                    favorite: true
+                }
+            ],
+            videos: [
+                {
+                    id: 1,
+                    src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                    title: "Video Spesial",
+                    description: "Video kenangan indah kita bersama.",
+                    date: "10-02-2024",
+                    type: "videos",
+                    favorite: true
+                },
+                {
+                    id: 2,
+                    src: "https://www.youtube.com/embed/9bZkp7q19f0",
+                    title: "Video Kenangan",
+                    description: "Kenangan indah yang selalu terkenang.",
+                    date: "15-03-2024",
+                    type: "videos",
+                    favorite: false
+                }
+            ],
+            memories: [
+                {
+                    id: 1,
+                    photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    title: "Pertama Kali Bertemu",
+                    description: "Pertama kali kita bertemu, aku tak menyangka bahwa dirimu akan menjadi bagian terpenting dalam hidupku. Saat itu di sebuah kafe kecil, kamu tersenyum dan dunia seketika terasa lebih cerah.",
+                    date: "10-02-2023",
+                    type: "memories",
+                    favorite: true
+                },
+                {
+                    id: 2,
+                    photo: "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    title: "Perjalanan Pertama",
+                    description: "Perjalanan pertama kita ke pantai bersama. Aku masih ingat bagaimana kita berjalan berpegangan tangan di tepi pantai saat matahari terbenam. Waktu itu terasa sempurna.",
+                    date: "15-03-2023",
+                    type: "memories",
+                    favorite: true
+                }
+            ]
+        };
+
+        // ==================== STATE APLIKASI ====================
+        let albumData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultData;
+        let currentFilter = 'all';
+        let isGalleryView = false;
+        let allItems = [];
+        let uploadedFiles = [];
+        let uploadedDataURLs = [];
+        let currentUploadMode = 'gallery';
+        let isEditing = false;
+        let currentEditId = null;
+        let currentEditType = null;
+
+        // ==================== ELEMEN DOM ====================
+        const loadingScreen = document.getElementById('loadingScreen');
+        const floatingHearts = document.getElementById('floatingHearts');
+        const backBtn = document.getElementById('backBtn');
+        const addContentBtn = document.getElementById('addContentBtn');
+        
+        // Containers
+        const albumGridContainer = document.getElementById('albumGridContainer');
+        const masonryContainer = document.getElementById('masonryContainer');
+        
+        // Views
+        const gridView = document.getElementById('gridView');
+        const galleryView = document.getElementById('galleryView');
+        
+        // Navigation
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const viewToggleBtn = document.getElementById('viewToggleBtn');
+        const viewToggleText = document.getElementById('viewToggleText');
+        
+        // Modals
+        const photoModal = document.getElementById('photoModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalClose = document.getElementById('modalClose');
+        
+        const videoModal = document.getElementById('videoModal');
+        const videoModalPlayer = document.getElementById('videoModalPlayer');
+        const videoModalClose = document.getElementById('videoModalClose');
+        
+        // Add Content Modal Elements
+        const addContentModal = document.getElementById('addContentModal');
+        const closeFormBtn = document.getElementById('closeFormBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const formTitle = document.getElementById('formTitle');
+        const itemForm = document.getElementById('itemForm');
+        const itemId = document.getElementById('itemId');
+        const itemType = document.getElementById('itemType');
+        const itemTitle = document.getElementById('itemTitle');
+        const itemDescription = document.getElementById('itemDescription');
+        const itemUrl = document.getElementById('itemUrl');
+        
+        // Upload elements
+        const uploadOption1 = document.getElementById('uploadOption1');
+        const uploadOption2 = document.getElementById('uploadOption2');
+        const fileInput = document.getElementById('fileInput');
+        const uploadPreview = document.getElementById('uploadPreview');
+        const previewContainer = document.getElementById('previewContainer');
+        const urlInputGroup = document.getElementById('urlInputGroup');
+
+        // ==================== FUNGSI UTAMA ====================
+        
+        // Inisialisasi aplikasi
+        function init() {
+            // Gabungkan semua data
+            prepareAllItems();
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Buat floating hearts
+            createFloatingHearts();
+            
+            // Load konten
+            loadContent();
+            
+            // Sembunyikan loading screen
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+            }, 1000);
+            
+            console.log("Album siap! Total item:", allItems.length);
+        }
+        
+        // Simpan data ke localStorage
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(albumData));
+            console.log("Data disimpan ke localStorage");
+        }
+        
+        // Gabungkan semua item
+        function prepareAllItems() {
+            allItems = [];
+            
+            // Tambahkan photos
+            albumData.photos.forEach(photo => {
+                allItems.push({
+                    ...photo,
+                    displayType: 'photo',
+                    category: 'photos'
+                });
+            });
+            
+            // Tambahkan videos
+            albumData.videos.forEach(video => {
+                allItems.push({
+                    ...video,
+                    displayType: 'video',
+                    category: 'videos'
+                });
+            });
+            
+            // Tambahkan memories
+            albumData.memories.forEach(memory => {
+                allItems.push({
+                    ...memory,
+                    displayType: 'memory',
+                    src: memory.photo,
+                    category: 'memories'
+                });
+            });
+            
+            // Urutkan berdasarkan id (yang terbaru dulu)
+            allItems.sort((a, b) => b.id - a.id);
+        }
+        
+        // Buat floating hearts
+        function createFloatingHearts() {
+            floatingHearts.innerHTML = '';
+            
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '<i class="fas fa-heart"></i>';
+                
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.animationDelay = `${Math.random() * 5}s`;
+                heart.style.animationDuration = `${10 + Math.random() * 10}s`;
+                heart.style.fontSize = `${0.8 + Math.random() * 1}rem`;
+                
+                floatingHearts.appendChild(heart);
+            }
+        }
+        
+        // ==================== LOAD KONTEN ====================
+        
+        function loadContent() {
+            if (isGalleryView) {
+                loadMasonryItems();
+            } else {
+                loadGridItems();
+            }
+        }
+        
+        function loadGridItems() {
+            albumGridContainer.innerHTML = '';
+            const filteredItems = filterItems(allItems);
+            
+            if (filteredItems.length === 0) {
+                albumGridContainer.innerHTML = createEmptyState('Tidak ada kenangan yang sesuai filter');
+                return;
+            }
+            
+            filteredItems.forEach((item, index) => {
+                const card = createCardElement(item);
+                card.style.animationDelay = `${index * 0.05}s`;
+                albumGridContainer.appendChild(card);
+            });
+        }
+        
+        function loadMasonryItems() {
+            masonryContainer.innerHTML = '';
+            const filteredItems = filterItems(allItems);
+            
+            if (filteredItems.length === 0) {
+                masonryContainer.innerHTML = createEmptyState('Tidak ada kenangan yang sesuai filter');
+                return;
+            }
+            
+            filteredItems.forEach((item, index) => {
+                const masonryItem = createMasonryElement(item);
+                masonryItem.style.animationDelay = `${index * 0.05}s`;
+                masonryContainer.appendChild(masonryItem);
+            });
+        }
+        
+        // Filter items berdasarkan filter aktif
+        function filterItems(items) {
+            if (currentFilter === 'all') return items;
+            if (currentFilter === 'favorites') return items.filter(item => item.favorite);
+            return items.filter(item => item.category === currentFilter);
+        }
+        
+        // ==================== ELEMEN KREATOR ====================
+        
+        function createCardElement(item) {
+            const card = document.createElement('div');
+            card.className = 'album-card';
+            card.dataset.id = item.id;
+            card.dataset.type = item.category;
+            
+            const isVideo = item.category === 'videos';
+            const isMemory = item.category === 'memories';
+            const typeClass = isVideo ? 'type-video' : (isMemory ? 'type-memory' : 'type-photo');
+            const typeIcon = isVideo ? 'fas fa-play' : (isMemory ? 'fas fa-heart' : 'fas fa-camera');
+            
+            // Handle image error dengan fallback
+            const imgSrc = item.src || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY2YjhjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+            
+            card.innerHTML = `
+                <div class="type-indicator ${typeClass}">
+                    <i class="${typeIcon}"></i>
+                </div>
+                
+                <div class="card-media">
+                    <img src="${imgSrc}" alt="${item.title || 'Kenangan'}" class="card-img">
+                    <div class="card-overlay">
+                        <h3 class="card-title">${item.title || 'Tanpa Judul'}</h3>
+                        <div class="card-actions">
+                            <button class="card-btn view-btn" title="Lihat">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="card-btn favorite-btn" data-favorite="${item.favorite}" title="${item.favorite ? 'Hapus dari favorit' : 'Tambah ke favorit'}">
+                                <i class="${item.favorite ? 'fas' : 'far'} fa-heart"></i>
+                            </button>
+                            <button class="card-btn delete-btn" title="Hapus">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Event listeners
+            card.querySelector('.view-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (isVideo) {
+                    playVideo(item);
+                } else {
+                    viewPhoto(item);
+                }
+            });
+            
+            card.querySelector('.favorite-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleFavorite(item, card);
+            });
+            
+            card.querySelector('.delete-btn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                deleteItem(item, card);
+            });
+            
+            card.querySelector('.card-img').addEventListener('click', () => {
+                if (isVideo) {
+                    playVideo(item);
+                } else {
+                    viewPhoto(item);
+                }
+            });
+            
+            // Handle image error
+            card.querySelector('.card-img').onerror = function() {
+                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY2YjhjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+                this.style.objectFit = 'contain';
+                this.style.padding = '0.5rem';
+            };
+            
+            return card;
+        }
+        
+        function createMasonryElement(item) {
+            const masonryItem = document.createElement('div');
+            masonryItem.className = 'masonry-item';
+            masonryItem.dataset.id = item.id;
+            masonryItem.dataset.type = item.category;
+            
+            const isVideo = item.category === 'videos';
+            const imgSrc = item.src || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY2YjhjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+            
+            masonryItem.innerHTML = `
+                <img src="${imgSrc}" alt="${item.title || 'Kenangan'}" class="masonry-img">
+                ${isVideo ? 
+                    `<div style="position: absolute; top: 5px; right: 5px; background: rgba(33, 150, 243, 0.9); color: white; padding: 3px 8px; border-radius: 15px; font-size: 0.7rem;">
+                        <i class="fas fa-play"></i>
+                    </div>` : 
+                    ''
+                }
+            `;
+            
+            masonryItem.addEventListener('click', () => {
+                if (isVideo) {
+                    playVideo(item);
+                } else {
+                    viewPhoto(item);
+                }
+            });
+            
+            // Handle image error
+            masonryItem.querySelector('.masonry-img').onerror = function() {
+                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWlsPSIjZmY2YjhjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+            };
+            
+            return masonryItem;
+        }
+        
+        function createEmptyState(message) {
+            return `
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <h3>${message}</h3>
+                    <p>Klik tombol + untuk menambah kenangan baru.</p>
+                    <button class="nav-btn" style="margin-top: 1rem;" onclick="openAddForm()">
+                        <i class="fas fa-plus"></i> Tambah Kenangan
+                    </button>
+                </div>
+            `;
+        }
+        
+        // ==================== HAPUS KONTEN ====================
+        
+        function deleteItem(item, cardElement) {
+            if (!confirm(`Hapus "${item.title || 'kenangan ini'}"?`)) return;
+            
+            // Hapus dari array yang sesuai
+            if (item.category === 'photos') {
+                const index = albumData.photos.findIndex(photo => photo.id === item.id);
+                if (index !== -1) {
+                    albumData.photos.splice(index, 1);
+                }
+            } else if (item.category === 'videos') {
+                const index = albumData.videos.findIndex(video => video.id === item.id);
+                if (index !== -1) {
+                    albumData.videos.splice(index, 1);
+                }
+            } else if (item.category === 'memories') {
+                const index = albumData.memories.findIndex(memory => memory.id === item.id);
+                if (index !== -1) {
+                    albumData.memories.splice(index, 1);
+                }
+            }
+            
+            // Simpan ke localStorage
+            saveData();
+            
+            // Update data
+            prepareAllItems();
+            
+            // Animasi hapus
+            cardElement.style.animation = 'fadeOut 0.3s ease forwards';
+            
+            setTimeout(() => {
+                if (cardElement.parentNode) {
+                    cardElement.parentNode.removeChild(cardElement);
+                }
+                // Reload content setelah hapus
+                loadContent();
+                
+                // Cek jika sekarang kosong
+                const filteredItems = filterItems(allItems);
+                if (filteredItems.length === 0) {
+                    loadContent();
+                }
+            }, 300);
+        }
+        
+        // ==================== FAVORITE SYSTEM ====================
+        
+        function toggleFavorite(item, cardElement) {
+            // Toggle favorite status
+            item.favorite = !item.favorite;
+            
+            // Update di data asli
+            if (item.category === 'photos') {
+                const photoIndex = albumData.photos.findIndex(photo => photo.id === item.id);
+                if (photoIndex !== -1) albumData.photos[photoIndex].favorite = item.favorite;
+            } else if (item.category === 'videos') {
+                const videoIndex = albumData.videos.findIndex(video => video.id === item.id);
+                if (videoIndex !== -1) albumData.videos[videoIndex].favorite = item.favorite;
+            } else if (item.category === 'memories') {
+                const memoryIndex = albumData.memories.findIndex(memory => memory.id === item.id);
+                if (memoryIndex !== -1) albumData.memories[memoryIndex].favorite = item.favorite;
+            }
+            
+            // Simpan ke localStorage
+            saveData();
+            
+            // Update button in card
+            const favoriteBtn = cardElement.querySelector('.favorite-btn');
+            if (item.favorite) {
+                favoriteBtn.innerHTML = '<i class="fas fa-heart"></i>';
+                favoriteBtn.dataset.favorite = 'true';
+                favoriteBtn.title = 'Hapus dari favorit';
+            } else {
+                favoriteBtn.innerHTML = '<i class="far fa-heart"></i>';
+                favoriteBtn.dataset.favorite = 'false';
+                favoriteBtn.title = 'Tambah ke favorit';
+            }
+            
+            // Reload jika filter favorites aktif
+            if (currentFilter === 'favorites') {
+                setTimeout(() => {
+                    loadContent();
+                }, 300);
+            }
+        }
+        
+        // ==================== MODAL FUNCTIONS ====================
+        
+        function viewPhoto(item) {
+            modalImg.src = item.src;
+            photoModal.style.display = 'flex';
+        }
+        
+        function playVideo(video) {
+            const videoId = extractYouTubeId(video.src);
+            
+            if (videoId) {
+                videoModalPlayer.innerHTML = `
+                    <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            style="width:100%; height:100%; min-height: 300px;">
+                    </iframe>
+                `;
+            } else {
+                videoModalPlayer.innerHTML = `
+                    <video controls autoplay style="width:100%; height:100%; min-height: 300px;">
+                        <source src="${video.src}" type="video/mp4">
+                        Browser Anda tidak mendukung pemutaran video.
+                    </video>
+                `;
+            }
+            
+            videoModal.style.display = 'flex';
+        }
+        
+        function extractYouTubeId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+        
+        // ==================== UPLOAD SYSTEM ====================
+        
+        function setupUploadSystem() {
+            // Mode gallery
+            uploadOption1.addEventListener('click', () => {
+                setUploadMode('gallery');
+                fileInput.click();
+            });
+            
+            // Mode URL
+            uploadOption2.addEventListener('click', () => {
+                setUploadMode('url');
+            });
+            
+            // File input change
+            fileInput.addEventListener('change', handleFileSelect);
+        }
+        
+        function setUploadMode(mode) {
+            currentUploadMode = mode;
+            
+            // Update button states
+            [uploadOption1, uploadOption2].forEach(btn => btn.classList.remove('active'));
+            
+            if (mode === 'gallery') {
+                uploadOption1.classList.add('active');
+                uploadPreview.style.display = uploadedFiles.length > 0 ? 'block' : 'none';
+                urlInputGroup.style.display = 'none';
+                itemUrl.value = '';
+            } else if (mode === 'url') {
+                uploadOption2.classList.add('active');
+                uploadPreview.style.display = 'none';
+                urlInputGroup.style.display = 'block';
+                clearPreview();
+            }
+        }
+        
+        function handleFileSelect(e) {
+            const files = Array.from(e.target.files);
+            if (files.length === 0) return;
+            
+            // Validasi tipe file
+            const validFiles = files.filter(file => 
+                file.type.startsWith('image/') || file.type.startsWith('video/')
+            );
+            
+            if (validFiles.length === 0) {
+                alert('Hanya file gambar (JPG, PNG) dan video (MP4) yang didukung!');
+                return;
+            }
+            
+            // Validasi ukuran file (maks 10MB)
+            const maxSize = 10 * 1024 * 1024; // 10MB
+            const oversizedFiles = validFiles.filter(file => file.size > maxSize);
+            
+            if (oversizedFiles.length > 0) {
+                alert(`Beberapa file melebihi 10MB: ${oversizedFiles.map(f => f.name).join(', ')}`);
+                // Hanya proses file yang ukurannya sesuai
+                uploadedFiles = validFiles.filter(file => file.size <= maxSize);
+            } else {
+                uploadedFiles = validFiles;
+            }
+            
+            if (uploadedFiles.length === 0) return;
+            
+            // Reset data
+            uploadedDataURLs = [];
+            clearPreview();
+            
+            // Proses file
+            uploadedFiles.forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const dataUrl = e.target.result;
+                    uploadedDataURLs[index] = dataUrl;
+                    addPreview(file, dataUrl, index);
+                    
+                    if (uploadedDataURLs.length === uploadedFiles.length) {
+                        uploadPreview.classList.add('active');
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+            
+            e.target.value = '';
+        }
+        
+        function addPreview(file, dataUrl, index) {
+            const preview = document.createElement('div');
+            preview.className = 'preview-item';
+            
+            if (file.type.startsWith('image/')) {
+                preview.innerHTML = `
+                    <img src="${dataUrl}" class="preview-img" alt="Preview ${file.name}">
+                    <button class="remove-preview" data-index="${index}">&times;</button>
+                `;
+            } else if (file.type.startsWith('video/')) {
+                preview.innerHTML = `
+                    <video class="preview-video" controls>
+                        <source src="${dataUrl}" type="${file.type}">
+                    </video>
+                    <button class="remove-preview" data-index="${index}">&times;</button>
+                `;
+            }
+            
+            previewContainer.appendChild(preview);
+            
+            // Remove button
+            preview.querySelector('.remove-preview').addEventListener('click', (e) => {
+                e.stopPropagation();
+                removeFile(index);
+            });
+        }
+        
+        function removeFile(index) {
+            uploadedFiles.splice(index, 1);
+            uploadedDataURLs.splice(index, 1);
+            
+            // Refresh preview
+            clearPreview();
+            if (uploadedFiles.length === 0) {
+                uploadPreview.classList.remove('active');
+                return;
+            }
+            
+            uploadedFiles.forEach((file, idx) => {
+                addPreview(file, uploadedDataURLs[idx], idx);
+            });
+        }
+        
+        function clearPreview() {
+            previewContainer.innerHTML = '';
+        }
+        
+        // ==================== FORM HANDLING ====================
+        
+        function openAddForm() {
+            isEditing = false;
+            currentEditId = null;
+            currentEditType = null;
+            
+            // Reset form
+            itemForm.reset();
+            itemId.value = '';
+            itemType.value = 'photos';
+            uploadedFiles = [];
+            uploadedDataURLs = [];
+            clearPreview();
+            setUploadMode('gallery');
+            uploadPreview.classList.remove('active');
+            
+            formTitle.textContent = 'Tambah Kenangan';
+            addContentModal.style.display = 'flex';
+        }
+        
+        // Handle form submit
+        itemForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const type = itemType.value;
+            const title = itemTitle.value.trim();
+            const description = itemDescription.value.trim();
+            const url = itemUrl.value.trim();
+            
+            // Validasi berdasarkan mode
+            if (currentUploadMode === 'url') {
+                // Mode URL
+                if (!url) {
+                    alert('URL wajib diisi!');
+                    return;
+                }
+                
+                // Validasi URL
+                if (!isValidURL(url)) {
+                    alert('URL tidak valid. Harus dimulai dengan http://, https://, atau data:');
+                    return;
+                }
+                
+                // Tentukan tipe berdasarkan URL
+                let itemTypeToUse = type;
+                if (!type || type === 'photos') {
+                    if (url.includes('youtube.com') || url.includes('youtu.be') || url.includes('.mp4') || url.includes('.webm')) {
+                        itemTypeToUse = 'videos';
+                    } else if (url.includes('.jpg') || url.includes('.png') || url.includes('.jpeg') || url.includes('.gif')) {
+                        itemTypeToUse = 'photos';
+                    }
+                }
+                
+                saveItem(itemTypeToUse, title || 'Kenangan Baru', description, url);
+                addContentModal.style.display = 'none';
+                alert('Kenangan berhasil ditambahkan!');
+            } else {
+                // Mode upload file
+                if (uploadedDataURLs.length === 0) {
+                    alert('Pilih file terlebih dahulu!');
+                    return;
+                }
+                
+                // Simpan semua file
+                let savedCount = 0;
+                const totalFiles = uploadedDataURLs.length;
+                
+                for (let i = 0; i < uploadedDataURLs.length; i++) {
+                    const dataUrl = uploadedDataURLs[i];
+                    const file = uploadedFiles[i];
+                    
+                    // Tentukan tipe file
+                    let fileType = 'unknown';
+                    if (file.type.startsWith('image/')) fileType = 'image';
+                    else if (file.type.startsWith('video/')) fileType = 'video';
+                    
+                    // Tentukan tipe berdasarkan file
+                    let itemTypeToUse = type;
+                    if (!type || type === 'photos') {
+                        if (fileType === 'image') itemTypeToUse = 'photos';
+                        else if (fileType === 'video') itemTypeToUse = 'videos';
+                    }
+                    
+                    // Tentukan judul berdasarkan file
+                    let itemTitleText = title;
+                    if (!itemTitleText) {
+                        if (fileType === 'image') {
+                            itemTitleText = itemTypeToUse === 'photos' ? 'Foto' : 'Memori Spesial';
+                        } else if (fileType === 'video') {
+                            itemTitleText = 'Video';
+                        } else {
+                            itemTitleText = 'File Kenangan';
+                        }
+                    }
+                    
+                    if (uploadedDataURLs.length > 1 && title) {
+                        itemTitleText = `${title} (${i + 1})`;
+                    } else if (uploadedDataURLs.length > 1 && !title) {
+                        itemTitleText = fileType === 'image' ? `Foto ${i + 1}` : `Video ${i + 1}`;
+                    }
+                    
+                    saveItem(itemTypeToUse, itemTitleText, description, dataUrl);
+                    savedCount++;
+                }
+                
+                // Reset form
+                itemForm.reset();
+                uploadedFiles = [];
+                uploadedDataURLs = [];
+                clearPreview();
+                uploadPreview.classList.remove('active');
+                addContentModal.style.display = 'none';
+                
+                if (savedCount > 0) {
+                    alert(`Berhasil menambahkan ${savedCount} kenangan!`);
+                }
+            }
+        });
+        
+        function isValidURL(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return string.startsWith('data:');
+            }
+        }
+        
+        function saveItem(type, title, description, mediaUrl) {
+            // Cari ID terbaru
+            let newId = 1;
+            if (type === 'photos' && albumData.photos.length > 0) {
+                newId = Math.max(...albumData.photos.map(item => item.id)) + 1;
+            } else if (type === 'videos' && albumData.videos.length > 0) {
+                newId = Math.max(...albumData.videos.map(item => item.id)) + 1;
+            } else if (type === 'memories' && albumData.memories.length > 0) {
+                newId = Math.max(...albumData.memories.map(item => item.id)) + 1;
+            }
+            
+            const today = new Date();
+            const formattedDate = `${today.getDate().toString().padStart(2, '0')}-${(today.getMonth()+1).toString().padStart(2, '0')}-${today.getFullYear()}`;
+            
+            const newItem = {
+                id: newId,
+                title: title || (type === 'photos' ? 'Foto' : type === 'videos' ? 'Video' : 'Memori Spesial'),
+                description: description || '',
+                date: formattedDate,
+                type: type,
+                favorite: false
+            };
+            
+            if (type === 'memories') {
+                newItem.photo = mediaUrl;
+            } else {
+                newItem.src = mediaUrl;
+            }
+            
+            if (type === 'photos') {
+                albumData.photos.push(newItem);
+            } else if (type === 'videos') {
+                albumData.videos.push(newItem);
+            } else if (type === 'memories') {
+                albumData.memories.push(newItem);
+            }
+            
+            saveData();
+            prepareAllItems();
+            loadContent();
+            
+            console.log(`Item ditambahkan: ${type} - ${title}`);
+        }
+        
+        // ==================== VIEW TOGGLE ====================
+        
+        function toggleView() {
+            isGalleryView = !isGalleryView;
+            
+            if (isGalleryView) {
+                gridView.style.display = 'none';
+                galleryView.classList.add('active');
+                viewToggleText.textContent = 'Grid';
+                viewToggleBtn.querySelector('i').className = 'fas fa-th';
+                loadMasonryItems();
+            } else {
+                galleryView.classList.remove('active');
+                gridView.style.display = 'block';
+                viewToggleText.textContent = 'Gallery';
+                viewToggleBtn.querySelector('i').className = 'fas fa-th-large';
+                loadGridItems();
+            }
+        }
+        
+        // ==================== EVENT LISTENERS ====================
+        
+        function setupEventListeners() {
+            // Back button
+            backBtn.addEventListener('click', () => {
+                window.history.back();
+            });
+            
+            // Add content button
+            addContentBtn.addEventListener('click', openAddForm);
+            
+            // Filter buttons
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active button
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // Update filter
+                    currentFilter = btn.dataset.filter;
+                    
+                    // Reload content
+                    loadContent();
+                });
+            });
+            
+            // View toggle
+            viewToggleBtn.addEventListener('click', toggleView);
+            
+            // Modal close buttons
+            modalClose.addEventListener('click', () => {
+                photoModal.style.display = 'none';
+            });
+            
+            photoModal.addEventListener('click', (e) => {
+                if (e.target === photoModal) {
+                    photoModal.style.display = 'none';
+                }
+            });
+            
+            videoModalClose.addEventListener('click', () => {
+                videoModal.style.display = 'none';
+                videoModalPlayer.innerHTML = '';
+            });
+            
+            videoModal.addEventListener('click', (e) => {
+                if (e.target === videoModal) {
+                    videoModal.style.display = 'none';
+                    videoModalPlayer.innerHTML = '';
+                }
+            });
+            
+            // Add content modal
+            closeFormBtn.addEventListener('click', () => {
+                addContentModal.style.display = 'none';
+            });
+            
+            cancelBtn.addEventListener('click', () => {
+                addContentModal.style.display = 'none';
+            });
+            
+            addContentModal.addEventListener('click', (e) => {
+                if (e.target === addContentModal) {
+                    addContentModal.style.display = 'none';
+                }
+            });
+            
+            // Setup upload system
+            setupUploadSystem();
+            
+            // Keyboard controls
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    photoModal.style.display = 'none';
+                    videoModal.style.display = 'none';
+                    addContentModal.style.display = 'none';
+                }
+            });
+            
+            // Swipe untuk gallery view (untuk mobile)
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            document.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            document.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+            
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                const diff = touchStartX - touchEndX;
+                
+                // Swipe kiri (tidak digunakan di sini, tapi bisa untuk navigasi)
+                if (Math.abs(diff) > swipeThreshold) {
+                    // Bisa ditambahkan navigasi swipe jika diperlukan
+                }
+            }
+        }
+        
+        // ==================== INITIALIZATION ====================
+        
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', init);
+        
+        // Export fungsi untuk akses global (debug)
+        window.albumApp = {
+            getData: () => albumData,
+            getAllItems: () => allItems,
+            openAddForm: openAddForm,
+            addSamplePhoto: () => {
+                const newId = Math.max(0, ...allItems.map(item => item.id)) + 1;
+                const today = new Date();
+                const formattedDate = `${today.getDate().toString().padStart(2, '0')}-${(today.getMonth()+1).toString().padStart(2, '0')}-${today.getFullYear()}`;
+                
+                albumData.photos.push({
+                    id: newId,
+                    src: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    title: "Foto Sample " + newId,
+                    description: "Foto contoh yang ditambahkan via debug",
+                    date: formattedDate,
+                    type: "photos",
+                    favorite: false
+                });
+                saveData();
+                prepareAllItems();
+                loadContent();
+                alert('Sample photo ditambahkan!');
+            },
+            clearAllData: () => {
+                if (confirm('Hapus SEMUA data? Tindakan ini tidak dapat dibatalkan!')) {
+                    localStorage.removeItem(STORAGE_KEY);
+                    albumData = defaultData;
+                    saveData();
+                    prepareAllItems();
+                    loadContent();
+                    alert('Semua data telah direset ke default!');
+                }
+            }
+        };
+    </script>
+</body>
+</html>
