@@ -1608,6 +1608,69 @@
                 }, 800);
             }, 2500);
         }
+
+        
+    // Cek jika ada parameter untuk melewati login
+    function checkAutoLogin() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const autoLogin = urlParams.get('login');
+        
+        if (autoLogin === 'true') {
+            // Lewati login dan langsung tampilkan konten
+            loginScreen.style.display = 'none';
+            
+            // Simpan status login di localStorage
+            localStorage.setItem('davaAndienaLoggedIn', 'true');
+            
+            // Langsung tampilkan konten utama
+            setTimeout(() => {
+                mainContent.classList.add('visible');
+                loadLimitedContent();
+                createFloatingHearts();
+            }, 100);
+            
+            return true;
+        }
+        
+        // Cek jika sudah login sebelumnya
+        const isLoggedIn = localStorage.getItem('davaAndienaLoggedIn') === 'true';
+        if (isLoggedIn) {
+            loginScreen.style.display = 'none';
+            
+            setTimeout(() => {
+                mainContent.classList.add('visible');
+                loadLimitedContent();
+                createFloatingHearts();
+            }, 100);
+            
+            return true;
+        }
+        
+        return false;
+    }
+    
+    // Login dengan animasi
+    function login() {
+        const password = passwordInput.value.trim();
+        
+        if (password === APP_PASSWORD) {
+            errorMessage.textContent = '';
+            
+            // Simpan status login
+            localStorage.setItem('davaAndienaLoggedIn', 'true');
+            
+            loginScreen.classList.add('hidden');
+            
+            setTimeout(() => {
+                playTitleAnimation();
+            }, 500);
+        } else {
+            errorMessage.textContent = 'Sandi salah. Coba lagi!';
+            passwordInput.classList.add('shake');
+            setTimeout(() => passwordInput.classList.remove('shake'), 1000);
+        }
+    }
+    
         
         // Buat hati berjatuhan
         function createFloatingHearts() {
@@ -1977,6 +2040,32 @@
             console.log("Tombol 'Lihat Semua' mengarah ke album.html");
         }
         
+         function init() {
+        // Coba auto login
+        if (checkAutoLogin()) {
+            return;
+        }
+        
+        // Setup event listeners
+        loginBtn.addEventListener('click', login);
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') login();
+        });
+        
+        setupNavigation();
+        setupModals();
+        
+        // Set initial active nav
+        document.querySelector('.nav-link').classList.add('active');
+        document.querySelector('.sidebar-link').classList.add('active');
+        
+        console.log("Website Dava & Andiena siap digunakan!");
+        console.log("Password: 10022009");
+    }
+    
+    // Initialize app
+    document.addEventListener('DOMContentLoaded', init);
+    
         // Initialize app
         document.addEventListener('DOMContentLoaded', init);
     </script>

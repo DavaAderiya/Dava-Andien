@@ -8,14 +8,16 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap">
     <style>
         :root {
-            --primary-color: #ff6b8b;
-            --secondary-color: #ffc1cc;
-            --light-pink: #fff5f7;
-            --dark-bg: #0f3460;
-            --text-color: #333;
+            --primary-color: #ff85a2;
+            --secondary-color: #ffb6c1;
+            --light-pink: #fff0f5;
+            --soft-pink: #ffebf3;
+            --dark-pink: #d87093;
+            --text-color: #5a3a4c;
             --white: #ffffff;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow: 0 4px 12px rgba(255, 133, 162, 0.15);
             --transition: all 0.3s ease;
+            --success-color: #4CAF50;
         }
         
         * {
@@ -27,8 +29,8 @@
         
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: var(--white);
+            background: linear-gradient(135deg, #fff5f9 0%, #ffe8f0 100%);
+            color: var(--text-color);
             min-height: 100vh;
             overflow-x: hidden;
             font-size: 14px;
@@ -43,7 +45,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--primary-color) 0%, #ff99ac 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -82,40 +84,91 @@
             50% { opacity: 1; }
         }
         
-        /* Header Album Sederhana */
+        /* Success Animation */
+        .success-animation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        
+        .success-heart {
+            font-size: 4rem;
+            color: var(--primary-color);
+            animation: successHeart 1.5s ease forwards;
+        }
+        
+        @keyframes successHeart {
+            0% { 
+                transform: scale(0.5); 
+                opacity: 0; 
+            }
+            50% { 
+                transform: scale(1.5); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: scale(1); 
+                opacity: 0; 
+            }
+        }
+        
+        .success-text {
+            color: var(--primary-color);
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            margin-top: 1rem;
+            opacity: 0;
+            animation: successText 1.5s ease 0.3s forwards;
+        }
+        
+        @keyframes successText {
+            0% { opacity: 0; transform: translateY(20px); }
+            50% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+        
+        /* Header Album */
         .album-header {
             position: relative;
             padding: 2rem 1rem 1rem;
             text-align: center;
-            background: linear-gradient(to bottom, rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.7));
+            background: linear-gradient(to bottom, rgba(255, 133, 162, 0.1), rgba(255, 182, 193, 0.05));
             overflow: hidden;
         }
         
         .album-main-title {
             font-family: 'Dancing Script', cursive;
             font-size: 2.5rem;
-            color: var(--white);
+            color: var(--dark-pink);
             margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .album-subtitle {
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--text-color);
             max-width: 600px;
             margin: 0 auto;
             line-height: 1.5;
         }
         
-        /* Album Navigation - REVISI PERBESAR BACKGROUND */
+        /* Album Navigation */
         .album-nav {
             position: sticky;
             top: 0;
-            background: rgba(26, 26, 46, 0.98);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(15px);
             z-index: 100;
             padding: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 133, 162, 0.2);
+            box-shadow: 0 4px 20px rgba(255, 133, 162, 0.1);
         }
         
         .album-nav-container {
@@ -131,7 +184,6 @@
             font-size: 1.5rem;
             color: var(--primary-color);
             font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .album-nav-controls {
@@ -140,7 +192,7 @@
             align-items: center;
         }
         
-        /* Filter bar - Baris atas */
+        /* Filter bar */
         .album-filter {
             display: flex;
             gap: 0.5rem;
@@ -153,7 +205,7 @@
         }
         
         .album-filter::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 133, 162, 0.1);
             border-radius: 2px;
         }
         
@@ -165,9 +217,9 @@
         .filter-btn {
             padding: 0.5rem 1rem;
             border-radius: 1.5rem;
-            background: rgba(255, 255, 255, 0.12);
-            color: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: var(--soft-pink);
+            color: var(--text-color);
+            border: 1px solid var(--secondary-color);
             cursor: pointer;
             transition: var(--transition);
             font-size: 0.85rem;
@@ -181,22 +233,22 @@
             color: white;
             border-color: var(--primary-color);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 107, 139, 0.3);
+            box-shadow: var(--shadow);
         }
         
-        /* View toggle bar - Baris bawah */
+        /* View toggle bar */
         .view-toggle-bar {
             display: flex;
             gap: 0.5rem;
             margin-top: 0.8rem;
             padding-top: 0.8rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 133, 162, 0.2);
         }
         
         .nav-btn {
             padding: 0.6rem 1.2rem;
             border-radius: 1.5rem;
-            background: linear-gradient(135deg, var(--primary-color), #ff4d73);
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-pink));
             color: white;
             border: none;
             cursor: pointer;
@@ -207,21 +259,12 @@
             font-weight: 500;
             font-size: 0.85rem;
             flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(255, 107, 139, 0.3);
+            box-shadow: var(--shadow);
         }
         
         .nav-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(255, 107, 139, 0.4);
-        }
-        
-        .nav-btn.secondary {
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .nav-btn.secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 6px 15px rgba(255, 133, 162, 0.3);
         }
         
         /* Main Content */
@@ -231,7 +274,7 @@
             padding: 1.5rem 1rem;
         }
         
-        /* Grid View (Default) */
+        /* Grid View */
         .grid-view {
             display: block;
         }
@@ -244,16 +287,17 @@
         
         /* Album Card */
         .album-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: white;
             border-radius: 1rem;
             overflow: hidden;
             transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--secondary-color);
             cursor: pointer;
             position: relative;
             animation: cardAppear 0.6s ease forwards;
             opacity: 0;
             transform: translateY(20px);
+            box-shadow: var(--shadow);
         }
         
         @keyframes cardAppear {
@@ -266,7 +310,7 @@
         .album-card:hover {
             transform: translateY(-5px);
             border-color: var(--primary-color);
-            box-shadow: 0 10px 20px rgba(255, 107, 139, 0.2);
+            box-shadow: 0 10px 20px rgba(255, 133, 162, 0.2);
         }
         
         .card-media {
@@ -292,7 +336,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            background: linear-gradient(to top, rgba(216, 112, 147, 0.9), transparent);
             padding: 1rem;
             transform: translateY(100%);
             transition: transform 0.4s ease;
@@ -320,7 +364,7 @@
         .card-btn {
             padding: 0.3rem 0.6rem;
             border-radius: 1rem;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             color: white;
             border: none;
             cursor: pointer;
@@ -352,18 +396,9 @@
             justify-content: center;
             font-size: 0.7rem;
             z-index: 2;
-        }
-        
-        .type-photo {
-            background: rgba(76, 175, 80, 0.9);
-        }
-        
-        .type-video {
-            background: rgba(33, 150, 243, 0.9);
-        }
-        
-        .type-memory {
-            background: rgba(156, 39, 176, 0.9);
+            background: white;
+            color: var(--primary-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         
         /* Gallery View */
@@ -390,6 +425,7 @@
             animation: masonryAppear 0.5s ease forwards;
             opacity: 0;
             transform: scale(0.9);
+            box-shadow: var(--shadow);
         }
         
         @keyframes masonryAppear {
@@ -401,6 +437,7 @@
         
         .masonry-item:hover {
             transform: scale(1.03);
+            box-shadow: 0 8px 16px rgba(255, 133, 162, 0.3);
         }
         
         .masonry-img {
@@ -422,7 +459,7 @@
             width: 3.2rem;
             height: 3.2rem;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary-color), #ff4d73);
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-pink));
             color: white;
             border: none;
             cursor: pointer;
@@ -430,13 +467,13 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow);
             transition: var(--transition);
         }
         
         .back-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 6px 15px rgba(255, 107, 139, 0.4);
+            box-shadow: 0 6px 15px rgba(255, 133, 162, 0.3);
         }
         
         /* Add Content Button */
@@ -451,7 +488,7 @@
             width: 3.2rem;
             height: 3.2rem;
             border-radius: 50%;
-            background: linear-gradient(135deg, #4CAF50, #45a049);
+            background: linear-gradient(135deg, var(--success-color), #45a049);
             color: white;
             border: none;
             cursor: pointer;
@@ -459,13 +496,13 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow);
             transition: var(--transition);
         }
         
         .add-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 6px 15px rgba(76, 175, 80, 0.4);
+            box-shadow: 0 6px 15px rgba(76, 175, 80, 0.3);
         }
         
         /* Modal */
@@ -502,7 +539,7 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
-            background: rgba(255, 107, 139, 0.8);
+            background: rgba(255, 133, 162, 0.8);
             width: 2.5rem;
             height: 2.5rem;
             border-radius: 50%;
@@ -541,6 +578,7 @@
             max-height: 80vh;
             overflow-y: auto;
             position: relative;
+            box-shadow: 0 10px 30px rgba(255, 133, 162, 0.2);
         }
         
         .form-header {
@@ -560,7 +598,7 @@
             background: none;
             border: none;
             font-size: 1.5rem;
-            color: #777;
+            color: var(--text-color);
             cursor: pointer;
             width: 2rem;
             height: 2rem;
@@ -568,16 +606,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: var(--transition);
         }
         
         .close-btn:hover {
-            background: #f5f5f5;
+            background: var(--soft-pink);
         }
         
         .upload-section {
             margin-top: 1.2rem;
             padding: 1rem;
-            background: #f9f9f9;
+            background: var(--soft-pink);
             border-radius: 0.7rem;
             border: 2px dashed var(--secondary-color);
         }
@@ -600,7 +639,7 @@
         
         .upload-option-btn {
             padding: 0.8rem;
-            border: 2px solid #ddd;
+            border: 2px solid var(--secondary-color);
             background: white;
             border-radius: 0.7rem;
             cursor: pointer;
@@ -654,6 +693,7 @@
             height: 80px;
             border-radius: 0.5rem;
             overflow: hidden;
+            border: 2px solid var(--secondary-color);
         }
         
         .preview-img, .preview-video {
@@ -693,7 +733,7 @@
         .form-label {
             margin-bottom: 0.4rem;
             font-weight: 600;
-            color: #555;
+            color: var(--text-color);
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -702,15 +742,17 @@
         
         .form-input, .form-textarea {
             padding: 0.6rem;
-            border: 2px solid #ddd;
+            border: 2px solid var(--secondary-color);
             border-radius: 0.6rem;
             font-family: 'Poppins', sans-serif;
             transition: var(--transition);
+            background: white;
         }
         
         .form-input:focus, .form-textarea:focus {
             border-color: var(--primary-color);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 133, 162, 0.1);
         }
         
         .form-textarea {
@@ -724,7 +766,7 @@
             gap: 0.8rem;
             margin-top: 1.5rem;
             padding-top: 1.2rem;
-            border-top: 1px solid #eee;
+            border-top: 1px solid var(--secondary-color);
         }
         
         .form-btn {
@@ -741,17 +783,31 @@
         }
         
         .form-btn.primary {
-            background: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-pink));
             color: var(--white);
         }
         
         .form-btn.primary:hover {
-            background: #ff4d73;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
         
         .form-btn.secondary {
-            background: #f5f5f5;
-            color: #555;
+            background: var(--soft-pink);
+            color: var(--text-color);
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .form-btn.secondary:hover {
+            background: var(--light-pink);
+        }
+        
+        /* File size indicator */
+        .file-size-info {
+            font-size: 0.75rem;
+            color: var(--dark-pink);
+            margin-top: 0.5rem;
+            text-align: center;
         }
         
         /* Floating Hearts */
@@ -767,7 +823,7 @@
         
         .heart {
             position: absolute;
-            color: rgba(255, 107, 139, 0.15);
+            color: rgba(255, 133, 162, 0.2);
             font-size: 1rem;
             animation: floatHeart 15s infinite linear;
         }
@@ -798,22 +854,23 @@
         
         .empty-state-icon {
             font-size: 3rem;
-            color: rgba(255, 107, 139, 0.3);
+            color: var(--secondary-color);
             margin-bottom: 1rem;
         }
         
         .empty-state h3 {
             font-size: 1.2rem;
             margin-bottom: 0.8rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--text-color);
         }
         
         .empty-state p {
             max-width: 300px;
             margin: 0 auto;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-color);
             line-height: 1.5;
             font-size: 0.9rem;
+            opacity: 0.7;
         }
         
         /* Delete Animation */
@@ -822,22 +879,9 @@
             to { opacity: 0; transform: scale(0.8); }
         }
         
-        /* ==================== RESPONSIVE UNTUK HP ==================== */
+        /* ==================== RESPONSIVE ==================== */
         
-        /* Desktop & Tablet */
-        @media (min-width: 769px) {
-            .album-nav-controls {
-                flex-direction: column;
-                align-items: flex-end;
-                gap: 0.5rem;
-            }
-            
-            .view-toggle-bar {
-                justify-content: flex-end;
-            }
-        }
-        
-        /* Tablet & HP kecil */
+        /* Tablet & HP */
         @media (max-width: 768px) {
             .album-main-title {
                 font-size: 2rem;
@@ -847,7 +891,6 @@
                 font-size: 0.8rem;
             }
             
-            /* NAVIGASI UNTUK HP - REVISI BARU */
             .album-nav {
                 padding: 0.8rem;
             }
@@ -864,7 +907,7 @@
                 margin-bottom: 0;
                 width: 100%;
                 padding-bottom: 0.5rem;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                border-bottom: 1px solid rgba(255, 133, 162, 0.2);
             }
             
             .album-nav-controls {
@@ -895,7 +938,6 @@
                 padding: 0.5rem 0.8rem;
             }
             
-            /* Album grid untuk HP */
             .album-grid {
                 grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
                 gap: 0.8rem;
@@ -905,13 +947,11 @@
                 height: 120px;
             }
             
-            /* Gallery view untuk HP */
             .masonry-grid {
                 columns: 2 100px;
                 column-gap: 0.8rem;
             }
             
-            /* Modal untuk HP */
             .form-content {
                 padding: 1rem;
             }
@@ -921,13 +961,12 @@
             }
         }
         
-        /* HP kecil (portrait) */
+        /* HP kecil */
         @media (max-width: 480px) {
             .album-main-title {
                 font-size: 1.7rem;
             }
             
-            /* Navigation untuk HP kecil */
             .album-nav-title {
                 font-size: 1.3rem;
             }
@@ -946,7 +985,6 @@
                 padding: 0.4rem 0.6rem;
             }
             
-            /* Album grid untuk HP kecil */
             .album-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -959,7 +997,6 @@
                 height: 100px;
             }
             
-            /* Loading screen untuk HP */
             .loading-heart {
                 font-size: 4rem;
             }
@@ -968,7 +1005,6 @@
                 font-size: 1.2rem;
             }
             
-            /* Tombol aksi untuk HP */
             .back-home, .add-content-btn {
                 bottom: 0.8rem;
             }
@@ -977,62 +1013,6 @@
                 width: 2.8rem;
                 height: 2.8rem;
                 font-size: 1rem;
-            }
-        }
-        
-        /* HP sangat kecil */
-        @media (max-width: 360px) {
-            .album-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .card-media {
-                height: 150px;
-            }
-            
-            .view-toggle-bar {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            
-            .nav-btn {
-                width: 100%;
-            }
-        }
-        
-        /* Untuk orientasi landscape HP */
-        @media (max-width: 768px) and (orientation: landscape) {
-            .album-nav-container {
-                flex-direction: row;
-                align-items: center;
-                gap: 1rem;
-            }
-            
-            .album-nav-title {
-                width: auto;
-                margin-right: 0;
-                border-bottom: none;
-                padding-bottom: 0;
-            }
-            
-            .album-nav-controls {
-                flex: 1;
-                flex-direction: column;
-                align-items: flex-end;
-            }
-            
-            .album-filter {
-                justify-content: flex-end;
-            }
-            
-            .view-toggle-bar {
-                justify-content: flex-end;
-                margin-top: 0.3rem;
-                padding-top: 0.3rem;
-            }
-            
-            .album-grid {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             }
         }
     </style>
@@ -1044,6 +1024,14 @@
             <i class="fas fa-heart"></i>
         </div>
         <div class="loading-text">Memuat Album Kita...</div>
+    </div>
+    
+    <!-- Success Animation -->
+    <div class="success-animation" id="successAnimation" style="display: none;">
+        <div class="success-heart">
+            <i class="fas fa-heart"></i>
+        </div>
+        <div class="success-text">Tersimpan!</div>
     </div>
     
     <!-- Floating Hearts -->
@@ -1069,7 +1057,7 @@
         <p class="album-subtitle">Kumpulan foto, video, dan kenangan indah kita bersama</p>
     </header>
     
-    <!-- Album Navigation - REVISI BARU -->
+    <!-- Album Navigation -->
     <nav class="album-nav">
         <div class="album-nav-container">
             <div class="album-nav-title">Love Story</div>
@@ -1146,6 +1134,7 @@
                         <i class="fas fa-images"></i>
                         <span>Pilih File</span>
                         <small>Foto & Video</small>
+                        <div class="file-size-info">Maks. 20MB</div>
                     </button>
                     <button type="button" class="upload-option-btn" id="uploadOption2">
                         <i class="fas fa-link"></i>
@@ -1210,8 +1199,9 @@
     <script>
         // ==================== KONFIGURASI ====================
         const STORAGE_KEY = 'davaAndienaMemories';
+        const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
         
-        // Data default jika belum ada di localStorage
+        // Data default
         const defaultData = {
             photos: [
                 {
@@ -1231,24 +1221,6 @@
                     date: "15-03-2023",
                     type: "photos",
                     favorite: true
-                },
-                {
-                    id: 3,
-                    src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    title: "Momen Berdua",
-                    description: "Saat-saat berdua yang selalu membuatku bahagia.",
-                    date: "20-03-2023",
-                    type: "photos",
-                    favorite: false
-                },
-                {
-                    id: 4,
-                    src: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    title: "Senyumanmu",
-                    description: "Senyumanmu adalah sumber kebahagiaanku.",
-                    date: "25-03-2023",
-                    type: "photos",
-                    favorite: true
                 }
             ],
             videos: [
@@ -1260,15 +1232,6 @@
                     date: "10-02-2024",
                     type: "videos",
                     favorite: true
-                },
-                {
-                    id: 2,
-                    src: "https://www.youtube.com/embed/9bZkp7q19f0",
-                    title: "Video Kenangan",
-                    description: "Kenangan indah yang selalu terkenang.",
-                    date: "15-03-2024",
-                    type: "videos",
-                    favorite: false
                 }
             ],
             memories: [
@@ -1276,17 +1239,8 @@
                     id: 1,
                     photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                     title: "Pertama Kali Bertemu",
-                    description: "Pertama kali kita bertemu, aku tak menyangka bahwa dirimu akan menjadi bagian terpenting dalam hidupku. Saat itu di sebuah kafe kecil, kamu tersenyum dan dunia seketika terasa lebih cerah.",
+                    description: "Pertama kali kita bertemu, aku tak menyangka bahwa dirimu akan menjadi bagian terpenting dalam hidupku.",
                     date: "10-02-2023",
-                    type: "memories",
-                    favorite: true
-                },
-                {
-                    id: 2,
-                    photo: "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    title: "Perjalanan Pertama",
-                    description: "Perjalanan pertama kita ke pantai bersama. Aku masih ingat bagaimana kita berjalan berpegangan tangan di tepi pantai saat matahari terbenam. Waktu itu terasa sempurna.",
-                    date: "15-03-2023",
                     type: "memories",
                     favorite: true
                 }
@@ -1307,6 +1261,7 @@
 
         // ==================== ELEMEN DOM ====================
         const loadingScreen = document.getElementById('loadingScreen');
+        const successAnimation = document.getElementById('successAnimation');
         const floatingHearts = document.getElementById('floatingHearts');
         const backBtn = document.getElementById('backBtn');
         const addContentBtn = document.getElementById('addContentBtn');
@@ -1356,39 +1311,24 @@
 
         // ==================== FUNGSI UTAMA ====================
         
-        // Inisialisasi aplikasi
         function init() {
-            // Gabungkan semua data
             prepareAllItems();
-            
-            // Setup event listeners
             setupEventListeners();
-            
-            // Buat floating hearts
             createFloatingHearts();
-            
-            // Load konten
             loadContent();
             
-            // Sembunyikan loading screen
             setTimeout(() => {
                 loadingScreen.classList.add('hidden');
             }, 1000);
-            
-            console.log("Album siap! Total item:", allItems.length);
         }
         
-        // Simpan data ke localStorage
         function saveData() {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(albumData));
-            console.log("Data disimpan ke localStorage");
         }
         
-        // Gabungkan semua item
         function prepareAllItems() {
             allItems = [];
             
-            // Tambahkan photos
             albumData.photos.forEach(photo => {
                 allItems.push({
                     ...photo,
@@ -1397,7 +1337,6 @@
                 });
             });
             
-            // Tambahkan videos
             albumData.videos.forEach(video => {
                 allItems.push({
                     ...video,
@@ -1406,7 +1345,6 @@
                 });
             });
             
-            // Tambahkan memories
             albumData.memories.forEach(memory => {
                 allItems.push({
                     ...memory,
@@ -1416,11 +1354,9 @@
                 });
             });
             
-            // Urutkan berdasarkan id (yang terbaru dulu)
             allItems.sort((a, b) => b.id - a.id);
         }
         
-        // Buat floating hearts
         function createFloatingHearts() {
             floatingHearts.innerHTML = '';
             
@@ -1437,6 +1373,60 @@
                 floatingHearts.appendChild(heart);
             }
         }
+        
+        // ==================== ANIMASI SUKSES ====================
+        
+        function showSuccessAnimation() {
+            successAnimation.style.display = 'flex';
+            
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    createFloatingSuccessHeart();
+                }, i * 100);
+            }
+            
+            setTimeout(() => {
+                successAnimation.style.display = 'none';
+            }, 2000);
+        }
+        
+        function createFloatingSuccessHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '<i class="fas fa-heart"></i>';
+            heart.style.cssText = `
+                position: fixed;
+                color: var(--primary-color);
+                font-size: ${1 + Math.random() * 1}rem;
+                top: 50%;
+                left: 50%;
+                z-index: 2501;
+                animation: floatSuccessHeart 1.5s ease forwards;
+            `;
+            
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                if (heart.parentNode) {
+                    heart.parentNode.removeChild(heart);
+                }
+            }, 1500);
+        }
+        
+        // Tambahkan keyframe untuk animasi success heart
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatSuccessHeart {
+                0% {
+                    transform: translate(-50%, -50%) scale(0.5);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * -100 - 50}px) scale(1);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
         
         // ==================== LOAD KONTEN ====================
         
@@ -1480,7 +1470,6 @@
             });
         }
         
-        // Filter items berdasarkan filter aktif
         function filterItems(items) {
             if (currentFilter === 'all') return items;
             if (currentFilter === 'favorites') return items.filter(item => item.favorite);
@@ -1497,19 +1486,17 @@
             
             const isVideo = item.category === 'videos';
             const isMemory = item.category === 'memories';
-            const typeClass = isVideo ? 'type-video' : (isMemory ? 'type-memory' : 'type-photo');
             const typeIcon = isVideo ? 'fas fa-play' : (isMemory ? 'fas fa-heart' : 'fas fa-camera');
             
-            // Handle image error dengan fallback
-            const imgSrc = item.src || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY2YjhjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+            const imgSrc = item.src || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
             
             card.innerHTML = `
-                <div class="type-indicator ${typeClass}">
+                <div class="type-indicator">
                     <i class="${typeIcon}"></i>
                 </div>
                 
                 <div class="card-media">
-                    <img src="${imgSrc}" alt="${item.title || 'Kenangan'}" class="card-img">
+                    <img src="${imgSrc}" alt="${item.title || 'Kenangan'}" class="card-img" loading="lazy">
                     <div class="card-overlay">
                         <h3 class="card-title">${item.title || 'Tanpa Judul'}</h3>
                         <div class="card-actions">
@@ -1527,7 +1514,6 @@
                 </div>
             `;
             
-            // Event listeners
             card.querySelector('.view-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
                 if (isVideo) {
@@ -1555,9 +1541,8 @@
                 }
             });
             
-            // Handle image error
             card.querySelector('.card-img').onerror = function() {
-                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY2YjhjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
                 this.style.objectFit = 'contain';
                 this.style.padding = '0.5rem';
             };
@@ -1572,12 +1557,12 @@
             masonryItem.dataset.type = item.category;
             
             const isVideo = item.category === 'videos';
-            const imgSrc = item.src || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY2YjhjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+            const imgSrc = item.src || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
             
             masonryItem.innerHTML = `
-                <img src="${imgSrc}" alt="${item.title || 'Kenangan'}" class="masonry-img">
+                <img src="${imgSrc}" alt="${item.title || 'Kenangan'}" class="masonry-img" loading="lazy">
                 ${isVideo ? 
-                    `<div style="position: absolute; top: 5px; right: 5px; background: rgba(33, 150, 243, 0.9); color: white; padding: 3px 8px; border-radius: 15px; font-size: 0.7rem;">
+                    `<div style="position: absolute; top: 5px; right: 5px; background: var(--primary-color); color: white; padding: 3px 8px; border-radius: 15px; font-size: 0.7rem;">
                         <i class="fas fa-play"></i>
                     </div>` : 
                     ''
@@ -1592,9 +1577,8 @@
                 }
             });
             
-            // Handle image error
             masonryItem.querySelector('.masonry-img').onerror = function() {
-                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWlsPSIjZmY2YjhjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNUMlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
             };
             
             return masonryItem;
@@ -1620,41 +1604,28 @@
         function deleteItem(item, cardElement) {
             if (!confirm(`Hapus "${item.title || 'kenangan ini'}"?`)) return;
             
-            // Hapus dari array yang sesuai
             if (item.category === 'photos') {
                 const index = albumData.photos.findIndex(photo => photo.id === item.id);
-                if (index !== -1) {
-                    albumData.photos.splice(index, 1);
-                }
+                if (index !== -1) albumData.photos.splice(index, 1);
             } else if (item.category === 'videos') {
                 const index = albumData.videos.findIndex(video => video.id === item.id);
-                if (index !== -1) {
-                    albumData.videos.splice(index, 1);
-                }
+                if (index !== -1) albumData.videos.splice(index, 1);
             } else if (item.category === 'memories') {
                 const index = albumData.memories.findIndex(memory => memory.id === item.id);
-                if (index !== -1) {
-                    albumData.memories.splice(index, 1);
-                }
+                if (index !== -1) albumData.memories.splice(index, 1);
             }
             
-            // Simpan ke localStorage
             saveData();
-            
-            // Update data
             prepareAllItems();
             
-            // Animasi hapus
             cardElement.style.animation = 'fadeOut 0.3s ease forwards';
             
             setTimeout(() => {
                 if (cardElement.parentNode) {
                     cardElement.parentNode.removeChild(cardElement);
                 }
-                // Reload content setelah hapus
                 loadContent();
                 
-                // Cek jika sekarang kosong
                 const filteredItems = filterItems(allItems);
                 if (filteredItems.length === 0) {
                     loadContent();
@@ -1665,10 +1636,8 @@
         // ==================== FAVORITE SYSTEM ====================
         
         function toggleFavorite(item, cardElement) {
-            // Toggle favorite status
             item.favorite = !item.favorite;
             
-            // Update di data asli
             if (item.category === 'photos') {
                 const photoIndex = albumData.photos.findIndex(photo => photo.id === item.id);
                 if (photoIndex !== -1) albumData.photos[photoIndex].favorite = item.favorite;
@@ -1680,10 +1649,8 @@
                 if (memoryIndex !== -1) albumData.memories[memoryIndex].favorite = item.favorite;
             }
             
-            // Simpan ke localStorage
             saveData();
             
-            // Update button in card
             const favoriteBtn = cardElement.querySelector('.favorite-btn');
             if (item.favorite) {
                 favoriteBtn.innerHTML = '<i class="fas fa-heart"></i>';
@@ -1695,7 +1662,6 @@
                 favoriteBtn.title = 'Tambah ke favorit';
             }
             
-            // Reload jika filter favorites aktif
             if (currentFilter === 'favorites') {
                 setTimeout(() => {
                     loadContent();
@@ -1743,25 +1709,21 @@
         // ==================== UPLOAD SYSTEM ====================
         
         function setupUploadSystem() {
-            // Mode gallery
             uploadOption1.addEventListener('click', () => {
                 setUploadMode('gallery');
                 fileInput.click();
             });
             
-            // Mode URL
             uploadOption2.addEventListener('click', () => {
                 setUploadMode('url');
             });
             
-            // File input change
             fileInput.addEventListener('change', handleFileSelect);
         }
         
         function setUploadMode(mode) {
             currentUploadMode = mode;
             
-            // Update button states
             [uploadOption1, uploadOption2].forEach(btn => btn.classList.remove('active'));
             
             if (mode === 'gallery') {
@@ -1781,7 +1743,6 @@
             const files = Array.from(e.target.files);
             if (files.length === 0) return;
             
-            // Validasi tipe file
             const validFiles = files.filter(file => 
                 file.type.startsWith('image/') || file.type.startsWith('video/')
             );
@@ -1791,25 +1752,20 @@
                 return;
             }
             
-            // Validasi ukuran file (maks 10MB)
-            const maxSize = 10 * 1024 * 1024; // 10MB
-            const oversizedFiles = validFiles.filter(file => file.size > maxSize);
+            const oversizedFiles = validFiles.filter(file => file.size > MAX_FILE_SIZE);
             
             if (oversizedFiles.length > 0) {
-                alert(`Beberapa file melebihi 10MB: ${oversizedFiles.map(f => f.name).join(', ')}`);
-                // Hanya proses file yang ukurannya sesuai
-                uploadedFiles = validFiles.filter(file => file.size <= maxSize);
+                alert(`Beberapa file melebihi 20MB: ${oversizedFiles.map(f => f.name).join(', ')}\n\nMaksimal ukuran file adalah 20MB.`);
+                uploadedFiles = validFiles.filter(file => file.size <= MAX_FILE_SIZE);
             } else {
                 uploadedFiles = validFiles;
             }
             
             if (uploadedFiles.length === 0) return;
             
-            // Reset data
             uploadedDataURLs = [];
             clearPreview();
             
-            // Proses file
             uploadedFiles.forEach((file, index) => {
                 const reader = new FileReader();
                 reader.onload = function(e) {
@@ -1847,7 +1803,6 @@
             
             previewContainer.appendChild(preview);
             
-            // Remove button
             preview.querySelector('.remove-preview').addEventListener('click', (e) => {
                 e.stopPropagation();
                 removeFile(index);
@@ -1858,7 +1813,6 @@
             uploadedFiles.splice(index, 1);
             uploadedDataURLs.splice(index, 1);
             
-            // Refresh preview
             clearPreview();
             if (uploadedFiles.length === 0) {
                 uploadPreview.classList.remove('active');
@@ -1881,7 +1835,6 @@
             currentEditId = null;
             currentEditType = null;
             
-            // Reset form
             itemForm.reset();
             itemId.value = '';
             itemType.value = 'photos';
@@ -1895,7 +1848,6 @@
             addContentModal.style.display = 'flex';
         }
         
-        // Handle form submit
         itemForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -1904,21 +1856,17 @@
             const description = itemDescription.value.trim();
             const url = itemUrl.value.trim();
             
-            // Validasi berdasarkan mode
             if (currentUploadMode === 'url') {
-                // Mode URL
                 if (!url) {
                     alert('URL wajib diisi!');
                     return;
                 }
                 
-                // Validasi URL
                 if (!isValidURL(url)) {
                     alert('URL tidak valid. Harus dimulai dengan http://, https://, atau data:');
                     return;
                 }
                 
-                // Tentukan tipe berdasarkan URL
                 let itemTypeToUse = type;
                 if (!type || type === 'photos') {
                     if (url.includes('youtube.com') || url.includes('youtu.be') || url.includes('.mp4') || url.includes('.webm')) {
@@ -1930,35 +1878,30 @@
                 
                 saveItem(itemTypeToUse, title || 'Kenangan Baru', description, url);
                 addContentModal.style.display = 'none';
-                alert('Kenangan berhasil ditambahkan!');
+                
+                showSuccessAnimation();
             } else {
-                // Mode upload file
                 if (uploadedDataURLs.length === 0) {
                     alert('Pilih file terlebih dahulu!');
                     return;
                 }
                 
-                // Simpan semua file
                 let savedCount = 0;
-                const totalFiles = uploadedDataURLs.length;
                 
                 for (let i = 0; i < uploadedDataURLs.length; i++) {
                     const dataUrl = uploadedDataURLs[i];
                     const file = uploadedFiles[i];
                     
-                    // Tentukan tipe file
                     let fileType = 'unknown';
                     if (file.type.startsWith('image/')) fileType = 'image';
                     else if (file.type.startsWith('video/')) fileType = 'video';
                     
-                    // Tentukan tipe berdasarkan file
                     let itemTypeToUse = type;
                     if (!type || type === 'photos') {
                         if (fileType === 'image') itemTypeToUse = 'photos';
                         else if (fileType === 'video') itemTypeToUse = 'videos';
                     }
                     
-                    // Tentukan judul berdasarkan file
                     let itemTitleText = title;
                     if (!itemTitleText) {
                         if (fileType === 'image') {
@@ -1980,7 +1923,6 @@
                     savedCount++;
                 }
                 
-                // Reset form
                 itemForm.reset();
                 uploadedFiles = [];
                 uploadedDataURLs = [];
@@ -1989,7 +1931,7 @@
                 addContentModal.style.display = 'none';
                 
                 if (savedCount > 0) {
-                    alert(`Berhasil menambahkan ${savedCount} kenangan!`);
+                    showSuccessAnimation();
                 }
             }
         });
@@ -2004,7 +1946,6 @@
         }
         
         function saveItem(type, title, description, mediaUrl) {
-            // Cari ID terbaru
             let newId = 1;
             if (type === 'photos' && albumData.photos.length > 0) {
                 newId = Math.max(...albumData.photos.map(item => item.id)) + 1;
@@ -2043,8 +1984,6 @@
             saveData();
             prepareAllItems();
             loadContent();
-            
-            console.log(`Item ditambahkan: ${type} - ${title}`);
         }
         
         // ==================== VIEW TOGGLE ====================
@@ -2067,36 +2006,38 @@
             }
         }
         
+        // ==================== FUNGSI HOME BUTTON ====================
+        
+        function goToHomePage() {
+            // Tampilkan loading screen
+            loadingScreen.classList.remove('hidden');
+            loadingScreen.style.opacity = '1';
+            
+            // Arahkan ke halaman utama (index.html)
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 800);
+        }
+        
         // ==================== EVENT LISTENERS ====================
         
         function setupEventListeners() {
-            // Back button
-            backBtn.addEventListener('click', () => {
-                window.history.back();
-            });
+            // Home button - KEMBALI KE HALAMAN UTAMA
+            backBtn.addEventListener('click', goToHomePage);
             
-            // Add content button
             addContentBtn.addEventListener('click', openAddForm);
             
-            // Filter buttons
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    // Update active button
                     filterBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
-                    
-                    // Update filter
                     currentFilter = btn.dataset.filter;
-                    
-                    // Reload content
                     loadContent();
                 });
             });
             
-            // View toggle
             viewToggleBtn.addEventListener('click', toggleView);
             
-            // Modal close buttons
             modalClose.addEventListener('click', () => {
                 photoModal.style.display = 'none';
             });
@@ -2119,7 +2060,6 @@
                 }
             });
             
-            // Add content modal
             closeFormBtn.addEventListener('click', () => {
                 addContentModal.style.display = 'none';
             });
@@ -2134,10 +2074,8 @@
                 }
             });
             
-            // Setup upload system
             setupUploadSystem();
             
-            // Keyboard controls
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     photoModal.style.display = 'none';
@@ -2145,71 +2083,11 @@
                     addContentModal.style.display = 'none';
                 }
             });
-            
-            // Swipe untuk gallery view (untuk mobile)
-            let touchStartX = 0;
-            let touchEndX = 0;
-            
-            document.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-            });
-            
-            document.addEventListener('touchend', (e) => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            });
-            
-            function handleSwipe() {
-                const swipeThreshold = 50;
-                const diff = touchStartX - touchEndX;
-                
-                // Swipe kiri (tidak digunakan di sini, tapi bisa untuk navigasi)
-                if (Math.abs(diff) > swipeThreshold) {
-                    // Bisa ditambahkan navigasi swipe jika diperlukan
-                }
-            }
         }
         
         // ==================== INITIALIZATION ====================
         
-        // Initialize app
         document.addEventListener('DOMContentLoaded', init);
-        
-        // Export fungsi untuk akses global (debug)
-        window.albumApp = {
-            getData: () => albumData,
-            getAllItems: () => allItems,
-            openAddForm: openAddForm,
-            addSamplePhoto: () => {
-                const newId = Math.max(0, ...allItems.map(item => item.id)) + 1;
-                const today = new Date();
-                const formattedDate = `${today.getDate().toString().padStart(2, '0')}-${(today.getMonth()+1).toString().padStart(2, '0')}-${today.getFullYear()}`;
-                
-                albumData.photos.push({
-                    id: newId,
-                    src: "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    title: "Foto Sample " + newId,
-                    description: "Foto contoh yang ditambahkan via debug",
-                    date: formattedDate,
-                    type: "photos",
-                    favorite: false
-                });
-                saveData();
-                prepareAllItems();
-                loadContent();
-                alert('Sample photo ditambahkan!');
-            },
-            clearAllData: () => {
-                if (confirm('Hapus SEMUA data? Tindakan ini tidak dapat dibatalkan!')) {
-                    localStorage.removeItem(STORAGE_KEY);
-                    albumData = defaultData;
-                    saveData();
-                    prepareAllItems();
-                    loadContent();
-                    alert('Semua data telah direset ke default!');
-                }
-            }
-        };
     </script>
 </body>
 </html>
