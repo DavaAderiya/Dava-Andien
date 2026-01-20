@@ -1364,6 +1364,21 @@
                 margin-right: auto;
             }
         }
+        
+        /* Badge untuk konten baru */
+        .new-badge {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            background: linear-gradient(135deg, #ff4d73, #ff6b8b);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.7rem;
+            font-size: 0.7rem;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -1385,7 +1400,7 @@
             <p class="welcome-subtitle">Selamat datang di galeri kenangan indah kami. Setiap foto dan video adalah bagian dari kisah cinta kami yang abadi.</p>
             
             <button class="main-cta-button" id="enterButton">
-                <i class="fas fa-heart"></i> Dava & Andien
+                <i class="fas fa-heart"></i> Dava & Andien 
             </button>
             
             <p class="cta-description">
@@ -1483,7 +1498,7 @@
         
         <!-- TOMBOL LIAT SEMUA -->
         <div class="view-all-button-container">
-            <a href="p.html" class="view-all-btn pulse-animation" id="viewAllBtn">
+            <a href="album.html" class="view-all-btn pulse-animation" id="viewAllBtn">
                 <i class="fas fa-heart"></i> Lihat Semua Album Lengkap
             </a>
             <p style="text-align: center; margin-top: 1rem; color: #777; font-size: 0.9rem;">Jelajahi semua foto, video, dan kenangan indah kami di album lengkap.</p>
@@ -1558,6 +1573,7 @@
 
     <script>
         // ==================== KONFIGURASI ====================
+        const STORAGE_KEY = 'davaAndienaMemories';
         
         // Data default
         const defaultData = {
@@ -1579,24 +1595,6 @@
                     date: "15-03-2023",
                     type: "photos",
                     favorite: true
-                },
-                {
-                    id: 3,
-                    src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    title: "Kencan Romantis",
-                    description: "Malam yang indah dengan cahaya lilin dan senyumanmu.",
-                    date: "20-04-2023",
-                    type: "photos",
-                    favorite: false
-                },
-                {
-                    id: 4,
-                    src: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    title: "Liburan Bersama",
-                    description: "Petualangan indah kita di tempat baru.",
-                    date: "25-05-2023",
-                    type: "photos",
-                    favorite: true
                 }
             ],
             videos: [
@@ -1604,31 +1602,11 @@
                     id: 1,
                     src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
                     thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
-                    title: "Video Spesial 1",
-                    description: "Video kenangan indah kita bersama di hari yang cerah",
+                    title: "Video Spesial",
+                    description: "Video kenangan indah kita bersama.",
                     date: "10-02-2024",
                     type: "videos",
                     favorite: true
-                },
-                {
-                    id: 2,
-                    src: "https://www.youtube.com/embed/L_jWHffIx5E",
-                    thumbnail: "https://img.youtube.com/vi/L_jWHffIx5E/maxresdefault.jpg",
-                    title: "Video Spesial 2",
-                    description: "Momen kebahagiaan kita yang terekam dengan sempurna",
-                    date: "15-03-2024",
-                    type: "videos",
-                    favorite: true
-                },
-                {
-                    id: 3,
-                    src: "https://www.youtube.com/embed/9bZkp7q19f0",
-                    thumbnail: "https://img.youtube.com/vi/9bZkp7q19f0/maxresdefault.jpg",
-                    title: "Video Spesial 3",
-                    description: "Lagu yang selalu mengingatkanku padamu",
-                    date: "20-04-2024",
-                    type: "videos",
-                    favorite: false
                 }
             ],
             memories: [
@@ -1636,17 +1614,8 @@
                     id: 1,
                     photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                     title: "Pertama Kali Bertemu",
-                    description: "Pertama kali kita bertemu, aku tak menyangka bahwa dirimu akan menjadi bagian terpenting dalam hidupku. Hari itu matahari bersinar terang, dan senyummu membuat hari itu menjadi sempurna.",
+                    description: "Pertama kali kita bertemu, aku tak menyangka bahwa dirimu akan menjadi bagian terpenting dalam hidupku.",
                     date: "10-02-2023",
-                    type: "memories",
-                    favorite: true
-                },
-                {
-                    id: 2,
-                    photo: "https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    title: "Ulang Tahun Pertama",
-                    description: "Ulang tahun pertamamu yang kita rayakan bersama. Kue sederhana, hadiah kecil, tapi kebahagiaan yang kita rasakan sangat besar.",
-                    date: "15-03-2023",
                     type: "memories",
                     favorite: true
                 }
@@ -1654,7 +1623,7 @@
         };
 
         // ==================== STATE APLIKASI ====================
-        let memoriesData = JSON.parse(localStorage.getItem('davaAndienaMemories')) || defaultData;
+        let memoriesData = null;
 
         // ==================== ELEMEN DOM ====================
         const welcomeScreen = document.getElementById('welcomeScreen');
@@ -1700,12 +1669,40 @@
                     
                     setTimeout(() => {
                         mainContent.classList.add('visible');
-                        loadLimitedContent();
+                        loadDataAndContent();
                         createFloatingHearts();
                         createBackgroundHearts();
                     }, 300);
                 }, 800);
             }, 2500);
+        }
+        
+        // Load data dari localStorage
+        function loadDataFromStorage() {
+            try {
+                const storedData = localStorage.getItem(STORAGE_KEY);
+                if (storedData) {
+                    memoriesData = JSON.parse(storedData);
+                    console.log("Data berhasil dimuat dari localStorage:", memoriesData);
+                } else {
+                    memoriesData = defaultData;
+                    console.log("Menggunakan data default");
+                }
+            } catch (error) {
+                console.error("Error loading data from localStorage:", error);
+                memoriesData = defaultData;
+            }
+            
+            // Pastikan struktur data lengkap
+            if (!memoriesData.photos) memoriesData.photos = [];
+            if (!memoriesData.videos) memoriesData.videos = [];
+            if (!memoriesData.memories) memoriesData.memories = [];
+        }
+        
+        // Load data dan konten
+        function loadDataAndContent() {
+            loadDataFromStorage();
+            loadLimitedContent();
         }
         
         // Buat hati berjatuhan di header
@@ -1815,6 +1812,7 @@
             const div = document.createElement('div');
             div.className = 'photo-item';
             div.innerHTML = `
+                ${photo.id > 2 ? '<div class="new-badge">BARU</div>' : ''}
                 <img src="${photo.src}" alt="${photo.title}" class="photo-img" onerror="handleImageError(this)">
                 <div class="photo-caption">
                     <h3>${photo.title || 'Foto'}</h3>
@@ -1845,6 +1843,7 @@
             const thumbnail = video.thumbnail || (isYouTube ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '');
             
             div.innerHTML = `
+                ${video.id > 1 ? '<div class="new-badge">BARU</div>' : ''}
                 <div class="video-player-container">
                     ${thumbnail ? `<img src="${thumbnail}" class="video-thumbnail" onerror="handleImageError(this)">` : 
                       '<div style="background:#ff6b8b;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:white;"><i class="fas fa-video"></i></div>'}
@@ -1873,6 +1872,7 @@
             const div = document.createElement('div');
             div.className = 'memory-card';
             div.innerHTML = `
+                ${memory.id > 1 ? '<div class="new-badge">BARU</div>' : ''}
                 <div class="memory-photo-container">
                     <img src="${memory.photo}" alt="${memory.title}" class="memory-photo" onerror="handleImageError(this)">
                 </div>
@@ -2070,6 +2070,18 @@
             });
         }
         
+        // ==================== AUTO REFRESH DATA ====================
+        
+        // Fungsi untuk refresh data saat kembali ke halaman utama
+        function refreshDataOnVisibilityChange() {
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden) {
+                    // Reload data saat halaman kembali aktif
+                    loadDataAndContent();
+                }
+            });
+        }
+        
         // ==================== INITIALIZATION ====================
         
         function init() {
@@ -2078,6 +2090,7 @@
             
             setupNavigation();
             setupModals();
+            refreshDataOnVisibilityChange();
             
             // Set initial active nav
             document.querySelector('.nav-link').classList.add('active');
@@ -2088,6 +2101,7 @@
             
             console.log("Website Dava & Andiena siap digunakan!");
             console.log("Halaman utama menampilkan 2 foto, 2 video, dan 1 memori terbaru");
+            console.log("Data akan dimuat dari localStorage dengan key: " + STORAGE_KEY);
             console.log("Tombol 'Lihat Semua' mengarah ke album.html");
         }
         
