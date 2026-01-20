@@ -18,6 +18,8 @@
             --shadow: 0 4px 12px rgba(255, 133, 162, 0.15);
             --transition: all 0.3s ease;
             --success-color: #4CAF50;
+            --warning-color: #ff9800;
+            --error-color: #f44336;
         }
         
         * {
@@ -232,7 +234,7 @@
             background: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
-            transform: translateY(-2px);
+            transform: translateY(0px);
             box-shadow: var(--shadow);
         }
         
@@ -719,6 +721,52 @@
             font-size: 0.7rem;
         }
         
+        /* Upload Loading Indicator */
+        .upload-loading {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--soft-pink);
+            border-radius: 0.7rem;
+            text-align: center;
+        }
+        
+        .upload-loading.active {
+            display: block;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            border: 3px solid var(--light-pink);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+            margin-bottom: 0.5rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Progress Bar */
+        .upload-progress {
+            width: 100%;
+            height: 0.5rem;
+            background: var(--light-pink);
+            border-radius: 0.25rem;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), var(--dark-pink));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
         .url-input-group {
             margin-top: 1rem;
             display: none;
@@ -802,6 +850,12 @@
             background: var(--light-pink);
         }
         
+        .form-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
         /* File size indicator */
         .file-size-info {
             font-size: 0.75rem;
@@ -877,6 +931,62 @@
         @keyframes fadeOut {
             from { opacity: 1; transform: scale(1); }
             to { opacity: 0; transform: scale(0.8); }
+        }
+        
+        /* Message Notification */
+        .message-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            z-index: 3000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: slideIn 0.3s ease;
+            color: white;
+            max-width: 300px;
+            font-weight: 500;
+        }
+        
+        .message-notification.info {
+            background: var(--primary-color);
+        }
+        
+        .message-notification.warning {
+            background: var(--warning-color);
+        }
+        
+        .message-notification.error {
+            background: var(--error-color);
+        }
+        
+        .message-notification.success {
+            background: var(--success-color);
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        /* Video Preview Indicator */
+        .video-indicator {
+            position: absolute;
+            top: 0.2rem;
+            left: 0.2rem;
+            background: rgba(255, 85, 162, 0.8);
+            color: white;
+            font-size: 0.6rem;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
         }
         
         /* ==================== RESPONSIVE ==================== */
@@ -958,6 +1068,12 @@
             
             .upload-options {
                 grid-template-columns: 1fr;
+            }
+            
+            .message-notification {
+                left: 1rem;
+                right: 1rem;
+                max-width: none;
             }
         }
         
@@ -1134,7 +1250,7 @@
                         <i class="fas fa-images"></i>
                         <span>Pilih File</span>
                         <small>Foto & Video</small>
-                        <div class="file-size-info">Maks. 20MB</div>
+                        <div class="file-size-info">Maks. 20MB per file</div>
                     </button>
                     <button type="button" class="upload-option-btn" id="uploadOption2">
                         <i class="fas fa-link"></i>
@@ -1144,7 +1260,7 @@
                 </div>
                 
                 <!-- Hidden File Input -->
-                <input type="file" class="hidden-file-input" id="fileInput" accept="image/*,video/*" multiple>
+                <input type="file" class="hidden-file-input" id="fileInput" accept="image/*,video/*,.mp4,.mov,.avi" multiple>
                 
                 <!-- Preview -->
                 <div class="upload-preview" id="uploadPreview">
@@ -1154,13 +1270,22 @@
                     </div>
                 </div>
                 
+                <!-- Upload Loading Indicator -->
+                <div class="upload-loading" id="uploadLoading">
+                    <div class="loading-spinner"></div>
+                    <p>Mengunggah file... <span id="loadingCount">0</span>/<span id="totalCount">0</span></p>
+                    <div class="upload-progress">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                </div>
+                
                 <!-- URL Input -->
                 <div class="url-input-group" id="urlInputGroup">
                     <div class="form-group">
                         <label class="form-label" for="itemUrl">
                             <i class="fas fa-link"></i> URL Gambar/Video
                         </label>
-                        <input type="text" class="form-input" id="itemUrl" placeholder="Masukkan URL gambar atau video">
+                        <input type="text" class="form-input" id="itemUrl" placeholder="Masukkan URL gambar atau video (YouTube, dll)">
                     </div>
                 </div>
             </div>
@@ -1252,9 +1377,15 @@
         let currentFilter = 'all';
         let isGalleryView = false;
         let allItems = [];
+        
+        // State untuk upload
         let uploadedFiles = [];
         let uploadedDataURLs = [];
         let currentUploadMode = 'gallery';
+        let isUploading = false;
+        let uploadQueue = [];
+        let isProcessingQueue = false;
+        
         let isEditing = false;
         let currentEditId = null;
         let currentEditType = null;
@@ -1308,6 +1439,12 @@
         const uploadPreview = document.getElementById('uploadPreview');
         const previewContainer = document.getElementById('previewContainer');
         const urlInputGroup = document.getElementById('urlInputGroup');
+        
+        // Loading elements
+        const uploadLoading = document.getElementById('uploadLoading');
+        const loadingCount = document.getElementById('loadingCount');
+        const totalCount = document.getElementById('totalCount');
+        const progressBar = document.getElementById('progressBar');
 
         // ==================== FUNGSI UTAMA ====================
         
@@ -1372,6 +1509,25 @@
                 
                 floatingHearts.appendChild(heart);
             }
+        }
+        
+        // ==================== NOTIFICATION SYSTEM ====================
+        
+        function showMessage(text, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `message-notification ${type}`;
+            notification.textContent = text;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease forwards';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
         }
         
         // ==================== ANIMASI SUKSES ====================
@@ -1740,63 +1896,142 @@
         }
         
         function handleFileSelect(e) {
-            const files = Array.from(e.target.files);
-            if (files.length === 0) return;
-            
-            const validFiles = files.filter(file => 
-                file.type.startsWith('image/') || file.type.startsWith('video/')
-            );
-            
-            if (validFiles.length === 0) {
-                alert('Hanya file gambar (JPG, PNG) dan video (MP4) yang didukung!');
+            if (isUploading) {
+                showMessage('Upload sedang berlangsung, tunggu hingga selesai', 'warning');
+                e.target.value = '';
                 return;
             }
             
-            const oversizedFiles = validFiles.filter(file => file.size > MAX_FILE_SIZE);
+            const files = Array.from(e.target.files);
+            if (files.length === 0) return;
             
-            if (oversizedFiles.length > 0) {
-                alert(`Beberapa file melebihi 20MB: ${oversizedFiles.map(f => f.name).join(', ')}\n\nMaksimal ukuran file adalah 20MB.`);
-                uploadedFiles = validFiles.filter(file => file.size <= MAX_FILE_SIZE);
-            } else {
-                uploadedFiles = validFiles;
-            }
-            
-            if (uploadedFiles.length === 0) return;
-            
-            uploadedDataURLs = [];
-            clearPreview();
-            
-            uploadedFiles.forEach((file, index) => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const dataUrl = e.target.result;
-                    uploadedDataURLs[index] = dataUrl;
-                    addPreview(file, dataUrl, index);
-                    
-                    if (uploadedDataURLs.length === uploadedFiles.length) {
-                        uploadPreview.classList.add('active');
-                    }
-                };
-                reader.readAsDataURL(file);
+            // Validasi file
+            const validFiles = files.filter(file => {
+                const isImage = file.type.startsWith('image/');
+                const isVideo = file.type.startsWith('video/') || 
+                               file.name.toLowerCase().endsWith('.mp4') ||
+                               file.name.toLowerCase().endsWith('.mov') ||
+                               file.name.toLowerCase().endsWith('.avi') ||
+                               file.name.toLowerCase().endsWith('.webm');
+                return isImage || isVideo;
             });
             
+            if (validFiles.length < files.length) {
+                showMessage('Beberapa file tidak didukung. Hanya gambar dan video yang diperbolehkan.', 'warning');
+            }
+            
+            if (validFiles.length === 0) {
+                e.target.value = '';
+                return;
+            }
+            
+            // Cek ukuran file
+            const oversizedFiles = validFiles.filter(file => file.size > MAX_FILE_SIZE);
+            if (oversizedFiles.length > 0) {
+                showMessage(`Beberapa file melebihi 20MB: ${oversizedFiles.map(f => f.name).join(', ')}`, 'error');
+                const validSizedFiles = validFiles.filter(file => file.size <= MAX_FILE_SIZE);
+                if (validSizedFiles.length === 0) {
+                    e.target.value = '';
+                    return;
+                }
+                startUploadProcess(validSizedFiles);
+            } else {
+                startUploadProcess(validFiles);
+            }
+            
             e.target.value = '';
+        }
+        
+        function startUploadProcess(files) {
+            isUploading = true;
+            uploadQueue = files.map((file, index) => ({ file, index }));
+            uploadedFiles = files;
+            uploadedDataURLs = new Array(files.length);
+            
+            // Setup loading indicator
+            uploadLoading.classList.add('active');
+            totalCount.textContent = files.length;
+            loadingCount.textContent = '0';
+            progressBar.style.width = '0%';
+            
+            // Disable tombol simpan selama upload
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menunggu Upload...';
+            
+            // Clear preview yang lama
+            clearPreview();
+            
+            // Mulai proses upload queue
+            processQueue();
+        }
+        
+        function processQueue() {
+            if (uploadQueue.length === 0) {
+                // Semua file sudah diproses
+                isUploading = false;
+                isProcessingQueue = false;
+                
+                // Update UI
+                setTimeout(() => {
+                    uploadLoading.classList.remove('active');
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = '<i class="fas fa-save"></i> Simpan';
+                    uploadPreview.classList.add('active');
+                }, 500);
+                
+                showMessage(`Berhasil mengunggah ${uploadedFiles.length} file`, 'success');
+                return;
+            }
+            
+            isProcessingQueue = true;
+            const item = uploadQueue.shift();
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const dataUrl = e.target.result;
+                uploadedDataURLs[item.index] = dataUrl;
+                addPreview(item.file, dataUrl, item.index);
+                
+                // Update progress
+                const processedCount = uploadedDataURLs.filter(url => url).length;
+                loadingCount.textContent = processedCount;
+                progressBar.style.width = `${(processedCount / uploadedFiles.length) * 100}%`;
+                
+                // Proses file berikutnya
+                setTimeout(processQueue, 100);
+            };
+            
+            reader.onerror = function() {
+                showMessage(`Gagal membaca file: ${item.file.name}`, 'error');
+                setTimeout(processQueue, 100);
+            };
+            
+            reader.readAsDataURL(item.file);
         }
         
         function addPreview(file, dataUrl, index) {
             const preview = document.createElement('div');
             preview.className = 'preview-item';
             
-            if (file.type.startsWith('image/')) {
+            const isVideo = file.type.startsWith('video/') || 
+                           file.name.toLowerCase().endsWith('.mp4') ||
+                           file.name.toLowerCase().endsWith('.mov') ||
+                           file.name.toLowerCase().endsWith('.avi') ||
+                           file.name.toLowerCase().endsWith('.webm');
+            
+            if (isVideo) {
                 preview.innerHTML = `
-                    <img src="${dataUrl}" class="preview-img" alt="Preview ${file.name}">
+                    <video class="preview-video">
+                        <source src="${dataUrl}" type="${file.type || 'video/mp4'}">
+                    </video>
+                    <div class="video-indicator">
+                        <i class="fas fa-play"></i> Video
+                    </div>
                     <button class="remove-preview" data-index="${index}">&times;</button>
                 `;
-            } else if (file.type.startsWith('video/')) {
+            } else {
                 preview.innerHTML = `
-                    <video class="preview-video" controls>
-                        <source src="${dataUrl}" type="${file.type}">
-                    </video>
+                    <img src="${dataUrl}" class="preview-img" alt="Preview ${file.name}">
                     <button class="remove-preview" data-index="${index}">&times;</button>
                 `;
             }
@@ -1810,15 +2045,22 @@
         }
         
         function removeFile(index) {
+            if (isUploading) {
+                showMessage('Tunggu upload selesai sebelum menghapus file', 'warning');
+                return;
+            }
+            
             uploadedFiles.splice(index, 1);
             uploadedDataURLs.splice(index, 1);
             
             clearPreview();
+            
             if (uploadedFiles.length === 0) {
                 uploadPreview.classList.remove('active');
                 return;
             }
             
+            // Rebuild preview
             uploadedFiles.forEach((file, idx) => {
                 addPreview(file, uploadedDataURLs[idx], idx);
             });
@@ -1828,9 +2070,24 @@
             previewContainer.innerHTML = '';
         }
         
+        function resetUploadForm() {
+            uploadedFiles = [];
+            uploadedDataURLs = [];
+            clearPreview();
+            fileInput.value = '';
+            uploadPreview.classList.remove('active');
+            uploadLoading.classList.remove('active');
+            urlInputGroup.style.display = 'none';
+            itemUrl.value = '';
+            isUploading = false;
+            saveBtn.disabled = false;
+            saveBtn.innerHTML = '<i class="fas fa-save"></i> Simpan';
+        }
+        
         // ==================== FORM HANDLING ====================
         
         function openAddForm() {
+            resetUploadForm();
             isEditing = false;
             currentEditId = null;
             currentEditType = null;
@@ -1838,11 +2095,7 @@
             itemForm.reset();
             itemId.value = '';
             itemType.value = 'photos';
-            uploadedFiles = [];
-            uploadedDataURLs = [];
-            clearPreview();
             setUploadMode('gallery');
-            uploadPreview.classList.remove('active');
             
             formTitle.textContent = 'Tambah Kenangan';
             addContentModal.style.display = 'flex';
@@ -1851,19 +2104,26 @@
         itemForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            // Validasi upload sedang berlangsung
+            if (isUploading) {
+                showMessage('File masih diunggah, tunggu hingga selesai!', 'warning');
+                return;
+            }
+            
             const type = itemType.value;
             const title = itemTitle.value.trim();
             const description = itemDescription.value.trim();
             const url = itemUrl.value.trim();
             
+            // Validasi mode upload
             if (currentUploadMode === 'url') {
                 if (!url) {
-                    alert('URL wajib diisi!');
+                    showMessage('URL wajib diisi!', 'warning');
                     return;
                 }
                 
                 if (!isValidURL(url)) {
-                    alert('URL tidak valid. Harus dimulai dengan http://, https://, atau data:');
+                    showMessage('URL tidak valid. Harus dimulai dengan http://, https://, atau data:', 'warning');
                     return;
                 }
                 
@@ -1881,8 +2141,9 @@
                 
                 showSuccessAnimation();
             } else {
+                // Mode gallery/file upload
                 if (uploadedDataURLs.length === 0) {
-                    alert('Pilih file terlebih dahulu!');
+                    showMessage('Pilih file terlebih dahulu!', 'warning');
                     return;
                 }
                 
@@ -1923,11 +2184,9 @@
                     savedCount++;
                 }
                 
+                // Reset form
                 itemForm.reset();
-                uploadedFiles = [];
-                uploadedDataURLs = [];
-                clearPreview();
-                uploadPreview.classList.remove('active');
+                resetUploadForm();
                 addContentModal.style.display = 'none';
                 
                 if (savedCount > 0) {
@@ -1947,6 +2206,8 @@
         
         function saveItem(type, title, description, mediaUrl) {
             let newId = 1;
+            
+            // Cari ID tertinggi berdasarkan type
             if (type === 'photos' && albumData.photos.length > 0) {
                 newId = Math.max(...albumData.photos.map(item => item.id)) + 1;
             } else if (type === 'videos' && albumData.videos.length > 0) {
@@ -1973,6 +2234,7 @@
                 newItem.src = mediaUrl;
             }
             
+            // Tambah ke data
             if (type === 'photos') {
                 albumData.photos.push(newItem);
             } else if (type === 'videos') {
@@ -2009,11 +2271,9 @@
         // ==================== FUNGSI HOME BUTTON ====================
         
         function goToHomePage() {
-            // Tampilkan loading screen
             loadingScreen.classList.remove('hidden');
             loadingScreen.style.opacity = '1';
             
-            // Arahkan ke halaman utama (index.html)
             setTimeout(() => {
                 window.location.href = 'index.html';
             }, 800);
@@ -2022,9 +2282,7 @@
         // ==================== EVENT LISTENERS ====================
         
         function setupEventListeners() {
-            // Home button - KEMBALI KE HALAMAN UTAMA
             backBtn.addEventListener('click', goToHomePage);
-            
             addContentBtn.addEventListener('click', openAddForm);
             
             filterBtns.forEach(btn => {
