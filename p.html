@@ -338,6 +338,55 @@
             transform: scale(1.1);
         }
         
+        /* Video Thumbnail Container */
+        .video-thumbnail-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #f0f0f0;
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .video-play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .album-card:hover .video-play-overlay {
+            opacity: 1;
+        }
+        
+        .play-button {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .album-card:hover .play-button {
+            transform: scale(1.1);
+        }
+        
         .card-overlay {
             position: absolute;
             bottom: 0;
@@ -1018,21 +1067,24 @@
             word-break: break-all;
         }
         
-        /* Optimasi untuk Mobile */
-        .mobile-optimized {
-            -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            -webkit-perspective: 1000;
-            perspective: 1000;
+        /* Video Thumbnail Fallback */
+        .video-thumbnail-fallback {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
         }
         
-        /* Prevent zoom on input focus in mobile */
-        @media screen and (max-width: 768px) {
-            input, textarea, select {
-                font-size: 16px !important;
-            }
+        /* YouTube Thumbnail */
+        .youtube-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: #000;
         }
         
         /* ==================== RESPONSIVE ==================== */
@@ -1144,6 +1196,12 @@
             .form-actions {
                 gap: 0.5rem;
             }
+            
+            .play-button {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
         }
         
         /* HP kecil */
@@ -1212,6 +1270,12 @@
                 padding: 0.7rem 0.9rem;
                 font-size: 0.9rem;
             }
+            
+            .play-button {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
         }
         
         /* Very small phones */
@@ -1241,6 +1305,12 @@
             .form-content {
                 padding: 0.8rem;
                 margin: 0.3rem;
+            }
+            
+            .play-button {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -1439,7 +1509,7 @@
         const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
         const MAX_FILES_MOBILE = 5; // Batas file untuk mobile
         
-        // Data default
+        // Data default dengan video thumbnail
         const defaultData = {
             photos: [
                 {
@@ -1465,6 +1535,7 @@
                 {
                     id: 1,
                     src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                    thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
                     title: "Video Spesial",
                     description: "Video kenangan indah kita bersama.",
                     date: "10-02-2024",
@@ -1491,7 +1562,7 @@
         let isGalleryView = false;
         let allItems = [];
         
-        // State untuk upload - DIREFACTOR TOTAL untuk mobile
+        // State untuk upload
         let uploadedFiles = [];
         let uploadedPreviewURLs = []; // Hanya untuk preview (objectURL)
         let currentUploadMode = 'gallery';
@@ -1597,7 +1668,9 @@
                 allItems.push({
                     ...video,
                     displayType: 'video',
-                    category: 'videos'
+                    category: 'videos',
+                    // Tambah thumbnail jika belum ada
+                    thumbnail: video.thumbnail || getVideoThumbnail(video.src)
                 });
             });
             
@@ -1611,6 +1684,110 @@
             });
             
             allItems.sort((a, b) => b.id - a.id);
+        }
+        
+        // ==================== FUNGSI THUMBNAIL VIDEO ====================
+        
+        // Fungsi untuk mendapatkan thumbnail video dari YouTube
+        function getYouTubeThumbnail(url) {
+            try {
+                const videoId = extractYouTubeId(url);
+                if (!videoId) return null;
+                
+                // Coba beberapa kualitas thumbnail YouTube
+                const qualities = ['maxresdefault', 'hqdefault', 'mqdefault', 'sddefault'];
+                
+                for (const quality of qualities) {
+                    const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/${quality}.jpg`;
+                    // Di production, Anda bisa melakukan HEAD request untuk cek apakah thumbnail ada
+                    // Tapi untuk simplicity, kita langsung return
+                    return thumbnailUrl;
+                }
+                
+                return `https://img.youtube.com/vi/${videoId}/0.jpg`;
+            } catch (error) {
+                console.error('Error getting YouTube thumbnail:', error);
+                return null;
+            }
+        }
+        
+        // Fungsi untuk generate thumbnail dari video file (dataURL)
+        function generateVideoThumbnail(videoUrl) {
+            return new Promise((resolve) => {
+                // Jika YouTube URL, gunakan YouTube thumbnail
+                if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+                    const thumbnail = getYouTubeThumbnail(videoUrl);
+                    if (thumbnail) {
+                        resolve(thumbnail);
+                        return;
+                    }
+                }
+                
+                // Jika dataURL (video yang diupload), coba buat thumbnail
+                if (videoUrl.startsWith('data:video/')) {
+                    const video = document.createElement('video');
+                    video.src = videoUrl;
+                    video.crossOrigin = 'anonymous';
+                    
+                    // Capture frame pertama
+                    video.addEventListener('loadeddata', () => {
+                        try {
+                            // Set current time untuk ambil frame
+                            video.currentTime = 0.1;
+                        } catch (e) {
+                            // Fallback jika gagal
+                            resolve(null);
+                        }
+                    });
+                    
+                    video.addEventListener('seeked', () => {
+                        try {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = video.videoWidth || 300;
+                            canvas.height = video.videoHeight || 200;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                            
+                            const thumbnail = canvas.toDataURL('image/jpeg', 0.7);
+                            resolve(thumbnail);
+                        } catch (e) {
+                            resolve(null);
+                        }
+                    });
+                    
+                    // Timeout fallback
+                    setTimeout(() => {
+                        resolve(null);
+                    }, 2000);
+                } else {
+                    // Untuk URL video lain, gunakan fallback
+                    resolve(null);
+                }
+            });
+        }
+        
+        // Fungsi helper untuk mendapatkan thumbnail video
+        function getVideoThumbnail(videoUrl) {
+            // Jika sudah ada thumbnail di data, gunakan itu
+            const videoItem = albumData.videos.find(v => v.src === videoUrl);
+            if (videoItem && videoItem.thumbnail) {
+                return videoItem.thumbnail;
+            }
+            
+            // Jika YouTube, generate thumbnail URL
+            if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+                return getYouTubeThumbnail(videoUrl);
+            }
+            
+            // Untuk video lain, return null (akan menggunakan fallback)
+            return null;
+        }
+        
+        // Extract YouTube ID
+        function extractYouTubeId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
         }
         
         function createFloatingHearts() {
@@ -1763,7 +1940,36 @@
             const isMemory = item.category === 'memories';
             const typeIcon = isVideo ? 'fas fa-play' : (isMemory ? 'fas fa-heart' : 'fas fa-camera');
             
-            const imgSrc = item.src || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+            let imgSrc = item.src;
+            let isYouTube = false;
+            let hasThumbnail = false;
+            
+            // Handle video thumbnail
+            if (isVideo) {
+                // Cek apakah ada thumbnail
+                if (item.thumbnail) {
+                    imgSrc = item.thumbnail;
+                    hasThumbnail = true;
+                } else if (item.src.includes('youtube.com') || item.src.includes('youtu.be')) {
+                    // Generate YouTube thumbnail
+                    const videoId = extractYouTubeId(item.src);
+                    if (videoId) {
+                        imgSrc = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+                        isYouTube = true;
+                        hasThumbnail = true;
+                    }
+                }
+                
+                // Jika tidak ada thumbnail, gunakan fallback
+                if (!hasThumbnail) {
+                    imgSrc = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY3ZWVhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPjx0c3BhbiBkeT0iLTAuNWVtIj7inaTvuI88L3RzcGFuPjx0c3BhbiBkeT0iMC41ZW0iPlZpZGVvPC90c3Bhbj48L3RleHQ+PC9zdmc+';
+                }
+            } else {
+                // Untuk foto dan memori
+                if (!imgSrc || imgSrc === '') {
+                    imgSrc = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+                }
+            }
             
             card.innerHTML = `
                 <div class="type-indicator">
@@ -1771,7 +1977,24 @@
                 </div>
                 
                 <div class="card-media">
-                    <img src="${imgSrc}" alt="${item.title || 'Kenangan'}" class="card-img" loading="lazy">
+                    ${isVideo ? `
+                        <div class="video-thumbnail-container">
+                            ${hasThumbnail ? 
+                                `<img src="${imgSrc}" alt="${item.title || 'Video'}" class="${isYouTube ? 'youtube-thumbnail' : 'video-thumbnail'}" loading="lazy">` :
+                                `<div class="video-thumbnail-fallback">
+                                    <i class="fas fa-play-circle"></i>
+                                </div>`
+                            }
+                            <div class="video-play-overlay">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                        </div>
+                    ` : `
+                        <img src="${imgSrc}" alt="${item.title || 'Kenangan'}" class="card-img" loading="lazy">
+                    `}
+                    
                     <div class="card-overlay">
                         <h3 class="card-title">${item.title || 'Tanpa Judul'}</h3>
                         <div class="card-actions">
@@ -1798,6 +2021,18 @@
                 }
             });
             
+            // Tambah event listener untuk klik di area video
+            if (isVideo) {
+                card.querySelector('.video-thumbnail-container').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    playVideo(item);
+                });
+            } else {
+                card.querySelector('.card-img').addEventListener('click', () => {
+                    viewPhoto(item);
+                });
+            }
+            
             card.querySelector('.favorite-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
                 toggleFavorite(item, card);
@@ -1808,19 +2043,21 @@
                 deleteItem(item, card);
             });
             
-            card.querySelector('.card-img').addEventListener('click', () => {
-                if (isVideo) {
-                    playVideo(item);
-                } else {
-                    viewPhoto(item);
-                }
-            });
-            
-            card.querySelector('.card-img').onerror = function() {
-                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
-                this.style.objectFit = 'contain';
-                this.style.padding = '0.5rem';
-            };
+            // Handle image error
+            const imgElement = card.querySelector('img');
+            if (imgElement) {
+                imgElement.onerror = function() {
+                    if (isVideo) {
+                        this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY3ZWVhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPjx0c3BhbiBkeT0iLTAuNWVtIj7inaTvuI88L3RzcGFuPjx0c3BhbiBkeT0iMC41ZW0iPlZpZGVvPC90c3Bhbj48L3RleHQ+PC9zdmc+';
+                        this.style.objectFit = 'contain';
+                        this.style.padding = '0.5rem';
+                    } else {
+                        this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+                        this.style.objectFit = 'contain';
+                        this.style.padding = '0.5rem';
+                    }
+                };
+            }
             
             return card;
         }
@@ -1832,7 +2069,28 @@
             masonryItem.dataset.type = item.category;
             
             const isVideo = item.category === 'videos';
-            const imgSrc = item.src || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNUMlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+            
+            let imgSrc = item.src;
+            
+            // Handle video thumbnail untuk masonry
+            if (isVideo) {
+                if (item.thumbnail) {
+                    imgSrc = item.thumbnail;
+                } else if (item.src.includes('youtube.com') || item.src.includes('youtu.be')) {
+                    const videoId = extractYouTubeId(item.src);
+                    if (videoId) {
+                        imgSrc = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+                    }
+                }
+                
+                if (!imgSrc || imgSrc === item.src) {
+                    imgSrc = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY3ZWVhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPlZpZGVvPC90c3Bhbj48L3RleHQ+PC9zdmc+';
+                }
+            } else {
+                if (!imgSrc || imgSrc === '') {
+                    imgSrc = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNUMlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+                }
+            }
             
             masonryItem.innerHTML = `
                 <img src="${imgSrc}" alt="${item.title || 'Kenangan'}" class="masonry-img" loading="lazy">
@@ -1853,7 +2111,11 @@
             });
             
             masonryItem.querySelector('.masonry-img').onerror = function() {
-                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNUMlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+                if (isVideo) {
+                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY3ZWVhIi8+PHRleHQgeD0iNUMlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPlZpZGVvPC90c3Bhbj48L3RleHQ+PC9zdmc+';
+                } else {
+                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNUMlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+                }
             };
             
             return masonryItem;
@@ -1975,19 +2237,11 @@
             videoModal.style.display = 'flex';
         }
         
-        function extractYouTubeId(url) {
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11) ? match[2] : null;
-        }
-        
-        // ==================== UPLOAD SYSTEM UNTUK MOBILE ====================
-        // SOLUSI UTAMA: Hindari FileReader untuk preview, gunakan langsung file untuk penyimpanan
+        // ==================== UPLOAD SYSTEM ====================
         
         function setupUploadSystem() {
             uploadOption1.addEventListener('click', () => {
                 setUploadMode('gallery');
-                // Reset input file untuk memastikan change event terpicu
                 fileInput.value = '';
                 setTimeout(() => fileInput.click(), 100);
             }, { passive: true });
@@ -2027,14 +2281,12 @@
             const files = Array.from(e.target.files);
             if (files.length === 0) return;
             
-            // Batasi jumlah file untuk mobile
             if (isMobile && files.length > MAX_FILES) {
                 showMessage(`Maksimal ${MAX_FILES} file untuk mobile`, 'warning');
                 e.target.value = '';
                 return;
             }
             
-            // Validasi file
             const validFiles = files.filter(file => {
                 const isImage = file.type.startsWith('image/') || 
                                /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(file.name);
@@ -2052,7 +2304,6 @@
                 return;
             }
             
-            // Cek ukuran file
             const oversizedFiles = validFiles.filter(file => file.size > MAX_FILE_SIZE);
             if (oversizedFiles.length > 0) {
                 showMessage(`Beberapa file melebihi 20MB: ${oversizedFiles.map(f => f.name).join(', ')}`, 'error');
@@ -2069,50 +2320,37 @@
             e.target.value = '';
         }
         
-        // FUNGSI BARU: Process files tanpa freeze untuk mobile
         async function processFiles(files) {
             isUploading = true;
-            
-            // Clear previous files
             clearPreview();
             
-            // Reset arrays
             uploadedFiles = [...files];
             uploadedPreviewURLs = [];
             
-            // Show loading
             uploadLoading.classList.add('active');
             totalCount.textContent = files.length;
             loadingCount.textContent = '0';
             progressBar.style.width = '0%';
             
-            // Disable save button temporarily
             saveBtn.disabled = true;
             saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
             
             let processedCount = 0;
             
-            // Process files one by one with delay to prevent UI freeze
             for (let i = 0; i < files.length; i++) {
                 try {
                     const file = files[i];
-                    
-                    // Create object URL for preview (instant, no freeze)
                     const objectURL = URL.createObjectURL(file);
                     uploadedPreviewURLs[i] = objectURL;
                     
-                    // Add preview immediately
                     addPreview(file, objectURL, i);
                     
                     processedCount++;
-                    
-                    // Update progress
                     loadingCount.textContent = processedCount;
                     progressBar.style.width = `${(processedCount / files.length) * 100}%`;
                     
-                    // Small delay to prevent UI freeze
                     if (isMobile) {
-                        await delay(50); // Delay lebih kecil untuk mobile
+                        await delay(50);
                     }
                     
                 } catch (error) {
@@ -2121,19 +2359,16 @@
                 }
             }
             
-            // Hide loading and enable save button
             uploadLoading.classList.remove('active');
             saveBtn.disabled = false;
             saveBtn.innerHTML = '<i class="fas fa-save"></i> Simpan';
             isUploading = false;
             
-            // Show preview section
             uploadPreview.classList.add('active');
             
             showMessage(`Siap menyimpan ${files.length} file`, 'success');
         }
         
-        // Helper function for delay
         function delay(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
@@ -2186,7 +2421,6 @@
                 return;
             }
             
-            // Hapus object URL untuk mencegah memory leak
             if (uploadedPreviewURLs[index]) {
                 URL.revokeObjectURL(uploadedPreviewURLs[index]);
             }
@@ -2201,18 +2435,15 @@
                 return;
             }
             
-            // Rebuild preview dengan index yang benar
             uploadedFiles.forEach((file, idx) => {
                 addPreview(file, uploadedPreviewURLs[idx], idx);
             });
             
-            // Update progress
             totalCount.textContent = uploadedFiles.length;
             loadingCount.textContent = uploadedFiles.length;
         }
         
         function clearPreview() {
-            // Hapus semua object URL untuk mencegah memory leak
             uploadedPreviewURLs.forEach(url => {
                 if (url && url.startsWith('blob:')) {
                     URL.revokeObjectURL(url);
@@ -2223,7 +2454,6 @@
         }
         
         function resetUploadForm() {
-            // Hapus semua object URL untuk mencegah memory leak
             clearPreview();
             
             uploadedFiles = [];
@@ -2241,7 +2471,7 @@
             progressBar.style.width = '0%';
         }
         
-        // ==================== FORM HANDLING YANG DIPERBAIKI UNTUK MOBILE ====================
+        // ==================== FORM HANDLING ====================
         
         function openAddForm() {
             resetUploadForm();
@@ -2262,10 +2492,8 @@
             e.preventDefault();
             e.stopPropagation();
             
-            // Prevent double submit
             if (saveBtn.disabled) return;
             
-            // Validasi upload sedang berlangsung
             if (isUploading) {
                 showMessage('File masih diproses, tunggu sebentar!', 'warning');
                 return;
@@ -2276,7 +2504,6 @@
             const description = itemDescription.value.trim();
             const url = itemUrl.value.trim();
             
-            // Validasi mode upload
             if (currentUploadMode === 'url') {
                 if (!url) {
                     showMessage('URL wajib diisi!', 'warning');
@@ -2289,43 +2516,40 @@
                 }
                 
                 let itemTypeToUse = type;
+                let thumbnail = null;
+                
                 if (!type || type === 'photos') {
                     if (url.includes('youtube.com') || url.includes('youtu.be') || url.includes('.mp4') || url.includes('.webm')) {
                         itemTypeToUse = 'videos';
+                        // Generate thumbnail untuk YouTube
+                        if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                            thumbnail = getYouTubeThumbnail(url);
+                        }
                     } else if (url.includes('.jpg') || url.includes('.png') || url.includes('.jpeg') || url.includes('.gif')) {
                         itemTypeToUse = 'photos';
                     }
                 }
                 
-                saveItem(itemTypeToUse, title || 'Kenangan Baru', description, url);
+                saveItemWithThumbnail(itemTypeToUse, title || 'Kenangan Baru', description, url, thumbnail);
                 addContentModal.style.display = 'none';
                 
                 showSuccessAnimation();
                 return;
             }
             
-            // Mode gallery/file upload
             if (uploadedFiles.length === 0) {
                 showMessage('Pilih file terlebih dahulu!', 'warning');
                 return;
             }
             
-            // Tampilkan loading saat menyimpan
             saveBtn.disabled = true;
             saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
             
-            // Gunakan Web Workers untuk mobile (jika tersedia)
-            if (isMobile && window.Worker) {
-                await saveFilesWithWorker(uploadedFiles, type, title, description);
-            } else {
-                await saveFilesDirect(uploadedFiles, type, title, description);
-            }
+            await saveFilesDirect(uploadedFiles, type, title, description);
             
-            // Reset form
             itemForm.reset();
             resetUploadForm();
             
-            // Tunggu sebentar sebelum menutup modal
             setTimeout(() => {
                 addContentModal.style.display = 'none';
                 saveBtn.disabled = false;
@@ -2334,7 +2558,6 @@
             }, 500);
         });
         
-        // Fungsi baru: Simpan file langsung tanpa konversi dataURL
         async function saveFilesDirect(files, type, title, description) {
             let savedCount = 0;
             
@@ -2342,19 +2565,21 @@
                 const file = files[i];
                 
                 try {
-                    // Untuk mobile, gunakan FileReader dengan chunking
                     const dataUrl = await readFileAsDataURLChunked(file);
                     
-                    // Deteksi tipe file
                     const isVideoFile = file.type.startsWith('video/') || 
                                        /\.(mp4|mov|avi|webm|mkv|flv|wmv)$/i.test(file.name);
                     const isImageFile = file.type.startsWith('image/') || 
                                        /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(file.name);
                     
                     let itemTypeToUse = type;
+                    let thumbnail = null;
+                    
                     if (!type || type === 'photos') {
                         if (isVideoFile) {
                             itemTypeToUse = 'videos';
+                            // Generate thumbnail untuk video
+                            thumbnail = await generateVideoThumbnail(dataUrl);
                         } else if (isImageFile) {
                             itemTypeToUse = 'photos';
                         }
@@ -2377,11 +2602,9 @@
                         itemTitleText = isImageFile ? `Foto ${i + 1}` : `Video ${i + 1}`;
                     }
                     
-                    // Simpan item
-                    saveItem(itemTypeToUse, itemTitleText, description, dataUrl);
+                    saveItemWithThumbnail(itemTypeToUse, itemTitleText, description, dataUrl, thumbnail);
                     savedCount++;
                     
-                    // Delay kecil untuk mencegah freeze
                     await delay(isMobile ? 100 : 50);
                     
                 } catch (error) {
@@ -2393,11 +2616,9 @@
             showMessage(`Berhasil menyimpan ${savedCount} dari ${files.length} file`, 'success');
         }
         
-        // Fungsi baru: Baca file sebagai dataURL dengan chunking untuk mobile
         function readFileAsDataURLChunked(file) {
             return new Promise((resolve, reject) => {
-                // Untuk file kecil, langsung baca
-                if (file.size < 2 * 1024 * 1024) { // < 2MB
+                if (file.size < 2 * 1024 * 1024) {
                     const reader = new FileReader();
                     reader.onload = (e) => resolve(e.target.result);
                     reader.onerror = reject;
@@ -2405,7 +2626,6 @@
                     return;
                 }
                 
-                // Untuk file besar di mobile, gunakan chunking
                 if (isMobile) {
                     showMessage(`Memproses ${file.name} (file besar)...`, 'info');
                 }
@@ -2414,14 +2634,6 @@
                 reader.onload = (e) => resolve(e.target.result);
                 reader.onerror = reject;
                 reader.readAsDataURL(file);
-            });
-        }
-        
-        // Backup: Simpan dengan Web Worker jika tersedia
-        async function saveFilesWithWorker(files, type, title, description) {
-            return new Promise((resolve) => {
-                // Fallback ke metode direct jika worker tidak tersedia
-                saveFilesDirect(files, type, title, description).then(resolve);
             });
         }
         
@@ -2434,10 +2646,10 @@
             }
         }
         
-        function saveItem(type, title, description, mediaUrl) {
+        // Fungsi baru: Simpan item dengan thumbnail
+        function saveItemWithThumbnail(type, title, description, mediaUrl, thumbnail = null) {
             let newId = 1;
             
-            // Cari ID tertinggi berdasarkan type
             if (type === 'photos' && albumData.photos.length > 0) {
                 newId = Math.max(...albumData.photos.map(item => item.id)) + 1;
             } else if (type === 'videos' && albumData.videos.length > 0) {
@@ -2462,9 +2674,12 @@
                 newItem.photo = mediaUrl;
             } else {
                 newItem.src = mediaUrl;
+                // Tambah thumbnail untuk video
+                if (type === 'videos' && thumbnail) {
+                    newItem.thumbnail = thumbnail;
+                }
             }
             
-            // Tambah ke data
             if (type === 'photos') {
                 albumData.photos.push(newItem);
             } else if (type === 'videos') {
@@ -2572,7 +2787,6 @@
                 }
             }, { passive: true });
             
-            // Tambah event listener untuk mencegah form submission ganda
             let isSubmitting = false;
             itemForm.addEventListener('submit', function(e) {
                 if (isSubmitting) {
@@ -2581,31 +2795,20 @@
                 }
                 isSubmitting = true;
                 
-                // Reset flag setelah 3 detik
                 setTimeout(() => {
                     isSubmitting = false;
                 }, 3000);
             }, { passive: false });
         }
         
-        // ==================== CLEANUP ON PAGE UNLOAD ====================
+        // ==================== CLEANUP ====================
         
         window.addEventListener('beforeunload', function() {
-            // Hapus semua object URL untuk mencegah memory leak
             uploadedPreviewURLs.forEach(url => {
                 if (url && url.startsWith('blob:')) {
                     URL.revokeObjectURL(url);
                 }
             });
-        }, { passive: true });
-        
-        // ==================== OPTIMASI UNTUK MOBILE ====================
-        
-        // Mencegah zoom pada input focus
-        document.addEventListener('touchstart', function(e) {
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-                e.target.style.fontSize = '16px';
-            }
         }, { passive: true });
         
         // ==================== INITIALIZATION ====================

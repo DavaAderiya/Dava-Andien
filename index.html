@@ -11,7 +11,8 @@
             --primary-color: #ff6b8b;
             --secondary-color: #ffc1cc;
             --light-pink: #fff5f7;
-            --dark-bg: #0f3460;
+            --soft-pink: #ffebf3;
+            --dark-pink: #d87093;
             --text-color: #333;
             --white: #ffffff;
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -36,104 +37,191 @@
             -moz-osx-font-smoothing: grayscale;
         }
         
-        /* Login Screen */
-        .login-screen {
+        /* Welcome Screen - Tampilan Awal yang Menarik */
+        .welcome-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--primary-color) 0%, #ff99ac 100%);
+            background: linear-gradient(135deg, #ffc1cc 0%, #ff8fab 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 1000;
             opacity: 1;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            padding: 1.5rem;
+            overflow: hidden;
         }
         
-        .login-screen.hidden {
+        .welcome-screen.hidden {
             opacity: 0;
-            transform: scale(0.95);
+            transform: translateY(-20px);
             pointer-events: none;
         }
         
-        .login-container {
-            background: rgba(255, 255, 255, 0.98);
-            padding: 2rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.25);
+        .welcome-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem 2rem;
+            border-radius: 2rem;
+            box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.2);
             text-align: center;
-            max-width: 340px;
-            width: 90%;
-        }
-        
-        .login-title {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.2rem;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-        
-        .login-subtitle {
-            color: #777;
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-        }
-        
-        .password-container {
-            position: relative;
-            margin-bottom: 1.2rem;
-        }
-        
-        .password-input {
+            max-width: 420px;
             width: 100%;
-            padding: 0.8rem 3rem 0.8rem 1.2rem;
-            border: 2px solid var(--secondary-color);
-            border-radius: 3rem;
-            font-size: 0.95rem;
-            outline: none;
-            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
         }
         
-        .password-input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.25rem rgba(255, 107, 139, 0.2);
+        .welcome-heart {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            animation: pulseHeart 2s infinite;
         }
         
-        .heart-btn {
-            position: absolute;
-            right: 0.3rem;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--primary-color);
-            color: var(--white);
-            border: none;
-            border-radius: 50%;
-            width: 2.2rem;
-            height: 2.2rem;
-            cursor: pointer;
+        @keyframes pulseHeart {
+            0%, 100% { 
+                transform: scale(1); 
+                color: #ff6b8b;
+            }
+            50% { 
+                transform: scale(1.2); 
+                color: #ff4d73;
+            }
+        }
+        
+        .welcome-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .welcome-subtitle {
+            color: #666;
+            margin-bottom: 2rem;
             font-size: 1rem;
+            line-height: 1.5;
+            padding: 0 1rem;
+        }
+        
+        /* Tombol Utama yang Sangat Menarik */
+        .main-cta-button {
+            position: relative;
+            padding: 1.3rem 2.8rem;
+            border: none;
+            border-radius: 3rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #ff4d73 100%);
+            color: white;
+            font-weight: 700;
+            font-size: 1.3rem;
+            cursor: pointer;
             transition: var(--transition);
-            display: flex;
+            overflow: hidden;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
+            gap: 1.2rem;
+            box-shadow: 0 0.8rem 2rem rgba(255, 107, 139, 0.5);
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            animation: ctaPulse 3s infinite ease-in-out;
+            z-index: 2;
+            margin-top: 1rem;
         }
         
-        .heart-btn:hover {
-            background: #ff4d73;
-            transform: translateY(-50%) scale(1.1);
+        @keyframes ctaPulse {
+            0%, 100% { 
+                transform: scale(1); 
+                box-shadow: 0 0.8rem 2rem rgba(255, 107, 139, 0.5);
+            }
+            50% { 
+                transform: scale(1.05); 
+                box-shadow: 0 1rem 2.5rem rgba(255, 107, 139, 0.7);
+            }
         }
         
-        .error-message {
-            color: #ff4d73;
-            margin-top: 0.5rem;
-            font-size: 0.85rem;
-            min-height: 1rem;
+        .main-cta-button:hover {
+            transform: scale(1.08) translateY(-5px);
+            box-shadow: 0 1.2rem 3rem rgba(255, 107, 139, 0.8);
+            animation: none;
         }
         
-        /* Animasi Judul Setelah Login */
+        .main-cta-button:active {
+            transform: scale(1.02) translateY(-2px);
+        }
+        
+        .main-cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.8s;
+        }
+        
+        .main-cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .main-cta-button i {
+            font-size: 1.5rem;
+            animation: heartBeat 1.5s infinite ease-in-out;
+        }
+        
+        @keyframes heartBeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.3);
+            }
+        }
+        
+        .cta-description {
+            color: #777;
+            margin-top: 1.8rem;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Hati animasi di background */
+        .heart-animation-bg {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            z-index: 1;
+            animation: floatHeartBg 8s infinite ease-in-out;
+        }
+        
+        @keyframes floatHeartBg {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) rotate(360deg) scale(1.2);
+            }
+        }
+        
+        /* Animasi Judul Setelah Klik Tombol */
         .title-animation {
             position: fixed;
             top: 0;
@@ -252,6 +340,24 @@
         }
         
         @media (max-width: 768px) {
+            .welcome-container {
+                padding: 2rem 1.5rem;
+                max-width: 90%;
+            }
+            
+            .welcome-title {
+                font-size: 2.2rem;
+            }
+            
+            .welcome-heart {
+                font-size: 3rem;
+            }
+            
+            .main-cta-button {
+                padding: 1.1rem 2rem;
+                font-size: 1.1rem;
+            }
+            
             .title-word {
                 font-size: 1.8rem !important;
                 margin-right: 0.4rem;
@@ -759,7 +865,7 @@
             font-size: 0.9rem;
         }
         
-        /* TOMBOL LIAT SEMUA DENGAN ANIMASI BARU */
+        /* TOMBOL LIAT SEMUA */
         .view-all-button-container {
             text-align: center;
             margin-top: 2.5rem;
@@ -812,15 +918,6 @@
         .view-all-btn i {
             font-size: 1.3rem;
             animation: heartBeat 1.5s infinite ease-in-out;
-        }
-        
-        @keyframes heartBeat {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
         }
         
         /* ANIMASI TOMBOL PULSE TAMBAHAN */
@@ -1169,26 +1266,20 @@
             font-size: 0.9rem;
         }
         
-        /* Animations */
-        @keyframes slideOutToRight {
-            0% {
-                opacity: 1;
-                transform: translateX(0);
-            }
-            100% {
-                opacity: 0;
-                transform: translateX(100%);
-            }
+        /* Limit sections */
+        .limit-section {
+            position: relative;
         }
         
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-        
-        .shake {
-            animation: shake 0.5s ease;
+        .limit-section::after {
+            content: '';
+            position: absolute;
+            bottom: -1.5rem;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+            border-radius: 1px;
         }
         
         /* Responsive */
@@ -1273,40 +1364,33 @@
                 margin-right: auto;
             }
         }
-        
-        /* Limit sections */
-        .limit-section {
-            position: relative;
-        }
-        
-        .limit-section::after {
-            content: '';
-            position: absolute;
-            bottom: -1.5rem;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
-            border-radius: 1px;
-        }
     </style>
 </head>
 <body>
-    <!-- Login Screen -->
-    <div class="login-screen" id="loginScreen">
-        <div class="login-container">
-            <h1 class="login-title">Dava & Andiena</h1>
-            <p class="login-subtitle">Masukkan sandi untuk melihat kenangan indah kami</p>
-            
-            <div class="password-container">
-                <input type="password" class="password-input" id="passwordInput" placeholder="Ketikkan sandi cinta kami...">
-                <button class="heart-btn" id="loginBtn">
-                    <i class="fas fa-heart"></i>
-                </button>
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <!-- Background animated hearts -->
+        <div class="heart-animation-bg" style="top: 10%; left: 5%; animation-delay: 0s;">❤</div>
+        <div class="heart-animation-bg" style="top: 20%; right: 8%; animation-delay: 1s;">❤</div>
+        <div class="heart-animation-bg" style="bottom: 30%; left: 10%; animation-delay: 2s;">❤</div>
+        <div class="heart-animation-bg" style="bottom: 15%; right: 15%; animation-delay: 3s;">❤</div>
+        <div class="heart-animation-bg" style="top: 50%; left: 15%; animation-delay: 4s;">❤</div>
+        <div class="heart-animation-bg" style="top: 40%; right: 20%; animation-delay: 5s;">❤</div>
+        
+        <div class="welcome-container">
+            <div class="welcome-heart">
+                <i class="fas fa-heart"></i>
             </div>
+            <h1 class="welcome-title">Dava & Andiena</h1>
+            <p class="welcome-subtitle">Selamat datang di galeri kenangan indah kami. Setiap foto dan video adalah bagian dari kisah cinta kami yang abadi.</p>
             
-            <p class="error-message" id="errorMessage"></p>
-            <p style="color: #999; font-size: 0.85rem; margin-top: 1.2rem;">Petunjuk: Tanggal spesial kita (ddmmyyyy)</p>
+            <button class="main-cta-button" id="enterButton">
+                <i class="fas fa-heart"></i> Lihat Kisah Cinta Kami
+            </button>
+            
+            <p class="cta-description">
+                Klik untuk menjelajahi perjalanan cinta kami yang penuh dengan momen-momen indah dan tak terlupakan.
+            </p>
         </div>
     </div>
     
@@ -1318,7 +1402,7 @@
             <span class="title-word" id="word3">Andiena's</span>
             <span class="title-word" id="word4">Story</span>
         </div>
-        <p class="subtitle-text" id="subtitleText">Selamat datang di galeri kenangan indah kita. Setiap momen bersamamu adalah harta yang tak ternilai </p>
+        <p class="subtitle-text" id="subtitleText">Setiap momen bersamamu adalah harta yang tak ternilai. Mari kita lihat kenangan indah kita...</p>
         
         <!-- Hati animasi -->
         <div class="heart-animation" style="top: 15%; left: 8%; animation-delay: 0s;">❤</div>
@@ -1346,7 +1430,7 @@
                 <li class="sidebar-item"><a href="#gallery" class="sidebar-link"><i class="fas fa-images"></i> Galeri Foto</a></li>
                 <li class="sidebar-item"><a href="#videos" class="sidebar-link"><i class="fas fa-video"></i> Video</a></li>
                 <li class="sidebar-item"><a href="#memories" class="sidebar-link"><i class="fas fa-heart"></i> Memori Spesial</a></li>
-                <li class="sidebar-item"><a href="p.html" class="sidebar-link"><i class="fas fa-book"></i> Album Lengkap</a></li>
+                <li class="sidebar-item"><a href="album.html" class="sidebar-link"><i class="fas fa-book"></i> Album Lengkap</a></li>
             </ul>
         </div>
         
@@ -1372,36 +1456,37 @@
         
         <!-- Galeri Foto - MAKSIMAL 2 FOTO -->
         <section class="section limit-section" id="gallery">
-            <h2 class="section-title">Galeri Foto</h2>
+            <h2 class="section-title">Galeri Foto Terbaru</h2>
             <div class="gallery-container" id="galleryContainer">
-                <!-- Hanya 2 foto yang ditampilkan -->
+                <!-- Hanya 2 foto terbaru yang ditampilkan -->
             </div>
-            <p style="text-align: center; margin-top: 1rem; color: #777; font-size: 0.9rem;">Menampilkan 2 foto terbaru</p>
+            <p style="text-align: center; margin-top: 1rem; color: #777; font-size: 0.9rem;">Menampilkan 2 foto terbaru. Klik tombol di bawah untuk melihat semua foto.</p>
         </section>
         
         <!-- Video - MAKSIMAL 2 VIDEO -->
         <section class="section limit-section" id="videos" style="background: #f9f9f9;">
-            <h2 class="section-title">Video</h2>
+            <h2 class="section-title">Video Terbaru</h2>
             <div class="video-container" id="videoContainer">
-                <!-- Hanya 2 video yang ditampilkan -->
+                <!-- Hanya 2 video terbaru yang ditampilkan -->
             </div>
-            <p style="text-align: center; margin-top: 1rem; color: #777; font-size: 0.9rem;">Menampilkan 2 video terbaru</p>
+            <p style="text-align: center; margin-top: 1rem; color: #777; font-size: 0.9rem;">Menampilkan 2 video terbaru. Lihat semua video di album lengkap.</p>
         </section>
         
         <!-- Memories Section - MAKSIMAL 1 MEMORI -->
         <section class="section" id="memories">
-            <h2 class="section-title">Memori Spesial</h2>
+            <h2 class="section-title">Memori Spesial Terbaru</h2>
             <div class="memory-container" id="memoryContainer">
-                <!-- Hanya 1 memori yang ditampilkan -->
+                <!-- Hanya 1 memori terbaru yang ditampilkan -->
             </div>
-            <p style="text-align: center; margin-top: 1rem; color: #777; font-size: 0.9rem;">Menampilkan 1 memori terbaru</p>
+            <p style="text-align: center; margin-top: 1rem; color: #777; font-size: 0.9rem;">Menampilkan 1 memori terbaru. Banyak kenangan indah lainnya menunggu Anda.</p>
         </section>
         
         <!-- TOMBOL LIAT SEMUA -->
         <div class="view-all-button-container">
-            <a href="p.html" class="view-all-btn pulse-animation" id="viewAllBtn">
+            <a href="album.html" class="view-all-btn pulse-animation" id="viewAllBtn">
                 <i class="fas fa-heart"></i> Lihat Semua Album Lengkap
             </a>
+            <p style="text-align: center; margin-top: 1rem; color: #777; font-size: 0.9rem;">Jelajahi semua foto, video, dan kenangan indah kami di album lengkap.</p>
         </div>
         
         <!-- Footer -->
@@ -1473,7 +1558,6 @@
 
     <script>
         // ==================== KONFIGURASI ====================
-        const APP_PASSWORD = "10022009";
         
         // Data default
         const defaultData = {
@@ -1482,45 +1566,69 @@
                     id: 1,
                     src: "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                     title: "Pertemuan Pertama",
-                    description: "Momen pertama kali kita bertemu, senyummu begitu manis."
+                    description: "Momen pertama kali kita bertemu, senyummu begitu manis.",
+                    date: "10-02-2023",
+                    type: "photos",
+                    favorite: true
                 },
                 {
                     id: 2,
                     src: "https://images.unsplash.com/photo-1511988617509-a57c8a288659?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                     title: "Bersantai di Pantai",
-                    description: "Hari yang indah di pantai bersama, matahari terbenam yang romantis."
+                    description: "Hari yang indah di pantai bersama, matahari terbenam yang romantis.",
+                    date: "15-03-2023",
+                    type: "photos",
+                    favorite: true
                 },
                 {
                     id: 3,
                     src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                     title: "Kencan Romantis",
-                    description: "Malam yang indah dengan cahaya lilin dan senyumanmu."
+                    description: "Malam yang indah dengan cahaya lilin dan senyumanmu.",
+                    date: "20-04-2023",
+                    type: "photos",
+                    favorite: false
                 },
                 {
                     id: 4,
                     src: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                     title: "Liburan Bersama",
-                    description: "Petualangan indah kita di tempat baru."
+                    description: "Petualangan indah kita di tempat baru.",
+                    date: "25-05-2023",
+                    type: "photos",
+                    favorite: true
                 }
             ],
             videos: [
                 {
                     id: 1,
                     src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                    thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
                     title: "Video Spesial 1",
-                    description: "Video kenangan indah kita bersama di hari yang cerah"
+                    description: "Video kenangan indah kita bersama di hari yang cerah",
+                    date: "10-02-2024",
+                    type: "videos",
+                    favorite: true
                 },
                 {
                     id: 2,
                     src: "https://www.youtube.com/embed/L_jWHffIx5E",
+                    thumbnail: "https://img.youtube.com/vi/L_jWHffIx5E/maxresdefault.jpg",
                     title: "Video Spesial 2",
-                    description: "Momen kebahagiaan kita yang terekam dengan sempurna"
+                    description: "Momen kebahagiaan kita yang terekam dengan sempurna",
+                    date: "15-03-2024",
+                    type: "videos",
+                    favorite: true
                 },
                 {
                     id: 3,
                     src: "https://www.youtube.com/embed/9bZkp7q19f0",
+                    thumbnail: "https://img.youtube.com/vi/9bZkp7q19f0/maxresdefault.jpg",
                     title: "Video Spesial 3",
-                    description: "Lagu yang selalu mengingatkanku padamu"
+                    description: "Lagu yang selalu mengingatkanku padamu",
+                    date: "20-04-2024",
+                    type: "videos",
+                    favorite: false
                 }
             ],
             memories: [
@@ -1528,13 +1636,19 @@
                     id: 1,
                     photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                     title: "Pertama Kali Bertemu",
-                    description: "Pertama kali kita bertemu, aku tak menyangka bahwa dirimu akan menjadi bagian terpenting dalam hidupku. Hari itu matahari bersinar terang, dan senyummu membuat hari itu menjadi sempurna."
+                    description: "Pertama kali kita bertemu, aku tak menyangka bahwa dirimu akan menjadi bagian terpenting dalam hidupku. Hari itu matahari bersinar terang, dan senyummu membuat hari itu menjadi sempurna.",
+                    date: "10-02-2023",
+                    type: "memories",
+                    favorite: true
                 },
                 {
                     id: 2,
                     photo: "https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
                     title: "Ulang Tahun Pertama",
-                    description: "Ulang tahun pertamamu yang kita rayakan bersama. Kue sederhana, hadiah kecil, tapi kebahagiaan yang kita rasakan sangat besar."
+                    description: "Ulang tahun pertamamu yang kita rayakan bersama. Kue sederhana, hadiah kecil, tapi kebahagiaan yang kita rasakan sangat besar.",
+                    date: "15-03-2023",
+                    type: "memories",
+                    favorite: true
                 }
             ]
         };
@@ -1543,42 +1657,26 @@
         let memoriesData = JSON.parse(localStorage.getItem('davaAndienaMemories')) || defaultData;
 
         // ==================== ELEMEN DOM ====================
-        const loginScreen = document.getElementById('loginScreen');
+        const welcomeScreen = document.getElementById('welcomeScreen');
         const titleAnimation = document.getElementById('titleAnimation');
         const mainContent = document.getElementById('mainContent');
-        const passwordInput = document.getElementById('passwordInput');
-        const loginBtn = document.getElementById('loginBtn');
-        const errorMessage = document.getElementById('errorMessage');
-        const word1 = document.getElementById('word1');
-        const word2 = document.getElementById('word2');
-        const word3 = document.getElementById('word3');
-        const word4 = document.getElementById('word4');
-        const subtitleText = document.getElementById('subtitleText');
+        const enterButton = document.getElementById('enterButton');
         
         // Tombol lihat semua
         const viewAllBtn = document.getElementById('viewAllBtn');
 
         // ==================== FUNGSI UTAMA ====================
         
-        // Login dengan animasi
-        function login() {
-            const password = passwordInput.value.trim();
+        // Fungsi untuk masuk ke website
+        function enterWebsite() {
+            welcomeScreen.classList.add('hidden');
             
-            if (password === APP_PASSWORD) {
-                errorMessage.textContent = '';
-                loginScreen.classList.add('hidden');
-                
-                setTimeout(() => {
-                    playTitleAnimation();
-                }, 500);
-            } else {
-                errorMessage.textContent = 'Sandi salah. Coba lagi!';
-                passwordInput.classList.add('shake');
-                setTimeout(() => passwordInput.classList.remove('shake'), 1000);
-            }
+            setTimeout(() => {
+                playTitleAnimation();
+            }, 500);
         }
         
-        // Animasi judul setelah login
+        // Animasi judul setelah klik tombol
         function playTitleAnimation() {
             titleAnimation.classList.add('visible');
             
@@ -1604,75 +1702,13 @@
                         mainContent.classList.add('visible');
                         loadLimitedContent();
                         createFloatingHearts();
+                        createBackgroundHearts();
                     }, 300);
                 }, 800);
             }, 2500);
         }
-
         
-    // Cek jika ada parameter untuk melewati login
-    function checkAutoLogin() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const autoLogin = urlParams.get('login');
-        
-        if (autoLogin === 'true') {
-            // Lewati login dan langsung tampilkan konten
-            loginScreen.style.display = 'none';
-            
-            // Simpan status login di localStorage
-            localStorage.setItem('davaAndienaLoggedIn', 'true');
-            
-            // Langsung tampilkan konten utama
-            setTimeout(() => {
-                mainContent.classList.add('visible');
-                loadLimitedContent();
-                createFloatingHearts();
-            }, 100);
-            
-            return true;
-        }
-        
-        // Cek jika sudah login sebelumnya
-        const isLoggedIn = localStorage.getItem('davaAndienaLoggedIn') === 'true';
-        if (isLoggedIn) {
-            loginScreen.style.display = 'none';
-            
-            setTimeout(() => {
-                mainContent.classList.add('visible');
-                loadLimitedContent();
-                createFloatingHearts();
-            }, 100);
-            
-            return true;
-        }
-        
-        return false;
-    }
-    
-    // Login dengan animasi
-    function login() {
-        const password = passwordInput.value.trim();
-        
-        if (password === APP_PASSWORD) {
-            errorMessage.textContent = '';
-            
-            // Simpan status login
-            localStorage.setItem('davaAndienaLoggedIn', 'true');
-            
-            loginScreen.classList.add('hidden');
-            
-            setTimeout(() => {
-                playTitleAnimation();
-            }, 500);
-        } else {
-            errorMessage.textContent = 'Sandi salah. Coba lagi!';
-            passwordInput.classList.add('shake');
-            setTimeout(() => passwordInput.classList.remove('shake'), 1000);
-        }
-    }
-    
-        
-        // Buat hati berjatuhan
+        // Buat hati berjatuhan di header
         function createFloatingHearts() {
             const floatingHearts = document.getElementById('floatingHearts');
             floatingHearts.innerHTML = '';
@@ -1688,6 +1724,16 @@
                 
                 floatingHearts.appendChild(heart);
             }
+        }
+        
+        // Buat hati di background welcome screen
+        function createBackgroundHearts() {
+            const welcomeScreen = document.querySelector('.welcome-screen');
+            const hearts = welcomeScreen.querySelectorAll('.heart-animation-bg');
+            
+            hearts.forEach(heart => {
+                heart.style.animation = 'floatHeartBg 8s infinite ease-in-out';
+            });
         }
         
         // ==================== LOAD KONTEN TERBATAS ====================
@@ -1707,7 +1753,10 @@
             const container = document.getElementById('galleryContainer');
             container.innerHTML = '';
             
-            const limitedPhotos = memoriesData.photos.slice(-2); // Ambil 2 terbaru
+            // Ambil 2 foto terbaru berdasarkan ID (ID tertinggi = terbaru)
+            const limitedPhotos = [...memoriesData.photos]
+                .sort((a, b) => b.id - a.id)
+                .slice(0, 2);
             
             if (limitedPhotos.length === 0) {
                 container.innerHTML = '<div class="empty-state"><i class="fas fa-images"></i><h3>Belum ada foto</h3><p>Tambahkan foto di album lengkap!</p></div>';
@@ -1724,7 +1773,10 @@
             const container = document.getElementById('videoContainer');
             container.innerHTML = '';
             
-            const limitedVideos = memoriesData.videos.slice(-2); // Ambil 2 terbaru
+            // Ambil 2 video terbaru berdasarkan ID (ID tertinggi = terbaru)
+            const limitedVideos = [...memoriesData.videos]
+                .sort((a, b) => b.id - a.id)
+                .slice(0, 2);
             
             if (limitedVideos.length === 0) {
                 container.innerHTML = '<div class="empty-state"><i class="fas fa-video"></i><h3>Belum ada video</h3><p>Tambahkan video di album lengkap!</p></div>';
@@ -1741,7 +1793,10 @@
             const container = document.getElementById('memoryContainer');
             container.innerHTML = '';
             
-            const limitedMemories = memoriesData.memories.slice(-1); // Ambil 1 terbaru
+            // Ambil 1 memori terbaru berdasarkan ID (ID tertinggi = terbaru)
+            const limitedMemories = [...memoriesData.memories]
+                .sort((a, b) => b.id - a.id)
+                .slice(0, 1);
             
             if (limitedMemories.length === 0) {
                 container.innerHTML = '<div class="empty-state"><i class="fas fa-heart"></i><h3>Belum ada memori</h3><p>Tambahkan memori di album lengkap!</p></div>';
@@ -1787,13 +1842,11 @@
             // Cek jika YouTube
             const isYouTube = video.src.includes('youtube.com') || video.src.includes('youtu.be');
             const videoId = isYouTube ? extractYouTubeId(video.src) : null;
-            const thumbnail = isYouTube ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '';
+            const thumbnail = video.thumbnail || (isYouTube ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '');
             
             div.innerHTML = `
                 <div class="video-player-container">
                     ${thumbnail ? `<img src="${thumbnail}" class="video-thumbnail" onerror="handleImageError(this)">` : 
-                      video.src.startsWith('data:video/') ? `<video class="video-thumbnail"><source src="${video.src}"></video>` :
-                      video.src.startsWith('http') ? `<div style="background:#ff6b8b;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:white;"><i class="fas fa-video"></i></div>` :
                       '<div style="background:#ff6b8b;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:white;"><i class="fas fa-video"></i></div>'}
                     <div class="video-play-overlay">
                         <div class="video-play-btn">
@@ -1876,7 +1929,6 @@
             } else if (video.src.startsWith('data:video/')) {
                 player.innerHTML = `<video controls autoplay style="width:100%;height:100%;"><source src="${video.src}" type="video/mp4"></video>`;
             } else if (video.src.startsWith('http')) {
-                // Coba embed video dari URL
                 if (video.src.includes('.mp4') || video.src.includes('.webm') || video.src.includes('.ogg')) {
                     player.innerHTML = `<video controls autoplay style="width:100%;height:100%;"><source src="${video.src}" type="video/mp4"></video>`;
                 } else {
@@ -2022,10 +2074,7 @@
         
         function init() {
             // Setup event listeners
-            loginBtn.addEventListener('click', login);
-            passwordInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') login();
-            });
+            enterButton.addEventListener('click', enterWebsite);
             
             setupNavigation();
             setupModals();
@@ -2034,38 +2083,14 @@
             document.querySelector('.nav-link').classList.add('active');
             document.querySelector('.sidebar-link').classList.add('active');
             
-            console.log("Website Dava & Andiena P.html siap digunakan!");
-            console.log("Password: 10022009");
-            console.log("Fitur: Hanya tampilkan 2 foto, 2 video, 1 memori");
+            // Buat hati background
+            createBackgroundHearts();
+            
+            console.log("Website Dava & Andiena siap digunakan!");
+            console.log("Halaman utama menampilkan 2 foto, 2 video, dan 1 memori terbaru");
             console.log("Tombol 'Lihat Semua' mengarah ke album.html");
         }
         
-         function init() {
-        // Coba auto login
-        if (checkAutoLogin()) {
-            return;
-        }
-        
-        // Setup event listeners
-        loginBtn.addEventListener('click', login);
-        passwordInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') login();
-        });
-        
-        setupNavigation();
-        setupModals();
-        
-        // Set initial active nav
-        document.querySelector('.nav-link').classList.add('active');
-        document.querySelector('.sidebar-link').classList.add('active');
-        
-        console.log("Website Dava & Andiena siap digunakan!");
-        console.log("Password: 10022009");
-    }
-    
-    // Initialize app
-    document.addEventListener('DOMContentLoaded', init);
-    
         // Initialize app
         document.addEventListener('DOMContentLoaded', init);
     </script>
