@@ -1445,7 +1445,7 @@
                 <li class="sidebar-item"><a href="#gallery" class="sidebar-link"><i class="fas fa-images"></i> Galeri Foto</a></li>
                 <li class="sidebar-item"><a href="#videos" class="sidebar-link"><i class="fas fa-video"></i> Video</a></li>
                 <li class="sidebar-item"><a href="#memories" class="sidebar-link"><i class="fas fa-heart"></i> Memori Spesial</a></li>
-                <li class="sidebar-item"><a href="album.html" class="sidebar-link"><i class="fas fa-book"></i> Album Lengkap</a></li>
+                <li class="sidebar-item"><a href="p.html" class="sidebar-link"><i class="fas fa-book"></i> Album Lengkap</a></li>
             </ul>
         </div>
         
@@ -1465,7 +1465,7 @@
                 <li class="nav-item"><a href="#gallery" class="nav-link active"><i class="fas fa-images"></i> Galeri Foto</a></li>
                 <li class="nav-item"><a href="#videos" class="nav-link"><i class="fas fa-video"></i> Video</a></li>
                 <li class="nav-item"><a href="#memories" class="nav-link"><i class="fas fa-heart"></i> Memori Spesial</a></li>
-                <li class="nav-item"><a href="album.html" class="nav-link"><i class="fas fa-book"></i> Album Lengkap</a></li>
+                <li class="nav-item"><a href="p.html" class="nav-link"><i class="fas fa-book"></i> Album Lengkap</a></li>
             </ul>
         </nav>
         
@@ -1571,542 +1571,594 @@
         </div>
     </div>
 
-    <script>
-        // ==================== KONFIGURASI ====================
-        const STORAGE_KEY = 'davaAndienaMemories';
-        
-        // Data default
-        const defaultData = {
-            photos: [
-                {
-                    id: 1,
-                    src: "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    title: "Pertemuan Pertama",
-                    description: "Momen pertama kali kita bertemu, senyummu begitu manis.",
-                    date: "10-02-2023",
-                    type: "photos",
-                    favorite: true
-                },
-                {
-                    id: 2,
-                    src: "https://images.unsplash.com/photo-1511988617509-a57c8a288659?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    title: "Bersantai di Pantai",
-                    description: "Hari yang indah di pantai bersama, matahari terbenam yang romantis.",
-                    date: "15-03-2023",
-                    type: "photos",
-                    favorite: true
-                }
-            ],
-            videos: [
-                {
-                    id: 1,
-                    src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-                    thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
-                    title: "Video Spesial",
-                    description: "Video kenangan indah kita bersama.",
-                    date: "10-02-2024",
-                    type: "videos",
-                    favorite: true
-                }
-            ],
-            memories: [
-                {
-                    id: 1,
-                    photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    title: "Pertama Kali Bertemu",
-                    description: "Pertama kali kita bertemu, aku tak menyangka bahwa dirimu akan menjadi bagian terpenting dalam hidupku.",
-                    date: "10-02-2023",
-                    type: "memories",
-                    favorite: true
-                }
-            ]
-        };
+   <script>
+    // ==================== KONFIGURASI ====================
+    const STORAGE_KEY = 'davaAndienaMemories';
+    
+    // Data default - Struktur harus sama dengan album.html
+    const defaultData = {
+        photos: [
+            {
+                id: 1,
+                src: "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                title: "Pertemuan Pertama",
+                description: "Momen pertama kali kita bertemu, senyummu begitu manis.",
+                date: "10-02-2023",
+                type: "photos",
+                favorite: true
+            },
+            {
+                id: 2,
+                src: "https://images.unsplash.com/photo-1511988617509-a57c8a288659?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                title: "Bersantai di Pantai",
+                description: "Hari yang indah di pantai bersama, matahari terbenam yang romantis.",
+                date: "15-03-2023",
+                type: "photos",
+                favorite: true
+            }
+        ],
+        videos: [
+            {
+                id: 1,
+                src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                thumbnail: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+                title: "Video Spesial",
+                description: "Video kenangan indah kita bersama.",
+                date: "10-02-2024",
+                type: "videos",
+                favorite: true
+            }
+        ],
+        memories: [
+            {
+                id: 1,
+                photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                title: "Pertama Kali Bertemu",
+                description: "Pertama kali kita bertemu, aku tak menyangka bahwa dirimu akan menjadi bagian terpenting dalam hidupku.",
+                date: "10-02-2023",
+                type: "memories",
+                favorite: true
+            }
+        ]
+    };
 
-        // ==================== STATE APLIKASI ====================
-        let memoriesData = null;
+    // ==================== STATE APLIKASI ====================
+    let memoriesData = null;
 
-        // ==================== ELEMEN DOM ====================
-        const welcomeScreen = document.getElementById('welcomeScreen');
-        const titleAnimation = document.getElementById('titleAnimation');
-        const mainContent = document.getElementById('mainContent');
-        const enterButton = document.getElementById('enterButton');
-        
-        // Tombol lihat semua
-        const viewAllBtn = document.getElementById('viewAllBtn');
+    // ==================== ELEMEN DOM ====================
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const titleAnimation = document.getElementById('titleAnimation');
+    const mainContent = document.getElementById('mainContent');
+    const enterButton = document.getElementById('enterButton');
+    
+    // Tombol lihat semua
+    const viewAllBtn = document.getElementById('viewAllBtn');
 
-        // ==================== FUNGSI UTAMA ====================
+    // ==================== FUNGSI UTAMA ====================
+    
+    // Fungsi untuk masuk ke website
+    function enterWebsite() {
+        welcomeScreen.classList.add('hidden');
         
-        // Fungsi untuk masuk ke website
-        function enterWebsite() {
-            welcomeScreen.classList.add('hidden');
-            
+        setTimeout(() => {
+            playTitleAnimation();
+        }, 500);
+    }
+    
+    // Animasi judul setelah klik tombol
+    function playTitleAnimation() {
+        titleAnimation.classList.add('visible');
+        
+        const words = [word1, word2, word3, word4];
+        words.forEach((word, index) => {
             setTimeout(() => {
-                playTitleAnimation();
-            }, 500);
-        }
+                word.style.animation = 'titleWordIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+            }, 200 + (index * 200));
+        });
         
-        // Animasi judul setelah klik tombol
-        function playTitleAnimation() {
-            titleAnimation.classList.add('visible');
-            
-            const words = [word1, word2, word3, word4];
+        setTimeout(() => {
             words.forEach((word, index) => {
                 setTimeout(() => {
-                    word.style.animation = 'titleWordIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-                }, 200 + (index * 200));
+                    word.style.animation = 'titleWordOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                }, index * 100);
             });
             
             setTimeout(() => {
-                words.forEach((word, index) => {
-                    setTimeout(() => {
-                        word.style.animation = 'titleWordOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-                    }, index * 100);
-                });
+                titleAnimation.classList.remove('visible');
+                titleAnimation.classList.add('hidden');
                 
                 setTimeout(() => {
-                    titleAnimation.classList.remove('visible');
-                    titleAnimation.classList.add('hidden');
-                    
-                    setTimeout(() => {
-                        mainContent.classList.add('visible');
-                        loadDataAndContent();
-                        createFloatingHearts();
-                        createBackgroundHearts();
-                    }, 300);
-                }, 800);
-            }, 2500);
-        }
+                    mainContent.classList.add('visible');
+                    loadDataAndContent();
+                    createFloatingHearts();
+                    createBackgroundHearts();
+                }, 300);
+            }, 800);
+        }, 2500);
+    }
+    
+    // Load data dari localStorage dengan penanganan error yang lebih baik
+    function loadDataFromStorage() {
+        console.log("Memuat data dari localStorage dengan key:", STORAGE_KEY);
         
-        // Load data dari localStorage
-        function loadDataFromStorage() {
-            try {
-                const storedData = localStorage.getItem(STORAGE_KEY);
-                if (storedData) {
-                    memoriesData = JSON.parse(storedData);
-                    console.log("Data berhasil dimuat dari localStorage:", memoriesData);
+        try {
+            const storedData = localStorage.getItem(STORAGE_KEY);
+            
+            if (storedData) {
+                const parsedData = JSON.parse(storedData);
+                console.log("Data berhasil di-parse dari localStorage:", parsedData);
+                
+                // Validasi struktur data
+                if (typeof parsedData === 'object' && parsedData !== null) {
+                    memoriesData = {
+                        photos: Array.isArray(parsedData.photos) ? parsedData.photos : [],
+                        videos: Array.isArray(parsedData.videos) ? parsedData.videos : [],
+                        memories: Array.isArray(parsedData.memories) ? parsedData.memories : []
+                    };
+                    
+                    console.log(`Data valid: ${memoriesData.photos.length} foto, ${memoriesData.videos.length} video, ${memoriesData.memories.length} memori`);
                 } else {
+                    console.warn("Data tidak valid, menggunakan data default");
                     memoriesData = defaultData;
-                    console.log("Menggunakan data default");
                 }
-            } catch (error) {
-                console.error("Error loading data from localStorage:", error);
+            } else {
+                console.log("Tidak ada data di localStorage, menggunakan data default");
                 memoriesData = defaultData;
             }
-            
-            // Pastikan struktur data lengkap
-            if (!memoriesData.photos) memoriesData.photos = [];
-            if (!memoriesData.videos) memoriesData.videos = [];
-            if (!memoriesData.memories) memoriesData.memories = [];
+        } catch (error) {
+            console.error("Error loading data from localStorage:", error);
+            console.log("Menggunakan data default karena error");
+            memoriesData = defaultData;
         }
         
-        // Load data dan konten
-        function loadDataAndContent() {
-            loadDataFromStorage();
-            loadLimitedContent();
+        // Pastikan properti selalu ada
+        if (!memoriesData.photos) memoriesData.photos = [];
+        if (!memoriesData.videos) memoriesData.videos = [];
+        if (!memoriesData.memories) memoriesData.memories = [];
+        
+        console.log("Data akhir yang akan digunakan:", memoriesData);
+    }
+    
+    // Load data dan konten
+    function loadDataAndContent() {
+        loadDataFromStorage();
+        loadLimitedContent();
+    }
+    
+    // Buat hati berjatuhan di header
+    function createFloatingHearts() {
+        const floatingHearts = document.getElementById('floatingHearts');
+        floatingHearts.innerHTML = '';
+        
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '<i class="fas fa-heart"></i>';
+            
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.animationDelay = `${Math.random() * 5}s`;
+            heart.style.animationDuration = `${5 + Math.random() * 3}s`;
+            
+            floatingHearts.appendChild(heart);
+        }
+    }
+    
+    // Buat hati di background welcome screen
+    function createBackgroundHearts() {
+        const welcomeScreen = document.querySelector('.welcome-screen');
+        const hearts = welcomeScreen.querySelectorAll('.heart-animation-bg');
+        
+        hearts.forEach(heart => {
+            heart.style.animation = 'floatHeartBg 8s infinite ease-in-out';
+        });
+    }
+    
+    // ==================== LOAD KONTEN TERBATAS ====================
+    
+    // Load konten terbatas (2 foto, 2 video, 1 memori)
+    function loadLimitedContent() {
+        console.log("Memuat konten terbatas...");
+        console.log("Jumlah foto:", memoriesData.photos.length);
+        console.log("Jumlah video:", memoriesData.videos.length);
+        console.log("Jumlah memori:", memoriesData.memories.length);
+        
+        loadLimitedPhotos();
+        loadLimitedVideos();
+        loadLimitedMemories();
+        
+        // Setup event listener untuk tombol lihat semua
+        setupViewAllButton();
+    }
+    
+    // Load hanya 2 foto terbaru
+    function loadLimitedPhotos() {
+        const container = document.getElementById('galleryContainer');
+        container.innerHTML = '';
+        
+        // Ambil 2 foto terbaru berdasarkan ID (ID tertinggi = terbaru)
+        const limitedPhotos = [...memoriesData.photos]
+            .sort((a, b) => b.id - a.id)
+            .slice(0, 2);
+        
+        console.log("Foto yang akan ditampilkan:", limitedPhotos);
+        
+        if (limitedPhotos.length === 0) {
+            container.innerHTML = '<div class="empty-state"><i class="fas fa-images"></i><h3>Belum ada foto</h3><p>Tambahkan foto di album lengkap!</p></div>';
+            return;
         }
         
-        // Buat hati berjatuhan di header
-        function createFloatingHearts() {
-            const floatingHearts = document.getElementById('floatingHearts');
-            floatingHearts.innerHTML = '';
-            
-            for (let i = 0; i < 15; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.innerHTML = '<i class="fas fa-heart"></i>';
-                
-                heart.style.left = `${Math.random() * 100}%`;
-                heart.style.animationDelay = `${Math.random() * 5}s`;
-                heart.style.animationDuration = `${5 + Math.random() * 3}s`;
-                
-                floatingHearts.appendChild(heart);
-            }
+        limitedPhotos.forEach(photo => {
+            container.appendChild(createPhotoElement(photo));
+        });
+    }
+    
+    // Load hanya 2 video terbaru
+    function loadLimitedVideos() {
+        const container = document.getElementById('videoContainer');
+        container.innerHTML = '';
+        
+        // Ambil 2 video terbaru berdasarkan ID (ID tertinggi = terbaru)
+        const limitedVideos = [...memoriesData.videos]
+            .sort((a, b) => b.id - a.id)
+            .slice(0, 2);
+        
+        console.log("Video yang akan ditampilkan:", limitedVideos);
+        
+        if (limitedVideos.length === 0) {
+            container.innerHTML = '<div class="empty-state"><i class="fas fa-video"></i><h3>Belum ada video</h3><p>Tambahkan video di album lengkap!</p></div>';
+            return;
         }
         
-        // Buat hati di background welcome screen
-        function createBackgroundHearts() {
-            const welcomeScreen = document.querySelector('.welcome-screen');
-            const hearts = welcomeScreen.querySelectorAll('.heart-animation-bg');
-            
-            hearts.forEach(heart => {
-                heart.style.animation = 'floatHeartBg 8s infinite ease-in-out';
-            });
+        limitedVideos.forEach(video => {
+            container.appendChild(createVideoElement(video));
+        });
+    }
+    
+    // Load hanya 1 memori terbaru
+    function loadLimitedMemories() {
+        const container = document.getElementById('memoryContainer');
+        container.innerHTML = '';
+        
+        // Ambil 1 memori terbaru berdasarkan ID (ID tertinggi = terbaru)
+        const limitedMemories = [...memoriesData.memories]
+            .sort((a, b) => b.id - a.id)
+            .slice(0, 1);
+        
+        console.log("Memori yang akan ditampilkan:", limitedMemories);
+        
+        if (limitedMemories.length === 0) {
+            container.innerHTML = '<div class="empty-state"><i class="fas fa-heart"></i><h3>Belum ada memori</h3><p>Tambahkan memori di album lengkap!</p></div>';
+            return;
         }
         
-        // ==================== LOAD KONTEN TERBATAS ====================
+        limitedMemories.forEach(memory => {
+            container.appendChild(createMemoryElement(memory));
+        });
+    }
+    
+    // ==================== ELEMEN KREATOR ====================
+    
+    // Buat elemen foto
+    function createPhotoElement(photo) {
+        const div = document.createElement('div');
+        div.className = 'photo-item';
+        div.innerHTML = `
+            ${photo.id > 2 ? '<div class="new-badge">BARU</div>' : ''}
+            <img src="${photo.src || photo.photo || ''}" alt="${photo.title || 'Foto'}" class="photo-img" onerror="handleImageError(this)">
+            <div class="photo-caption">
+                <h3>${photo.title || 'Foto'}</h3>
+                ${photo.description ? `<p class="photo-description">${photo.description}</p>` : ''}
+            </div>
+        `;
         
-        // Load konten terbatas (2 foto, 2 video, 1 memori)
-        function loadLimitedContent() {
-            loadLimitedPhotos();
-            loadLimitedVideos();
-            loadLimitedMemories();
-            
-            // Setup event listener untuk tombol lihat semua
-            setupViewAllButton();
-        }
+        // Klik untuk melihat foto
+        div.querySelector('.photo-img').addEventListener('click', () => {
+            const modal = document.getElementById('photoModal');
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = photo.src || photo.photo || '';
+            modalImg.alt = photo.title || 'Foto';
+            modal.style.display = 'flex';
+        });
         
-        // Load hanya 2 foto terbaru
-        function loadLimitedPhotos() {
-            const container = document.getElementById('galleryContainer');
-            container.innerHTML = '';
-            
-            // Ambil 2 foto terbaru berdasarkan ID (ID tertinggi = terbaru)
-            const limitedPhotos = [...memoriesData.photos]
-                .sort((a, b) => b.id - a.id)
-                .slice(0, 2);
-            
-            if (limitedPhotos.length === 0) {
-                container.innerHTML = '<div class="empty-state"><i class="fas fa-images"></i><h3>Belum ada foto</h3><p>Tambahkan foto di album lengkap!</p></div>';
-                return;
-            }
-            
-            limitedPhotos.forEach(photo => {
-                container.appendChild(createPhotoElement(photo));
-            });
-        }
+        return div;
+    }
+    
+    // Buat elemen video
+    function createVideoElement(video) {
+        const div = document.createElement('div');
+        div.className = 'video-item';
         
-        // Load hanya 2 video terbaru
-        function loadLimitedVideos() {
-            const container = document.getElementById('videoContainer');
-            container.innerHTML = '';
-            
-            // Ambil 2 video terbaru berdasarkan ID (ID tertinggi = terbaru)
-            const limitedVideos = [...memoriesData.videos]
-                .sort((a, b) => b.id - a.id)
-                .slice(0, 2);
-            
-            if (limitedVideos.length === 0) {
-                container.innerHTML = '<div class="empty-state"><i class="fas fa-video"></i><h3>Belum ada video</h3><p>Tambahkan video di album lengkap!</p></div>';
-                return;
-            }
-            
-            limitedVideos.forEach(video => {
-                container.appendChild(createVideoElement(video));
-            });
-        }
+        console.log("Membuat elemen video:", video);
         
-        // Load hanya 1 memori terbaru
-        function loadLimitedMemories() {
-            const container = document.getElementById('memoryContainer');
-            container.innerHTML = '';
-            
-            // Ambil 1 memori terbaru berdasarkan ID (ID tertinggi = terbaru)
-            const limitedMemories = [...memoriesData.memories]
-                .sort((a, b) => b.id - a.id)
-                .slice(0, 1);
-            
-            if (limitedMemories.length === 0) {
-                container.innerHTML = '<div class="empty-state"><i class="fas fa-heart"></i><h3>Belum ada memori</h3><p>Tambahkan memori di album lengkap!</p></div>';
-                return;
-            }
-            
-            limitedMemories.forEach(memory => {
-                container.appendChild(createMemoryElement(memory));
-            });
-        }
+        // Cek jika YouTube
+        const isYouTube = video.src && (video.src.includes('youtube.com') || video.src.includes('youtu.be'));
+        const videoId = isYouTube ? extractYouTubeId(video.src) : null;
+        const thumbnail = video.thumbnail || (isYouTube && videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '');
         
-        // ==================== ELEMEN KREATOR ====================
-        
-        // Buat elemen foto
-        function createPhotoElement(photo) {
-            const div = document.createElement('div');
-            div.className = 'photo-item';
-            div.innerHTML = `
-                ${photo.id > 2 ? '<div class="new-badge">BARU</div>' : ''}
-                <img src="${photo.src}" alt="${photo.title}" class="photo-img" onerror="handleImageError(this)">
-                <div class="photo-caption">
-                    <h3>${photo.title || 'Foto'}</h3>
-                    ${photo.description ? `<p class="photo-description">${photo.description}</p>` : ''}
-                </div>
-            `;
-            
-            // Klik untuk melihat foto
-            div.querySelector('.photo-img').addEventListener('click', () => {
-                const modal = document.getElementById('photoModal');
-                const modalImg = document.getElementById('modalImg');
-                modalImg.src = photo.src;
-                modalImg.alt = photo.title;
-                modal.style.display = 'flex';
-            });
-            
-            return div;
-        }
-        
-        // Buat elemen video
-        function createVideoElement(video) {
-            const div = document.createElement('div');
-            div.className = 'video-item';
-            
-            // Cek jika YouTube
-            const isYouTube = video.src.includes('youtube.com') || video.src.includes('youtu.be');
-            const videoId = isYouTube ? extractYouTubeId(video.src) : null;
-            const thumbnail = video.thumbnail || (isYouTube ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : '');
-            
-            div.innerHTML = `
-                ${video.id > 1 ? '<div class="new-badge">BARU</div>' : ''}
-                <div class="video-player-container">
-                    ${thumbnail ? `<img src="${thumbnail}" class="video-thumbnail" onerror="handleImageError(this)">` : 
-                      '<div style="background:#ff6b8b;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:white;"><i class="fas fa-video"></i></div>'}
-                    <div class="video-play-overlay">
-                        <div class="video-play-btn">
-                            <i class="fas fa-play"></i>
-                        </div>
+        div.innerHTML = `
+            ${video.id > 1 ? '<div class="new-badge">BARU</div>' : ''}
+            <div class="video-player-container">
+                ${thumbnail ? `<img src="${thumbnail}" class="video-thumbnail" onerror="handleImageError(this)">` : 
+                  '<div style="background:#ff6b8b;width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:white;"><i class="fas fa-video"></i></div>'}
+                <div class="video-play-overlay">
+                    <div class="video-play-btn">
+                        <i class="fas fa-play"></i>
                     </div>
                 </div>
-                <div class="video-caption">
-                    <h3>${video.title || 'Video'}</h3>
-                    ${video.description ? `<p class="video-description">${video.description}</p>` : ''}
-                </div>
-            `;
-            
-            // Klik untuk memutar video
-            div.querySelector('.video-play-btn').addEventListener('click', () => {
-                playVideo(video);
-            });
-            
-            return div;
-        }
+            </div>
+            <div class="video-caption">
+                <h3>${video.title || 'Video'}</h3>
+                ${video.description ? `<p class="video-description">${video.description}</p>` : ''}
+            </div>
+        `;
         
-        // Buat elemen memori
-        function createMemoryElement(memory) {
-            const div = document.createElement('div');
-            div.className = 'memory-card';
-            div.innerHTML = `
-                ${memory.id > 1 ? '<div class="new-badge">BARU</div>' : ''}
-                <div class="memory-photo-container">
-                    <img src="${memory.photo}" alt="${memory.title}" class="memory-photo" onerror="handleImageError(this)">
-                </div>
-                <div class="memory-icon">
-                    <i class="fas fa-heart"></i>
-                </div>
-                <h3>${memory.title || 'Memori Spesial'}</h3>
-                <p class="memory-text">${memory.description || 'Kenangan indah bersama.'}</p>
-            `;
-            
-            // Klik untuk melihat foto memori
-            div.querySelector('.memory-photo').addEventListener('click', () => {
-                const modal = document.getElementById('photoModal');
-                const modalImg = document.getElementById('modalImg');
-                modalImg.src = memory.photo;
-                modalImg.alt = memory.title;
-                modal.style.display = 'flex';
-            });
-            
-            return div;
-        }
+        // Klik untuk memutar video
+        div.querySelector('.video-play-btn').addEventListener('click', () => {
+            playVideo(video);
+        });
         
-        // Handle image error
-        function handleImageError(img) {
-            img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY2YjhjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
-            img.style.objectFit = 'contain';
-            img.style.padding = '1rem';
-        }
+        return div;
+    }
+    
+    // Buat elemen memori
+    function createMemoryElement(memory) {
+        const div = document.createElement('div');
+        div.className = 'memory-card';
+        div.innerHTML = `
+            ${memory.id > 1 ? '<div class="new-badge">BARU</div>' : ''}
+            <div class="memory-photo-container">
+                <img src="${memory.photo || memory.src || ''}" alt="${memory.title || 'Memori Spesial'}" class="memory-photo" onerror="handleImageError(this)">
+            </div>
+            <div class="memory-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <h3>${memory.title || 'Memori Spesial'}</h3>
+            <p class="memory-text">${memory.description || 'Kenangan indah bersama.'}</p>
+        `;
         
-        // ==================== FUNGSI VIDEO ====================
+        // Klik untuk melihat foto memori
+        div.querySelector('.memory-photo').addEventListener('click', () => {
+            const modal = document.getElementById('photoModal');
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = memory.photo || memory.src || '';
+            modalImg.alt = memory.title || 'Memori Spesial';
+            modal.style.display = 'flex';
+        });
         
-        // Ekstrak ID YouTube
-        function extractYouTubeId(url) {
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11) ? match[2] : null;
-        }
+        return div;
+    }
+    
+    // Handle image error
+    function handleImageError(img) {
+        console.warn("Gambar gagal dimuat, menggunakan fallback");
+        img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY2YjhjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+        img.style.objectFit = 'contain';
+        img.style.padding = '1rem';
+    }
+    
+    // ==================== FUNGSI VIDEO ====================
+    
+    // Ekstrak ID YouTube
+    function extractYouTubeId(url) {
+        if (!url) return null;
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const match = url.match(regExp);
+        return (match && match[2].length === 11) ? match[2] : null;
+    }
+    
+    // Mainkan video
+    function playVideo(video) {
+        const modal = document.getElementById('videoModal');
+        const player = document.getElementById('videoModalPlayer');
+        const title = document.getElementById('videoModalTitle');
+        const desc = document.getElementById('videoModalDescription');
         
-        // Mainkan video
-        function playVideo(video) {
-            const modal = document.getElementById('videoModal');
-            const player = document.getElementById('videoModalPlayer');
-            const title = document.getElementById('videoModalTitle');
-            const desc = document.getElementById('videoModalDescription');
-            
-            title.textContent = video.title || 'Video';
-            desc.textContent = video.description || 'Tidak ada deskripsi';
-            
-            const isYouTube = video.src.includes('youtube.com') || video.src.includes('youtu.be');
-            const videoId = isYouTube ? extractYouTubeId(video.src) : null;
-            
-            if (isYouTube && videoId) {
-                player.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-            } else if (video.src.startsWith('data:video/')) {
+        title.textContent = video.title || 'Video';
+        desc.textContent = video.description || 'Tidak ada deskripsi';
+        
+        const isYouTube = video.src && (video.src.includes('youtube.com') || video.src.includes('youtu.be'));
+        const videoId = isYouTube ? extractYouTubeId(video.src) : null;
+        
+        if (isYouTube && videoId) {
+            player.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        } else if (video.src && video.src.startsWith('data:video/')) {
+            player.innerHTML = `<video controls autoplay style="width:100%;height:100%;"><source src="${video.src}" type="video/mp4"></video>`;
+        } else if (video.src && video.src.startsWith('http')) {
+            if (video.src.includes('.mp4') || video.src.includes('.webm') || video.src.includes('.ogg')) {
                 player.innerHTML = `<video controls autoplay style="width:100%;height:100%;"><source src="${video.src}" type="video/mp4"></video>`;
-            } else if (video.src.startsWith('http')) {
-                if (video.src.includes('.mp4') || video.src.includes('.webm') || video.src.includes('.ogg')) {
-                    player.innerHTML = `<video controls autoplay style="width:100%;height:100%;"><source src="${video.src}" type="video/mp4"></video>`;
-                } else {
-                    player.innerHTML = `
-                        <div style="display: flex; justify-content: center; align-items: center; height: 100%; color: white; flex-direction: column; gap: 1rem;">
-                            <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem;"></i>
-                            <p>Format video tidak didukung. Coba gunakan link YouTube atau .mp4.</p>
-                        </div>
-                    `;
-                }
             } else {
                 player.innerHTML = `
                     <div style="display: flex; justify-content: center; align-items: center; height: 100%; color: white; flex-direction: column; gap: 1rem;">
                         <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem;"></i>
-                        <p>Tidak dapat memutar video.</p>
+                        <p>Format video tidak didukung. Coba gunakan link YouTube atau .mp4.</p>
                     </div>
                 `;
             }
-            
-            modal.style.display = 'flex';
+        } else {
+            player.innerHTML = `
+                <div style="display: flex; justify-content: center; align-items: center; height: 100%; color: white; flex-direction: column; gap: 1rem;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem;"></i>
+                    <p>Tidak dapat memutar video.</p>
+                </div>
+            `;
         }
         
-        // ==================== TOMBOL LIAT SEMUA ====================
+        modal.style.display = 'flex';
+    }
+    
+    // ==================== TOMBOL LIAT SEMUA ====================
+    
+    function setupViewAllButton() {
+        // Tambahkan animasi pulse secara berkala
+        setInterval(() => {
+            viewAllBtn.classList.toggle('pulse-animation');
+        }, 4000);
+    }
+    
+    // ==================== NAVIGATION ====================
+    
+    function setupNavigation() {
+        // Hamburger menu
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarClose = document.getElementById('sidebarClose');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const sidebarLinks = document.querySelectorAll('.sidebar-link');
         
-        function setupViewAllButton() {
-            // Tambahkan animasi pulse secara berkala
-            setInterval(() => {
-                viewAllBtn.classList.toggle('pulse-animation');
-            }, 4000);
-        }
-        
-        // ==================== NAVIGATION ====================
-        
-        function setupNavigation() {
-            // Hamburger menu
-            const hamburgerBtn = document.getElementById('hamburgerBtn');
-            const sidebar = document.getElementById('sidebar');
-            const sidebarClose = document.getElementById('sidebarClose');
-            const sidebarOverlay = document.getElementById('sidebarOverlay');
-            const sidebarLinks = document.querySelectorAll('.sidebar-link');
-            
-            // Desktop navigation
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    if (this.getAttribute('href').startsWith('#')) {
-                        e.preventDefault();
-                        
-                        // Update active
-                        navLinks.forEach(item => item.classList.remove('active'));
-                        this.classList.add('active');
-                        
-                        // Scroll to section
-                        const targetId = this.getAttribute('href');
-                        const target = document.querySelector(targetId);
-                        if (target) {
-                            window.scrollTo({
-                                top: target.offsetTop - 60,
-                                behavior: 'smooth'
-                            });
-                        }
+        // Desktop navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    
+                    // Update active
+                    navLinks.forEach(item => item.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Scroll to section
+                    const targetId = this.getAttribute('href');
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 60,
+                            behavior: 'smooth'
+                        });
                     }
-                });
-            });
-            
-            // Mobile navigation
-            sidebarLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    if (this.getAttribute('href').startsWith('#')) {
-                        e.preventDefault();
-                        
-                        // Update active
-                        sidebarLinks.forEach(item => item.classList.remove('active'));
-                        this.classList.add('active');
-                        
-                        // Close sidebar
-                        sidebar.classList.remove('open');
-                        sidebarOverlay.classList.remove('active');
-                        
-                        // Scroll to section
-                        const targetId = this.getAttribute('href');
-                        const target = document.querySelector(targetId);
-                        if (target) {
-                            window.scrollTo({
-                                top: target.offsetTop - 60,
-                                behavior: 'smooth'
-                            });
-                        }
-                    }
-                });
-            });
-            
-            // Hamburger menu
-            hamburgerBtn.addEventListener('click', () => {
-                sidebar.classList.add('open');
-                sidebarOverlay.classList.add('active');
-            });
-            
-            // Close sidebar
-            sidebarClose.addEventListener('click', () => {
-                sidebar.classList.remove('open');
-                sidebarOverlay.classList.remove('active');
-            });
-            
-            sidebarOverlay.addEventListener('click', () => {
-                sidebar.classList.remove('open');
-                sidebarOverlay.classList.remove('active');
-            });
-        }
-        
-        // ==================== MODAL HANDLERS ====================
-        
-        function setupModals() {
-            // Close photo modal
-            document.getElementById('modalClose').addEventListener('click', () => {
-                document.getElementById('photoModal').style.display = 'none';
-            });
-            
-            document.getElementById('photoModal').addEventListener('click', (e) => {
-                if (e.target === document.getElementById('photoModal')) {
-                    document.getElementById('photoModal').style.display = 'none';
                 }
             });
-            
-            // Close video modal
-            document.getElementById('videoModalClose').addEventListener('click', () => {
-                const modal = document.getElementById('videoModal');
+        });
+        
+        // Mobile navigation
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    
+                    // Update active
+                    sidebarLinks.forEach(item => item.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Close sidebar
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.remove('active');
+                    
+                    // Scroll to section
+                    const targetId = this.getAttribute('href');
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 60,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+        
+        // Hamburger menu
+        hamburgerBtn.addEventListener('click', () => {
+            sidebar.classList.add('open');
+            sidebarOverlay.classList.add('active');
+        });
+        
+        // Close sidebar
+        sidebarClose.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('active');
+        });
+        
+        sidebarOverlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('active');
+        });
+    }
+    
+    // ==================== MODAL HANDLERS ====================
+    
+    function setupModals() {
+        // Close photo modal
+        document.getElementById('modalClose').addEventListener('click', () => {
+            document.getElementById('photoModal').style.display = 'none';
+        });
+        
+        document.getElementById('photoModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('photoModal')) {
+                document.getElementById('photoModal').style.display = 'none';
+            }
+        });
+        
+        // Close video modal
+        document.getElementById('videoModalClose').addEventListener('click', () => {
+            const modal = document.getElementById('videoModal');
+            const player = document.getElementById('videoModalPlayer');
+            player.innerHTML = '';
+            modal.style.display = 'none';
+        });
+        
+        document.getElementById('videoModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('videoModal')) {
                 const player = document.getElementById('videoModalPlayer');
                 player.innerHTML = '';
-                modal.style.display = 'none';
-            });
-            
-            document.getElementById('videoModal').addEventListener('click', (e) => {
-                if (e.target === document.getElementById('videoModal')) {
-                    const player = document.getElementById('videoModalPlayer');
-                    player.innerHTML = '';
-                    document.getElementById('videoModal').style.display = 'none';
-                }
-            });
-        }
+                document.getElementById('videoModal').style.display = 'none';
+            }
+        });
+    }
+    
+    // ==================== AUTO REFRESH DATA ====================
+    
+    // Fungsi untuk refresh data saat kembali ke halaman utama
+    function refreshDataOnVisibilityChange() {
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                console.log("Halaman kembali aktif, merefresh data...");
+                loadDataAndContent();
+            }
+        });
+    }
+    
+    // ==================== DEBUG FUNCTIONS ====================
+    
+    // Fungsi untuk melihat data di console
+    function debugData() {
+        console.log("=== DEBUG DATA ===");
+        console.log("LocalStorage key:", STORAGE_KEY);
+        console.log("Data di localStorage:", localStorage.getItem(STORAGE_KEY));
+        console.log("MemoriesData:", memoriesData);
+        console.log("==================");
+    }
+    
+    // ==================== INITIALIZATION ====================
+    
+    function init() {
+        console.log("=== Initializing Dava & Andiena Website ===");
         
-        // ==================== AUTO REFRESH DATA ====================
+        // Setup event listeners
+        enterButton.addEventListener('click', enterWebsite);
         
-        // Fungsi untuk refresh data saat kembali ke halaman utama
-        function refreshDataOnVisibilityChange() {
-            document.addEventListener('visibilitychange', function() {
-                if (!document.hidden) {
-                    // Reload data saat halaman kembali aktif
-                    loadDataAndContent();
-                }
-            });
-        }
+        setupNavigation();
+        setupModals();
+        refreshDataOnVisibilityChange();
         
-        // ==================== INITIALIZATION ====================
+        // Set initial active nav
+        document.querySelector('.nav-link').classList.add('active');
+        document.querySelector('.sidebar-link').classList.add('active');
         
-        function init() {
-            // Setup event listeners
-            enterButton.addEventListener('click', enterWebsite);
-            
-            setupNavigation();
-            setupModals();
-            refreshDataOnVisibilityChange();
-            
-            // Set initial active nav
-            document.querySelector('.nav-link').classList.add('active');
-            document.querySelector('.sidebar-link').classList.add('active');
-            
-            // Buat hati background
-            createBackgroundHearts();
-            
-            console.log("Website Dava & Andiena siap digunakan!");
-            console.log("Halaman utama menampilkan 2 foto, 2 video, dan 1 memori terbaru");
-            console.log("Data akan dimuat dari localStorage dengan key: " + STORAGE_KEY);
-            console.log("Tombol 'Lihat Semua' mengarah ke album.html");
-        }
+        // Buat hati background
+        createBackgroundHearts();
         
-        // Initialize app
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
+        // Debug mode
+        window.debugData = debugData;
+        
+        console.log("Website Dava & Andiena siap digunakan!");
+        console.log("Halaman utama menampilkan 2 foto, 2 video, dan 1 memori terbaru");
+        console.log("Data akan dimuat dari localStorage dengan key: " + STORAGE_KEY);
+        console.log("Tombol 'Lihat Semua' mengarah ke album.html");
+        console.log("Gunakan debugData() di console untuk melihat data");
+    }
+    
+    // Initialize app
+    document.addEventListener('DOMContentLoaded', init);
+</script>
 </body>
 </html>
