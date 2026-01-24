@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Album Lengkap - Dava & Andiena</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap">
     <style>
         :root {
             --primary-color: #ff85a2;
@@ -20,15 +22,20 @@
             --success-color: #4CAF50;
             --warning-color: #ff9800;
             --error-color: #f44336;
+            --photo-color: #4CAF50;
+            --video-color: #2196F3;
+            --memory-color: #9C27B0;
+            --google-blue: #4285F4;
+            --google-green: #34A853;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #fff5f9 0%, #ffe8f0 100%);
@@ -40,7 +47,7 @@
             -moz-osx-font-smoothing: grayscale;
             touch-action: manipulation;
         }
-        
+
         /* Loading Screen */
         .loading-screen {
             position: fixed;
@@ -57,36 +64,50 @@
             opacity: 1;
             transition: opacity 0.8s ease;
         }
-        
+
         .loading-screen.hidden {
             opacity: 0;
             pointer-events: none;
         }
-        
+
         .loading-heart {
             font-size: 5rem;
             color: white;
             margin-bottom: 2rem;
             animation: heartbeat 1.2s infinite ease-in-out;
         }
-        
+
         @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.3); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.3);
+            }
         }
-        
+
         .loading-text {
             font-size: 1.5rem;
             color: white;
             font-family: 'Dancing Script', cursive;
             animation: fadeInOut 2s infinite;
         }
-        
+
         @keyframes fadeInOut {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
+
+            0%,
+            100% {
+                opacity: 0.7;
+            }
+
+            50% {
+                opacity: 1;
+            }
         }
-        
+
         /* Success Animation */
         .success-animation {
             position: fixed;
@@ -100,28 +121,30 @@
             justify-content: center;
             pointer-events: none;
         }
-        
+
         .success-heart {
             font-size: 4rem;
             color: var(--primary-color);
             animation: successHeart 1.5s ease forwards;
         }
-        
+
         @keyframes successHeart {
-            0% { 
-                transform: scale(0.5); 
-                opacity: 0; 
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
             }
-            50% { 
-                transform: scale(1.5); 
-                opacity: 1; 
+
+            50% {
+                transform: scale(1.5);
+                opacity: 1;
             }
-            100% { 
-                transform: scale(1); 
-                opacity: 0; 
+
+            100% {
+                transform: scale(1);
+                opacity: 0;
             }
         }
-        
+
         .success-text {
             color: var(--primary-color);
             font-family: 'Dancing Script', cursive;
@@ -130,13 +153,24 @@
             opacity: 0;
             animation: successText 1.5s ease 0.3s forwards;
         }
-        
+
         @keyframes successText {
-            0% { opacity: 0; transform: translateY(20px); }
-            50% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-20px); }
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
         }
-        
+
         /* Header Album */
         .album-header {
             position: relative;
@@ -145,7 +179,7 @@
             background: linear-gradient(to bottom, rgba(255, 133, 162, 0.1), rgba(255, 182, 193, 0.05));
             overflow: hidden;
         }
-        
+
         .album-main-title {
             font-family: 'Dancing Script', cursive;
             font-size: 2.5rem;
@@ -153,7 +187,7 @@
             margin-bottom: 0.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
+
         .album-subtitle {
             font-size: 0.9rem;
             color: var(--text-color);
@@ -161,7 +195,7 @@
             margin: 0 auto;
             line-height: 1.5;
         }
-        
+
         /* Album Navigation */
         .album-nav {
             position: sticky;
@@ -173,7 +207,7 @@
             border-bottom: 1px solid rgba(255, 133, 162, 0.2);
             box-shadow: 0 4px 20px rgba(255, 133, 162, 0.1);
         }
-        
+
         .album-nav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -181,20 +215,20 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .album-nav-title {
             font-family: 'Dancing Script', cursive;
             font-size: 1.5rem;
             color: var(--primary-color);
             font-weight: 700;
         }
-        
+
         .album-nav-controls {
             display: flex;
             gap: 1rem;
             align-items: center;
         }
-        
+
         /* Filter bar */
         .album-filter {
             display: flex;
@@ -203,21 +237,21 @@
             padding-bottom: 0.3rem;
             -webkit-overflow-scrolling: touch;
         }
-        
+
         .album-filter::-webkit-scrollbar {
             height: 4px;
         }
-        
+
         .album-filter::-webkit-scrollbar-track {
             background: rgba(255, 133, 162, 0.1);
             border-radius: 2px;
         }
-        
+
         .album-filter::-webkit-scrollbar-thumb {
             background: var(--primary-color);
             border-radius: 2px;
         }
-        
+
         .filter-btn {
             padding: 0.5rem 1rem;
             border-radius: 1.5rem;
@@ -232,15 +266,16 @@
             font-weight: 500;
             -webkit-tap-highlight-color: transparent;
         }
-        
-        .filter-btn:hover, .filter-btn.active {
+
+        .filter-btn:hover,
+        .filter-btn.active {
             background: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
             transform: translateY(0px);
             box-shadow: var(--shadow);
         }
-        
+
         /* View toggle bar */
         .view-toggle-bar {
             display: flex;
@@ -249,7 +284,7 @@
             padding-top: 0.8rem;
             border-top: 1px solid rgba(255, 133, 162, 0.2);
         }
-        
+
         .nav-btn {
             padding: 0.6rem 1.2rem;
             border-radius: 1.5rem;
@@ -267,30 +302,30 @@
             box-shadow: var(--shadow);
             -webkit-tap-highlight-color: transparent;
         }
-        
+
         .nav-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(255, 133, 162, 0.3);
         }
-        
+
         /* Main Content */
         .album-content {
             max-width: 1400px;
             margin: 0 auto;
             padding: 1.5rem 1rem;
         }
-        
+
         /* Grid View */
         .grid-view {
             display: block;
         }
-        
+
         .album-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 1rem;
         }
-        
+
         /* Album Card */
         .album-card {
             background: white;
@@ -306,38 +341,38 @@
             box-shadow: var(--shadow);
             -webkit-tap-highlight-color: transparent;
         }
-        
+
         @keyframes cardAppear {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-        
+
         .album-card:hover {
             transform: translateY(-5px);
             border-color: var(--primary-color);
             box-shadow: 0 10px 20px rgba(255, 133, 162, 0.2);
         }
-        
+
         .card-media {
             position: relative;
             width: 100%;
             height: 150px;
             overflow: hidden;
         }
-        
+
         .card-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.6s ease;
         }
-        
+
         .album-card:hover .card-img {
             transform: scale(1.1);
         }
-        
+
         /* Video Thumbnail Container */
         .video-thumbnail-container {
             position: relative;
@@ -345,13 +380,13 @@
             height: 100%;
             background: #f0f0f0;
         }
-        
+
         .video-thumbnail {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
+
         .video-play-overlay {
             position: absolute;
             top: 0;
@@ -365,11 +400,11 @@
             opacity: 0.8;
             transition: opacity 0.3s ease;
         }
-        
+
         .album-card:hover .video-play-overlay {
             opacity: 1;
         }
-        
+
         .play-button {
             width: 50px;
             height: 50px;
@@ -382,11 +417,11 @@
             font-size: 1.5rem;
             transition: transform 0.3s ease;
         }
-        
+
         .album-card:hover .play-button {
             transform: scale(1.1);
         }
-        
+
         .card-overlay {
             position: absolute;
             bottom: 0;
@@ -397,11 +432,11 @@
             transform: translateY(100%);
             transition: transform 0.4s ease;
         }
-        
+
         .album-card:hover .card-overlay {
             transform: translateY(0);
         }
-        
+
         .card-title {
             font-size: 0.9rem;
             margin-bottom: 0.3rem;
@@ -410,13 +445,13 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        
+
         .card-actions {
             display: flex;
             gap: 0.5rem;
             margin-top: 0.5rem;
         }
-        
+
         .card-btn {
             padding: 0.3rem 0.6rem;
             border-radius: 1rem;
@@ -431,16 +466,16 @@
             gap: 0.3rem;
             -webkit-tap-highlight-color: transparent;
         }
-        
+
         .card-btn:hover {
             background: var(--primary-color);
             transform: scale(1.05);
         }
-        
+
         .delete-btn:hover {
             background: #ff4d73;
         }
-        
+
         .type-indicator {
             position: absolute;
             top: 0.5rem;
@@ -455,23 +490,23 @@
             z-index: 2;
             background: white;
             color: var(--primary-color);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
-        
+
         /* Gallery View */
         .gallery-view {
             display: none;
         }
-        
+
         .gallery-view.active {
             display: block;
         }
-        
+
         .masonry-grid {
             columns: 4 120px;
             column-gap: 1rem;
         }
-        
+
         .masonry-item {
             break-inside: avoid;
             margin-bottom: 1rem;
@@ -484,26 +519,26 @@
             transform: scale(0.9);
             box-shadow: var(--shadow);
         }
-        
+
         @keyframes masonryAppear {
             to {
                 opacity: 1;
                 transform: scale(1);
             }
         }
-        
+
         .masonry-item:hover {
             transform: scale(1.03);
             box-shadow: 0 8px 16px rgba(255, 133, 162, 0.3);
         }
-        
+
         .masonry-img {
             width: 100%;
             height: auto;
             display: block;
             border-radius: 0.8rem;
         }
-        
+
         /* Back to Home */
         .back-home {
             position: fixed;
@@ -511,7 +546,7 @@
             left: 1rem;
             z-index: 100;
         }
-        
+
         .back-btn {
             width: 3.2rem;
             height: 3.2rem;
@@ -528,12 +563,12 @@
             transition: var(--transition);
             -webkit-tap-highlight-color: transparent;
         }
-        
+
         .back-btn:hover {
             transform: scale(1.1);
             box-shadow: 0 6px 15px rgba(255, 133, 162, 0.3);
         }
-        
+
         /* Add Content Button */
         .add-content-btn {
             position: fixed;
@@ -541,7 +576,7 @@
             right: 1rem;
             z-index: 100;
         }
-        
+
         .add-btn {
             width: 3.2rem;
             height: 3.2rem;
@@ -558,12 +593,12 @@
             transition: var(--transition);
             -webkit-tap-highlight-color: transparent;
         }
-        
+
         .add-btn:hover {
             transform: scale(1.1);
             box-shadow: 0 6px 15px rgba(76, 175, 80, 0.3);
         }
-        
+
         /* Modal */
         .modal {
             display: none;
@@ -578,19 +613,27 @@
             align-items: center;
             padding: 1rem;
         }
-        
+
         .modal-content {
-            max-width: 90%;
-            max-height: 90%;
+            max-width: 95%;
+            max-height: 95%;
             position: relative;
-        }
-        
-        .modal-img {
-            width: 100%;
+            width: auto;
             height: auto;
-            border-radius: 0.8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        
+
+        .modal-img {
+            max-width: 100%;
+            max-height: 95vh;
+            height: auto;
+            object-fit: contain;
+            border-radius: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
         .modal-close {
             position: absolute;
             top: -2rem;
@@ -608,12 +651,12 @@
             transition: var(--transition);
             -webkit-tap-highlight-color: transparent;
         }
-        
+
         .modal-close:hover {
             background: var(--primary-color);
             transform: rotate(90deg);
         }
-        
+
         /* Add Content Modal */
         .form-modal {
             display: none;
@@ -628,7 +671,7 @@
             align-items: center;
             padding: 1rem;
         }
-        
+
         .form-content {
             background: var(--white);
             padding: 1.5rem;
@@ -641,20 +684,20 @@
             box-shadow: 0 10px 30px rgba(255, 133, 162, 0.2);
             -webkit-overflow-scrolling: touch;
         }
-        
+
         .form-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.2rem;
         }
-        
+
         .form-title {
             font-family: 'Dancing Script', cursive;
             font-size: 1.5rem;
             color: var(--primary-color);
         }
-        
+
         .close-btn {
             background: none;
             border: none;
@@ -670,11 +713,11 @@
             transition: var(--transition);
             -webkit-tap-highlight-color: transparent;
         }
-        
+
         .close-btn:hover {
             background: var(--soft-pink);
         }
-        
+
         .upload-section {
             margin-top: 1.2rem;
             padding: 1rem;
@@ -682,7 +725,7 @@
             border-radius: 0.7rem;
             border: 2px dashed var(--secondary-color);
         }
-        
+
         .upload-title {
             font-size: 1rem;
             color: var(--primary-color);
@@ -691,14 +734,14 @@
             align-items: center;
             gap: 0.5rem;
         }
-        
+
         .upload-options {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 0.6rem;
             margin-bottom: 1rem;
         }
-        
+
         .upload-option-btn {
             padding: 0.8rem;
             border: 2px solid var(--secondary-color);
@@ -713,43 +756,130 @@
             text-align: center;
             -webkit-tap-highlight-color: transparent;
         }
-        
-        .upload-option-btn:hover {
+
+        .upload-option-btn:hover,
+        .upload-option-btn.active {
             border-color: var(--primary-color);
             background: var(--light-pink);
             transform: translateY(-2px);
         }
-        
-        .upload-option-btn.active {
-            border-color: var(--primary-color);
-            background: var(--light-pink);
-        }
-        
+
         .upload-option-btn i {
             font-size: 1.5rem;
             color: var(--primary-color);
         }
-        
+
         .hidden-file-input {
             display: none;
         }
-        
+
+        /* Content Type Selector */
+        .content-type-selector {
+            margin: 1.2rem 0;
+        }
+
+        .type-selector-title {
+            font-size: 1rem;
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .type-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.6rem;
+        }
+
+        .type-option {
+            padding: 1rem 0.5rem;
+            border: 2px solid var(--secondary-color);
+            background: white;
+            border-radius: 0.7rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .type-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .type-option.active {
+            border-width: 3px;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .type-option.photos.active {
+            border-color: var(--photo-color);
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.05));
+        }
+
+        .type-option.videos.active {
+            border-color: var(--video-color);
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(33, 150, 243, 0.05));
+        }
+
+        .type-option.memories.active {
+            border-color: var(--memory-color);
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(156, 39, 176, 0.05));
+        }
+
+        .type-option i {
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .type-option.photos i {
+            color: var(--photo-color);
+        }
+
+        .type-option.videos i {
+            color: var(--video-color);
+        }
+
+        .type-option.memories i {
+            color: var(--memory-color);
+        }
+
+        .type-option .type-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .type-option .type-desc {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-top: 0.2rem;
+        }
+
+        /* Upload Preview */
         .upload-preview {
             margin-top: 1rem;
             display: none;
         }
-        
+
         .upload-preview.active {
             display: block;
         }
-        
+
         .preview-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
             gap: 0.6rem;
             margin-top: 0.6rem;
         }
-        
+
         .preview-item {
             position: relative;
             width: 80px;
@@ -758,13 +888,14 @@
             overflow: hidden;
             border: 2px solid var(--secondary-color);
         }
-        
-        .preview-img, .preview-video {
+
+        .preview-img,
+        .preview-video {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
+
         .remove-preview {
             position: absolute;
             top: 0.2rem;
@@ -783,7 +914,7 @@
             z-index: 2;
             -webkit-tap-highlight-color: transparent;
         }
-        
+
         /* Upload Loading Indicator */
         .upload-loading {
             display: none;
@@ -793,11 +924,11 @@
             border-radius: 0.7rem;
             text-align: center;
         }
-        
+
         .upload-loading.active {
             display: block;
         }
-        
+
         .loading-spinner {
             display: inline-block;
             width: 2rem;
@@ -808,11 +939,13 @@
             animation: spin 1s linear infinite;
             margin-bottom: 0.5rem;
         }
-        
+
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
-        
+
         /* Progress Bar */
         .upload-progress {
             width: 100%;
@@ -822,14 +955,14 @@
             margin-top: 0.5rem;
             overflow: hidden;
         }
-        
+
         .progress-bar {
             height: 100%;
             background: linear-gradient(to right, var(--primary-color), var(--dark-pink));
             width: 0%;
             transition: width 0.3s ease;
         }
-        
+
         /* Video Indicator */
         .video-indicator {
             position: absolute;
@@ -845,18 +978,18 @@
             gap: 0.2rem;
             z-index: 1;
         }
-        
+
         .url-input-group {
             margin-top: 1rem;
             display: none;
         }
-        
+
         .form-group {
             display: flex;
             flex-direction: column;
             margin-bottom: 1rem;
         }
-        
+
         .form-label {
             margin-bottom: 0.4rem;
             font-weight: 600;
@@ -866,28 +999,30 @@
             gap: 0.5rem;
             font-size: 0.9rem;
         }
-        
-        .form-input, .form-textarea {
+
+        .form-input,
+        .form-textarea {
             padding: 0.6rem;
             border: 2px solid var(--secondary-color);
             border-radius: 0.6rem;
             font-family: 'Poppins', sans-serif;
             transition: var(--transition);
             background: white;
-            font-size: 16px; /* Mencegah zoom di iOS */
+            font-size: 16px;
         }
-        
-        .form-input:focus, .form-textarea:focus {
+
+        .form-input:focus,
+        .form-textarea:focus {
             border-color: var(--primary-color);
             outline: none;
             box-shadow: 0 0 0 3px rgba(255, 133, 162, 0.1);
         }
-        
+
         .form-textarea {
             min-height: 80px;
             resize: vertical;
         }
-        
+
         .form-actions {
             display: flex;
             justify-content: flex-end;
@@ -896,7 +1031,7 @@
             padding-top: 1.2rem;
             border-top: 1px solid var(--secondary-color);
         }
-        
+
         .form-btn {
             padding: 0.6rem 1.2rem;
             border-radius: 0.6rem;
@@ -910,33 +1045,33 @@
             gap: 0.5rem;
             -webkit-tap-highlight-color: transparent;
         }
-        
+
         .form-btn.primary {
             background: linear-gradient(135deg, var(--primary-color), var(--dark-pink));
             color: var(--white);
         }
-        
+
         .form-btn.primary:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow);
         }
-        
+
         .form-btn.secondary {
             background: var(--soft-pink);
             color: var(--text-color);
             border: 1px solid var(--secondary-color);
         }
-        
+
         .form-btn.secondary:hover {
             background: var(--light-pink);
         }
-        
+
         .form-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none !important;
         }
-        
+
         /* File size indicator */
         .file-size-info {
             font-size: 0.75rem;
@@ -944,7 +1079,7 @@
             margin-top: 0.5rem;
             text-align: center;
         }
-        
+
         /* Floating Hearts */
         .floating-hearts {
             position: fixed;
@@ -955,50 +1090,53 @@
             pointer-events: none;
             z-index: 1;
         }
-        
+
         .heart {
             position: absolute;
             color: rgba(255, 133, 162, 0.2);
             font-size: 1rem;
             animation: floatHeart 15s infinite linear;
         }
-        
+
         @keyframes floatHeart {
             0% {
                 transform: translateY(100vh) rotate(0deg);
                 opacity: 0;
             }
+
             10% {
                 opacity: 0.3;
             }
+
             90% {
                 opacity: 0.3;
             }
+
             100% {
                 transform: translateY(-100px) rotate(360deg);
                 opacity: 0;
             }
         }
-        
+
         /* Empty State */
         .empty-state {
             text-align: center;
             padding: 3rem 1rem;
             grid-column: 1 / -1;
         }
-        
+
         .empty-state-icon {
             font-size: 3rem;
             color: var(--secondary-color);
             margin-bottom: 1rem;
         }
-        
+
         .empty-state h3 {
             font-size: 1.2rem;
             margin-bottom: 0.8rem;
             color: var(--text-color);
         }
-        
+
         .empty-state p {
             max-width: 300px;
             margin: 0 auto;
@@ -1007,13 +1145,20 @@
             font-size: 0.9rem;
             opacity: 0.7;
         }
-        
+
         /* Delete Animation */
         @keyframes fadeOut {
-            from { opacity: 1; transform: scale(1); }
-            to { opacity: 0; transform: scale(0.8); }
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            to {
+                opacity: 0;
+                transform: scale(0.8);
+            }
         }
-        
+
         /* Message Notification */
         .message-notification {
             position: fixed;
@@ -1022,40 +1167,55 @@
             padding: 1rem 1.5rem;
             border-radius: 0.5rem;
             z-index: 3000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             animation: slideIn 0.3s ease;
             color: white;
             max-width: 300px;
             font-weight: 500;
             text-align: center;
+            word-wrap: break-word;
         }
-        
+
         .message-notification.info {
             background: var(--primary-color);
         }
-        
+
         .message-notification.warning {
             background: var(--warning-color);
         }
-        
+
         .message-notification.error {
             background: var(--error-color);
         }
-        
+
         .message-notification.success {
             background: var(--success-color);
         }
-        
+
         @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
-        
+
         @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
         }
-        
+
         /* File Info */
         .file-info {
             font-size: 0.7rem;
@@ -1066,7 +1226,7 @@
             padding: 0 0.2rem;
             word-break: break-all;
         }
-        
+
         /* Video Thumbnail Fallback */
         .video-thumbnail-fallback {
             width: 100%;
@@ -1078,7 +1238,7 @@
             color: white;
             font-size: 2rem;
         }
-        
+
         /* YouTube Thumbnail */
         .youtube-thumbnail {
             width: 100%;
@@ -1086,29 +1246,124 @@
             object-fit: cover;
             background: #000;
         }
-        
+
+        /* SOURCE SELECTOR MODAL */
+        .source-selector-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 3000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .source-selector-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .source-selector-title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+        }
+
+        .source-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .source-btn {
+            padding: 1rem;
+            border: none;
+            border-radius: 0.8rem;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .source-btn.gallery {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-pink));
+        }
+
+        .source-btn.gallery:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 133, 162, 0.3);
+        }
+
+        .source-btn.camera {
+            background: linear-gradient(135deg, var(--video-color), #1976D2);
+        }
+
+        .source-btn.camera:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .source-btn.cancel {
+            background: #f0f0f0;
+            color: #666;
+            margin-top: 1rem;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* DESKTOP HIDDEN ELEMENTS */
+        .desktop-hidden {
+            display: none;
+        }
+
         /* ==================== RESPONSIVE ==================== */
-        
+
         /* Tablet & HP */
         @media (max-width: 768px) {
             .album-main-title {
                 font-size: 2rem;
             }
-            
+
             .album-subtitle {
                 font-size: 0.8rem;
             }
-            
+
             .album-nav {
                 padding: 0.8rem;
             }
-            
+
             .album-nav-container {
                 flex-direction: column;
                 gap: 0.8rem;
                 align-items: stretch;
             }
-            
+
             .album-nav-title {
                 font-size: 1.4rem;
                 text-align: left;
@@ -1117,13 +1372,13 @@
                 padding-bottom: 0.5rem;
                 border-bottom: 1px solid rgba(255, 133, 162, 0.2);
             }
-            
+
             .album-nav-controls {
                 width: 100%;
                 flex-direction: column;
                 gap: 0.8rem;
             }
-            
+
             .album-filter {
                 width: 100%;
                 justify-content: flex-start;
@@ -1131,190 +1386,285 @@
                 overflow-x: auto;
                 padding-bottom: 0.4rem;
             }
-            
+
             .view-toggle-bar {
                 width: 100%;
                 justify-content: center;
                 margin-top: 0.5rem;
                 padding-top: 0.5rem;
             }
-            
+
             .nav-btn {
                 flex: 1;
                 justify-content: center;
                 font-size: 0.8rem;
                 padding: 0.5rem 0.8rem;
             }
-            
+
             .album-grid {
                 grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
                 gap: 0.8rem;
             }
-            
+
             .card-media {
                 height: 120px;
             }
-            
+
             .masonry-grid {
                 columns: 2 100px;
                 column-gap: 0.8rem;
             }
-            
+
             .form-content {
                 padding: 1rem;
                 max-height: 90vh;
                 margin: 0.5rem;
             }
-            
+
             .upload-options {
                 grid-template-columns: 1fr;
             }
-            
+
+            .type-options {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.4rem;
+            }
+
+            .type-option {
+                padding: 0.8rem 0.3rem;
+            }
+
+            .type-option i {
+                font-size: 1.5rem;
+            }
+
             .message-notification {
                 left: 1rem;
                 right: 1rem;
                 max-width: none;
                 top: 10px;
             }
-            
+
             .preview-container {
                 grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
                 gap: 0.5rem;
             }
-            
+
             .preview-item {
                 width: 70px;
                 height: 70px;
             }
-            
+
             .form-btn {
                 padding: 0.8rem 1rem;
                 font-size: 1rem;
                 flex: 1;
             }
-            
+
             .form-actions {
                 gap: 0.5rem;
             }
-            
+
             .play-button {
                 width: 40px;
                 height: 40px;
                 font-size: 1.2rem;
             }
+
+            /* Mobile only - show source selector */
+            .desktop-hidden {
+                display: block;
+            }
         }
-        
+
+        /* Desktop - hide source selector */
+        @media (min-width: 769px) {
+            .desktop-hidden {
+                display: none;
+            }
+
+            /* Override untuk desktop - langsung pilih file */
+            .upload-option-btn:first-child::after {
+                content: " (File Browser)";
+                font-size: 0.8rem;
+                opacity: 0.7;
+            }
+        }
+
         /* HP kecil */
         @media (max-width: 480px) {
             .album-main-title {
                 font-size: 1.7rem;
             }
-            
+
             .album-nav-title {
                 font-size: 1.3rem;
             }
-            
+
             .album-filter {
                 gap: 0.3rem;
             }
-            
+
             .filter-btn {
                 padding: 0.4rem 0.7rem;
                 font-size: 0.75rem;
             }
-            
+
             .nav-btn {
                 font-size: 0.75rem;
                 padding: 0.4rem 0.6rem;
             }
-            
+
             .album-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
+
             .masonry-grid {
                 columns: 1;
             }
-            
+
             .card-media {
                 height: 100px;
             }
-            
+
             .loading-heart {
                 font-size: 4rem;
             }
-            
+
             .loading-text {
                 font-size: 1.2rem;
             }
-            
-            .back-home, .add-content-btn {
+
+            .back-home,
+            .add-content-btn {
                 bottom: 0.8rem;
             }
-            
-            .back-btn, .add-btn {
+
+            .back-btn,
+            .add-btn {
                 width: 2.8rem;
                 height: 2.8rem;
                 font-size: 1rem;
             }
-            
+
+            .type-options {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.3rem;
+            }
+
+            .type-option {
+                padding: 0.7rem 0.2rem;
+            }
+
+            .type-option i {
+                font-size: 1.3rem;
+            }
+
+            .type-option .type-name {
+                font-size: 0.8rem;
+            }
+
+            .type-option .type-desc {
+                font-size: 0.7rem;
+            }
+
             .preview-container {
                 grid-template-columns: repeat(3, 1fr);
             }
-            
+
             .upload-option-btn {
                 padding: 1rem;
             }
-            
+
             .form-btn {
                 padding: 0.7rem 0.9rem;
                 font-size: 0.9rem;
             }
-            
+
             .play-button {
                 width: 35px;
                 height: 35px;
                 font-size: 1rem;
             }
+
+            .source-selector-content {
+                padding: 1.5rem;
+            }
+
+            .source-btn {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
         }
-        
+
         /* Very small phones */
         @media (max-width: 360px) {
             .album-main-title {
                 font-size: 1.5rem;
             }
-            
+
             .album-nav-title {
                 font-size: 1.2rem;
             }
-            
+
             .album-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 0.6rem;
             }
-            
+
+            .type-options {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.2rem;
+            }
+
+            .type-option {
+                padding: 0.6rem 0.1rem;
+            }
+
+            .type-option i {
+                font-size: 1.2rem;
+            }
+
+            .type-option .type-name {
+                font-size: 0.75rem;
+            }
+
+            .type-option .type-desc {
+                display: none;
+            }
+
             .preview-container {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
+
             .preview-item {
                 width: 65px;
                 height: 65px;
             }
-            
+
             .form-content {
                 padding: 0.8rem;
                 margin: 0.3rem;
             }
-            
+
             .play-button {
                 width: 30px;
                 height: 30px;
                 font-size: 0.9rem;
             }
+
+            .source-selector-content {
+                padding: 1rem;
+            }
+
+            .source-btn {
+                padding: 0.7rem;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
+
 <body>
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
@@ -1323,7 +1673,7 @@
         </div>
         <div class="loading-text">Memuat Album Kita...</div>
     </div>
-    
+
     <!-- Success Animation -->
     <div class="success-animation" id="successAnimation" style="display: none;">
         <div class="success-heart">
@@ -1331,35 +1681,35 @@
         </div>
         <div class="success-text">Tersimpan!</div>
     </div>
-    
+
     <!-- Floating Hearts -->
     <div class="floating-hearts" id="floatingHearts"></div>
-    
+
     <!-- Back to Home Button -->
     <div class="back-home">
         <button class="back-btn" id="backBtn" title="Kembali ke Beranda">
             <i class="fas fa-home"></i>
         </button>
     </div>
-    
+
     <!-- Add Content Button -->
     <div class="add-content-btn">
         <button class="add-btn" id="addContentBtn" title="Tambah Kenangan">
             <i class="fas fa-plus"></i>
         </button>
     </div>
-    
+
     <!-- Album Header -->
     <header class="album-header">
         <h1 class="album-main-title">Album Dava & Andiena</h1>
         <p class="album-subtitle">Kumpulan foto, video, dan kenangan indah kita bersama</p>
     </header>
-    
+
     <!-- Album Navigation -->
     <nav class="album-nav">
         <div class="album-nav-container">
             <div class="album-nav-title">Love Story</div>
-            
+
             <div class="album-nav-controls">
                 <!-- Baris atas untuk filter -->
                 <div class="album-filter">
@@ -1369,7 +1719,7 @@
                     <button class="filter-btn" data-filter="memories">Memori Spesial</button>
                     <button class="filter-btn" data-filter="favorites">Favorit</button>
                 </div>
-                
+
                 <!-- Baris bawah untuk view toggle -->
                 <div class="view-toggle-bar">
                     <button class="nav-btn" id="viewToggleBtn">
@@ -1379,7 +1729,7 @@
             </div>
         </div>
     </nav>
-    
+
     <!-- Main Content -->
     <main class="album-content">
         <!-- Grid View (Default) -->
@@ -1388,7 +1738,7 @@
                 <!-- Album items akan dimuat di sini -->
             </div>
         </div>
-        
+
         <!-- Gallery View -->
         <div class="gallery-view" id="galleryView">
             <div class="masonry-grid" id="masonryContainer">
@@ -1396,7 +1746,7 @@
             </div>
         </div>
     </main>
-    
+
     <!-- Photo Modal -->
     <div class="modal" id="photoModal">
         <div class="modal-content">
@@ -1404,7 +1754,7 @@
             <img class="modal-img" id="modalImg" src="" alt="Foto Kenangan">
         </div>
     </div>
-    
+
     <!-- Video Modal -->
     <div class="video-modal modal" id="videoModal">
         <div class="modal-content">
@@ -1414,7 +1764,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Add Content Modal -->
     <div class="form-modal" id="addContentModal">
         <div class="form-content">
@@ -1422,17 +1772,17 @@
                 <h3 class="form-title" id="formTitle">Tambah Kenangan</h3>
                 <button class="close-btn" id="closeFormBtn">&times;</button>
             </div>
-            
+
             <!-- Upload Section -->
             <div class="upload-section" id="uploadSection">
                 <h3 class="upload-title"><i class="fas fa-upload"></i> Unggah Kenangan</h3>
-                
+
                 <div class="upload-options">
                     <button type="button" class="upload-option-btn active" id="uploadOption1">
                         <i class="fas fa-images"></i>
                         <span>Pilih File</span>
                         <small>Foto & Video</small>
-                        <div class="file-size-info">Maks. 20MB per file</div>
+                        <div class="file-size-info">Tidak ada batasan ukuran file</div>
                     </button>
                     <button type="button" class="upload-option-btn" id="uploadOption2">
                         <i class="fas fa-link"></i>
@@ -1440,10 +1790,39 @@
                         <small>Link Online</small>
                     </button>
                 </div>
-                
-                <!-- Hidden File Input -->
-                <input type="file" class="hidden-file-input" id="fileInput" accept="image/*,video/*,.mp4,.mov,.avi,.webm,.mkv" multiple>
-                
+
+                <!-- Hidden File Inputs -->
+                <input type="file" class="hidden-file-input" id="fileInputGallery"
+                    accept="image/*,video/*,.mp4,.mov,.avi,.webm,.mkv,.3gp,.m4v,.wmv,.flv" multiple>
+
+                <input type="file" class="hidden-file-input desktop-hidden" id="fileInputCamera"
+                    accept="image/*,video/*" capture="environment">
+
+                <!-- Type Selector -->
+                <div class="content-type-selector" id="contentTypeSelector">
+                    <h3 class="type-selector-title"><i class="fas fa-tag"></i> Pilih Tipe Kenangan</h3>
+                    <div class="type-options">
+                        <div class="type-option photos active" data-type="photos">
+                            <div class="active-indicator"></div>
+                            <i class="fas fa-camera"></i>
+                            <div class="type-name">Foto</div>
+                            <div class="type-desc">Momen sehari-hari</div>
+                        </div>
+                        <div class="type-option videos" data-type="videos">
+                            <div class="active-indicator"></div>
+                            <i class="fas fa-video"></i>
+                            <div class="type-name">Video</div>
+                            <div class="type-desc">Kenangan bergerak</div>
+                        </div>
+                        <div class="type-option memories" data-type="memories">
+                            <div class="active-indicator"></div>
+                            <i class="fas fa-heart"></i>
+                            <div class="type-name">Memori Spesial</div>
+                            <div class="type-desc">Momen berharga</div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Preview -->
                 <div class="upload-preview" id="uploadPreview">
                     <h4 style="font-size: 0.9rem; margin-bottom: 0.5rem;">Pratinjau:</h4>
@@ -1451,7 +1830,7 @@
                         <!-- Preview items akan ditambahkan di sini -->
                     </div>
                 </div>
-                
+
                 <!-- Upload Loading Indicator -->
                 <div class="upload-loading" id="uploadLoading">
                     <div class="loading-spinner"></div>
@@ -1460,37 +1839,39 @@
                         <div class="progress-bar" id="progressBar"></div>
                     </div>
                 </div>
-                
+
                 <!-- URL Input -->
                 <div class="url-input-group" id="urlInputGroup">
                     <div class="form-group">
                         <label class="form-label" for="itemUrl">
                             <i class="fas fa-link"></i> URL Gambar/Video
                         </label>
-                        <input type="text" class="form-input" id="itemUrl" placeholder="Masukkan URL gambar atau video (YouTube, dll)">
+                        <input type="text" class="form-input" id="itemUrl"
+                            placeholder="Masukkan URL gambar atau video (YouTube, dll)">
                     </div>
                 </div>
             </div>
-            
+
             <!-- Form -->
             <form class="editor-form" id="itemForm">
                 <input type="hidden" id="itemId" value="">
                 <input type="hidden" id="itemType" value="photos">
-                
+
                 <div class="form-group">
                     <label class="form-label" for="itemTitle">
                         <i class="fas fa-heading"></i> Judul
                     </label>
                     <input type="text" class="form-input" id="itemTitle" placeholder="Masukkan judul (opsional)">
                 </div>
-                
+
                 <div class="form-group">
                     <label class="form-label" for="itemDescription">
                         <i class="fas fa-align-left"></i> Deskripsi
                     </label>
-                    <textarea class="form-textarea" id="itemDescription" placeholder="Tuliskan deskripsi (opsional)"></textarea>
+                    <textarea class="form-textarea" id="itemDescription"
+                        placeholder="Tuliskan deskripsi (opsional)"></textarea>
                 </div>
-                
+
                 <div class="form-actions">
                     <button type="button" class="form-btn secondary" id="cancelBtn">
                         <i class="fas fa-times"></i> Batal
@@ -1503,12 +1884,37 @@
         </div>
     </div>
 
+    <!-- Source Selector Modal (Mobile Only) -->
+    <div class="source-selector-modal desktop-hidden" id="sourceSelectorModal" style="display: none;">
+        <div class="source-selector-content">
+            <h3 class="source-selector-title">Pilih Sumber</h3>
+            <div class="source-options">
+                <button class="source-btn gallery" id="selectGallery">
+                    <i class="fas fa-images"></i>
+                    Galeri Perangkat
+                </button>
+                <button class="source-btn camera" id="selectCamera">
+                    <i class="fas fa-camera"></i>
+                    Ambil Foto/Video
+                </button>
+                <button class="source-btn cancel" id="cancelSource">
+                    <i class="fas fa-times"></i>
+                    Batal
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ==================== KONFIGURASI ====================
         const STORAGE_KEY = 'davaAndienaMemories';
-        const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
-        const MAX_FILES_MOBILE = 5; // Batas file untuk mobile
-        
+        const MEDIA_STORAGE_KEY = 'davaAndienaMedia_';
+        const INDEXED_DB_NAME = 'DavaAndienaAlbumDB';
+        const INDEXED_DB_VERSION = 1;
+
+        // Deteksi device
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
         // Data default dengan video thumbnail
         const defaultData = {
             photos: [
@@ -1557,24 +1963,25 @@
         };
 
         // ==================== STATE APLIKASI ====================
-        let albumData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultData;
+        let albumData = null;
         let currentFilter = 'all';
         let isGalleryView = false;
         let allItems = [];
-        
+        let db = null;
+
         // State untuk upload
         let uploadedFiles = [];
-        let uploadedPreviewURLs = []; // Hanya untuk preview (objectURL)
+        let uploadedPreviewURLs = [];
         let currentUploadMode = 'gallery';
         let isUploading = false;
-        
+
         let isEditing = false;
         let currentEditId = null;
         let currentEditType = null;
-        
-        // Deteksi device
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        const MAX_FILES = isMobile ? MAX_FILES_MOBILE : 10;
+
+        // Variabel untuk mencegah multiple submission
+        let isSaving = false;
+        let lastMessageTime = 0;
 
         // ==================== ELEMEN DOM ====================
         const loadingScreen = document.getElementById('loadingScreen');
@@ -1582,29 +1989,29 @@
         const floatingHearts = document.getElementById('floatingHearts');
         const backBtn = document.getElementById('backBtn');
         const addContentBtn = document.getElementById('addContentBtn');
-        
+
         // Containers
         const albumGridContainer = document.getElementById('albumGridContainer');
         const masonryContainer = document.getElementById('masonryContainer');
-        
+
         // Views
         const gridView = document.getElementById('gridView');
         const galleryView = document.getElementById('galleryView');
-        
+
         // Navigation
         const filterBtns = document.querySelectorAll('.filter-btn');
         const viewToggleBtn = document.getElementById('viewToggleBtn');
         const viewToggleText = document.getElementById('viewToggleText');
-        
+
         // Modals
         const photoModal = document.getElementById('photoModal');
         const modalImg = document.getElementById('modalImg');
         const modalClose = document.getElementById('modalClose');
-        
+
         const videoModal = document.getElementById('videoModal');
         const videoModalPlayer = document.getElementById('videoModalPlayer');
         const videoModalClose = document.getElementById('videoModalClose');
-        
+
         // Add Content Modal Elements
         const addContentModal = document.getElementById('addContentModal');
         const closeFormBtn = document.getElementById('closeFormBtn');
@@ -1617,45 +2024,404 @@
         const itemTitle = document.getElementById('itemTitle');
         const itemDescription = document.getElementById('itemDescription');
         const itemUrl = document.getElementById('itemUrl');
-        
+        const contentTypeSelector = document.getElementById('contentTypeSelector');
+        const typeOptions = document.querySelectorAll('.type-option');
+
         // Upload elements
         const uploadOption1 = document.getElementById('uploadOption1');
         const uploadOption2 = document.getElementById('uploadOption2');
-        const fileInput = document.getElementById('fileInput');
+        const fileInputGallery = document.getElementById('fileInputGallery');
+        const fileInputCamera = document.getElementById('fileInputCamera');
         const uploadPreview = document.getElementById('uploadPreview');
         const previewContainer = document.getElementById('previewContainer');
         const urlInputGroup = document.getElementById('urlInputGroup');
-        
+
         // Loading elements
         const uploadLoading = document.getElementById('uploadLoading');
         const loadingCount = document.getElementById('loadingCount');
         const totalCount = document.getElementById('totalCount');
         const progressBar = document.getElementById('progressBar');
 
-        // ==================== FUNGSI UTAMA ====================
-        
-        function init() {
-            prepareAllItems();
-            setupEventListeners();
-            createFloatingHearts();
-            loadContent();
-            
-            setTimeout(() => {
-                loadingScreen.classList.add('hidden');
-            }, 1000);
+        // Source Selector Modal (Mobile)
+        const sourceSelectorModal = document.getElementById('sourceSelectorModal');
+        const selectGallery = document.getElementById('selectGallery');
+        const selectCamera = document.getElementById('selectCamera');
+        const cancelSource = document.getElementById('cancelSource');
+
+        // ==================== INDEXEDDB SYSTEM ====================
+
+        async function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(INDEXED_DB_NAME, INDEXED_DB_VERSION);
+
+                request.onerror = (event) => {
+                    console.error('IndexedDB error:', event.target.error);
+                    reject(event.target.error);
+                };
+
+                request.onsuccess = (event) => {
+                    db = event.target.result;
+                    console.log('IndexedDB initialized');
+                    resolve(db);
+                };
+
+                request.onupgradeneeded = (event) => {
+                    const db = event.target.result;
+
+                    // Buat object store untuk metadata
+                    if (!db.objectStoreNames.contains('metadata')) {
+                        const metadataStore = db.createObjectStore('metadata', { keyPath: 'id' });
+                        metadataStore.createIndex('type', 'type', { unique: false });
+                        metadataStore.createIndex('favorite', 'favorite', { unique: false });
+                        metadataStore.createIndex('date', 'date', { unique: false });
+                    }
+
+                    // Buat object store untuk media (file besar)
+                    if (!db.objectStoreNames.contains('media')) {
+                        const mediaStore = db.createObjectStore('media', { keyPath: 'id' });
+                        console.log('Media store created');
+                    }
+                };
+            });
         }
-        
-        function saveData() {
+
+        async function saveToIndexedDB(item) {
+            if (!db) {
+                await initDB();
+            }
+
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(['metadata', 'media'], 'readwrite');
+
+                // Simpan metadata
+                const metadataStore = transaction.objectStore('metadata');
+                const mediaStore = transaction.objectStore('media');
+
+                // Ekstrak media data (base64)
+                const mediaData = item.src || item.photo;
+                const itemId = item.id || Date.now();
+
+                // Siapkan metadata tanpa media data
+                const metadata = {
+                    id: itemId,
+                    title: item.title || '',
+                    description: item.description || '',
+                    date: item.date || getCurrentDate(),
+                    type: item.type || 'photos',
+                    favorite: item.favorite || false,
+                    hasMedia: true
+                };
+
+                if (item.type === 'memories') {
+                    metadata.photoKey = `photo_${itemId}`;
+                } else {
+                    metadata.srcKey = `src_${itemId}`;
+                    if (item.thumbnail) {
+                        metadata.thumbnailKey = `thumb_${itemId}`;
+                    }
+                }
+
+                // Simpan metadata
+                const metadataRequest = metadataStore.put(metadata);
+
+                metadataRequest.onsuccess = () => {
+                    // Simpan media data ke store terpisah
+                    const mediaItem = {
+                        id: item.type === 'memories' ? `photo_${itemId}` : `src_${itemId}`,
+                        data: mediaData,
+                        type: item.type === 'videos' ? 'video' : 'image',
+                        timestamp: Date.now()
+                    };
+
+                    const mediaRequest = mediaStore.put(mediaItem);
+
+                    mediaRequest.onsuccess = () => {
+                        // Jika ada thumbnail, simpan juga
+                        if (item.thumbnail && item.type === 'videos') {
+                            const thumbItem = {
+                                id: `thumb_${itemId}`,
+                                data: item.thumbnail,
+                                type: 'image',
+                                timestamp: Date.now()
+                            };
+
+                            mediaStore.put(thumbItem);
+                        }
+
+                        resolve(true);
+                    };
+
+                    mediaRequest.onerror = (event) => {
+                        console.error('Error saving media:', event.target.error);
+                        reject(event.target.error);
+                    };
+                };
+
+                metadataRequest.onerror = (event) => {
+                    console.error('Error saving metadata:', event.target.error);
+                    reject(event.target.error);
+                };
+
+                transaction.oncomplete = () => {
+                    console.log('Transaction completed');
+                };
+
+                transaction.onerror = (event) => {
+                    console.error('Transaction error:', event.target.error);
+                    reject(event.target.error);
+                };
+            });
+        }
+
+        async function loadFromIndexedDB() {
+            if (!db) {
+                await initDB();
+            }
+
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(['metadata', 'media'], 'readonly');
+                const metadataStore = transaction.objectStore('metadata');
+                const mediaStore = transaction.objectStore('media');
+
+                const metadataRequest = metadataStore.getAll();
+                const result = {
+                    photos: [],
+                    videos: [],
+                    memories: []
+                };
+
+                metadataRequest.onsuccess = async (event) => {
+                    const allMetadata = event.target.result;
+
+                    // Load media data untuk setiap item
+                    for (const metadata of allMetadata) {
+                        try {
+                            const mediaKey = metadata.srcKey || metadata.photoKey;
+                            if (mediaKey) {
+                                const mediaData = await getMediaData(mediaKey);
+
+                                const item = {
+                                    id: metadata.id,
+                                    title: metadata.title,
+                                    description: metadata.description,
+                                    date: metadata.date,
+                                    type: metadata.type,
+                                    favorite: metadata.favorite
+                                };
+
+                                if (metadata.type === 'memories') {
+                                    item.photo = mediaData;
+                                } else {
+                                    item.src = mediaData;
+
+                                    // Load thumbnail jika ada
+                                    if (metadata.thumbnailKey) {
+                                        const thumbData = await getMediaData(metadata.thumbnailKey);
+                                        if (thumbData) {
+                                            item.thumbnail = thumbData;
+                                        }
+                                    }
+                                }
+
+                                // Tambahkan ke kategori yang sesuai
+                                if (metadata.type === 'photos') {
+                                    result.photos.push(item);
+                                } else if (metadata.type === 'videos') {
+                                    result.videos.push(item);
+                                } else if (metadata.type === 'memories') {
+                                    result.memories.push(item);
+                                }
+                            }
+                        } catch (error) {
+                            console.error('Error loading item:', error);
+                        }
+                    }
+
+                    resolve(result);
+                };
+
+                metadataRequest.onerror = (event) => {
+                    reject(event.target.error);
+                };
+            });
+        }
+
+        async function getMediaData(key) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject(new Error('Database not initialized'));
+                    return;
+                }
+
+                const transaction = db.transaction(['media'], 'readonly');
+                const mediaStore = transaction.objectStore('media');
+                const request = mediaStore.get(key);
+
+                request.onsuccess = (event) => {
+                    const result = event.target.result;
+                    resolve(result ? result.data : null);
+                };
+
+                request.onerror = (event) => {
+                    reject(event.target.error);
+                };
+            });
+        }
+
+        async function deleteFromIndexedDB(itemId, type) {
+            if (!db) {
+                await initDB();
+            }
+
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(['metadata', 'media'], 'readwrite');
+                const metadataStore = transaction.objectStore('metadata');
+                const mediaStore = transaction.objectStore('media');
+
+                // Hapus metadata
+                const metadataRequest = metadataStore.delete(itemId);
+
+                metadataRequest.onsuccess = () => {
+                    // Hapus media data terkait
+                    const mediaKeys = [];
+
+                    if (type === 'memories') {
+                        mediaKeys.push(`photo_${itemId}`);
+                    } else {
+                        mediaKeys.push(`src_${itemId}`);
+                        mediaKeys.push(`thumb_${itemId}`);
+                    }
+
+                    let deleteCount = 0;
+                    const totalToDelete = mediaKeys.length;
+
+                    mediaKeys.forEach(key => {
+                        const deleteRequest = mediaStore.delete(key);
+
+                        deleteRequest.onsuccess = () => {
+                            deleteCount++;
+                            if (deleteCount === totalToDelete) {
+                                resolve(true);
+                            }
+                        };
+
+                        deleteRequest.onerror = (event) => {
+                            console.error('Error deleting media:', event.target.error);
+                            deleteCount++;
+                            if (deleteCount === totalToDelete) {
+                                resolve(true);
+                            }
+                        };
+                    });
+
+                    if (totalToDelete === 0) {
+                        resolve(true);
+                    }
+                };
+
+                metadataRequest.onerror = (event) => {
+                    reject(event.target.error);
+                };
+            });
+        }
+
+        // ==================== FUNGSI UTAMA ====================
+
+        async function init() {
             try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(albumData));
-            } catch (e) {
-                showMessage('Gagal menyimpan, storage penuh!', 'error');
+                // Coba load dari IndexedDB terlebih dahulu
+                try {
+                    await initDB();
+                    const indexedDBData = await loadFromIndexedDB();
+
+                    // Validasi data dari IndexedDB
+                    if (indexedDBData &&
+                        (indexedDBData.photos.length > 0 ||
+                            indexedDBData.videos.length > 0 ||
+                            indexedDBData.memories.length > 0)) {
+                        albumData = indexedDBData;
+                    } else {
+                        // Fallback ke localStorage jika IndexedDB kosong
+                        await loadData();
+                    }
+                } catch (error) {
+                    console.error('Error loading from IndexedDB, falling back:', error);
+                    await loadData();
+                }
+
+                prepareAllItems();
+                setupEventListeners();
+                createFloatingHearts();
+                loadContent();
+
+                setTimeout(() => {
+                    loadingScreen.classList.add('hidden');
+                }, 1000);
+            } catch (error) {
+                console.error('Error initializing:', error);
+                showMessage('Gagal memuat album', 'error');
+                loadingScreen.classList.add('hidden');
             }
         }
-        
+
+        async function loadData() {
+            try {
+                const savedData = localStorage.getItem(STORAGE_KEY);
+                if (savedData) {
+                    const parsed = JSON.parse(savedData);
+                    // Validasi data
+                    if (parsed && typeof parsed === 'object') {
+                        albumData = parsed;
+                        // Pastikan semua array ada
+                        if (!albumData.photos) albumData.photos = [];
+                        if (!albumData.videos) albumData.videos = [];
+                        if (!albumData.memories) albumData.memories = [];
+                        return;
+                    }
+                }
+                // Jika tidak ada data atau data corrupt, gunakan default
+                albumData = JSON.parse(JSON.stringify(defaultData));
+                await saveData();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                albumData = JSON.parse(JSON.stringify(defaultData));
+                await saveData();
+            }
+        }
+
+        async function saveData() {
+            try {
+                // Untuk data default atau kecil, tetap simpan di localStorage
+                const dataToSave = {
+                    photos: albumData.photos || [],
+                    videos: albumData.videos || [],
+                    memories: albumData.memories || []
+                };
+
+                const dataString = JSON.stringify(dataToSave);
+
+                try {
+                    localStorage.setItem(STORAGE_KEY, dataString);
+                    console.log('Data saved to localStorage');
+                } catch (e) {
+                    console.log('localStorage full, only saving to IndexedDB');
+                }
+
+                return true;
+            } catch (e) {
+                console.error('Error in saveData:', e);
+                return true;
+            }
+        }
+
+        function getCurrentDate() {
+            const today = new Date();
+            return `${today.getDate().toString().padStart(2, '0')}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getFullYear()}`;
+        }
+
         function prepareAllItems() {
             allItems = [];
-            
+
             albumData.photos.forEach(photo => {
                 allItems.push({
                     ...photo,
@@ -1663,17 +2429,16 @@
                     category: 'photos'
                 });
             });
-            
+
             albumData.videos.forEach(video => {
                 allItems.push({
                     ...video,
                     displayType: 'video',
                     category: 'videos',
-                    // Tambah thumbnail jika belum ada
                     thumbnail: video.thumbnail || getVideoThumbnail(video.src)
                 });
             });
-            
+
             albumData.memories.forEach(memory => {
                 allItems.push({
                     ...memory,
@@ -1682,206 +2447,126 @@
                     category: 'memories'
                 });
             });
-            
-            allItems.sort((a, b) => b.id - a.id);
+
+            // Sort by date descending
+            allItems.sort((a, b) => {
+                try {
+                    const dateA = parseDate(a.date);
+                    const dateB = parseDate(b.date);
+                    return dateB - dateA;
+                } catch (e) {
+                    return b.id - a.id;
+                }
+            });
         }
-        
+
         // ==================== FUNGSI THUMBNAIL VIDEO ====================
-        
-        // Fungsi untuk mendapatkan thumbnail video dari YouTube
+
         function getYouTubeThumbnail(url) {
             try {
                 const videoId = extractYouTubeId(url);
                 if (!videoId) return null;
-                
-                // Coba beberapa kualitas thumbnail YouTube
-                const qualities = ['maxresdefault', 'hqdefault', 'mqdefault', 'sddefault'];
-                
-                for (const quality of qualities) {
-                    const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/${quality}.jpg`;
-                    // Di production, Anda bisa melakukan HEAD request untuk cek apakah thumbnail ada
-                    // Tapi untuk simplicity, kita langsung return
-                    return thumbnailUrl;
-                }
-                
-                return `https://img.youtube.com/vi/${videoId}/0.jpg`;
+                return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
             } catch (error) {
                 console.error('Error getting YouTube thumbnail:', error);
                 return null;
             }
         }
-        
-        // Fungsi untuk generate thumbnail dari video file (dataURL)
-        function generateVideoThumbnail(videoUrl) {
-            return new Promise((resolve) => {
-                // Jika YouTube URL, gunakan YouTube thumbnail
-                if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
-                    const thumbnail = getYouTubeThumbnail(videoUrl);
-                    if (thumbnail) {
-                        resolve(thumbnail);
-                        return;
-                    }
-                }
-                
-                // Jika dataURL (video yang diupload), coba buat thumbnail
-                if (videoUrl.startsWith('data:video/')) {
-                    const video = document.createElement('video');
-                    video.src = videoUrl;
-                    video.crossOrigin = 'anonymous';
-                    
-                    // Capture frame pertama
-                    video.addEventListener('loadeddata', () => {
-                        try {
-                            // Set current time untuk ambil frame
-                            video.currentTime = 0.1;
-                        } catch (e) {
-                            // Fallback jika gagal
-                            resolve(null);
-                        }
-                    });
-                    
-                    video.addEventListener('seeked', () => {
-                        try {
-                            const canvas = document.createElement('canvas');
-                            canvas.width = video.videoWidth || 300;
-                            canvas.height = video.videoHeight || 200;
-                            const ctx = canvas.getContext('2d');
-                            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                            
-                            const thumbnail = canvas.toDataURL('image/jpeg', 0.7);
-                            resolve(thumbnail);
-                        } catch (e) {
-                            resolve(null);
-                        }
-                    });
-                    
-                    // Timeout fallback
-                    setTimeout(() => {
-                        resolve(null);
-                    }, 2000);
-                } else {
-                    // Untuk URL video lain, gunakan fallback
-                    resolve(null);
-                }
-            });
-        }
-        
-        // Fungsi helper untuk mendapatkan thumbnail video
-        function getVideoThumbnail(videoUrl) {
-            // Jika sudah ada thumbnail di data, gunakan itu
-            const videoItem = albumData.videos.find(v => v.src === videoUrl);
-            if (videoItem && videoItem.thumbnail) {
-                return videoItem.thumbnail;
-            }
-            
-            // Jika YouTube, generate thumbnail URL
-            if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
-                return getYouTubeThumbnail(videoUrl);
-            }
-            
-            // Untuk video lain, return null (akan menggunakan fallback)
-            return null;
-        }
-        
-        // Extract YouTube ID
+
         function extractYouTubeId(url) {
             const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
             const match = url.match(regExp);
             return (match && match[2].length === 11) ? match[2] : null;
         }
-        
+
+        function getVideoThumbnail(videoUrl) {
+            const videoItem = albumData.videos.find(v => v.src === videoUrl);
+            if (videoItem && videoItem.thumbnail) {
+                return videoItem.thumbnail;
+            }
+
+            if (videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be')) {
+                return getYouTubeThumbnail(videoUrl);
+            }
+
+            return null;
+        }
+
+        function parseDate(dateStr) {
+            try {
+                const [day, month, year] = dateStr.split('-').map(Number);
+                return new Date(year, month - 1, day);
+            } catch (e) {
+                return new Date();
+            }
+        }
+
         function createFloatingHearts() {
             floatingHearts.innerHTML = '';
-            
+
             for (let i = 0; i < 15; i++) {
                 const heart = document.createElement('div');
                 heart.className = 'heart';
                 heart.innerHTML = '<i class="fas fa-heart"></i>';
-                
+
                 heart.style.left = `${Math.random() * 100}%`;
                 heart.style.animationDelay = `${Math.random() * 5}s`;
                 heart.style.animationDuration = `${10 + Math.random() * 10}s`;
                 heart.style.fontSize = `${0.8 + Math.random() * 1}rem`;
-                
+
                 floatingHearts.appendChild(heart);
             }
         }
-        
+
         // ==================== NOTIFICATION SYSTEM ====================
-        
-        function showMessage(text, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `message-notification ${type}`;
-            notification.textContent = text;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
+
+        function showMessage(text, type = 'info', duration = 3000) {
+            const now = Date.now();
+            if (now - lastMessageTime < 500) return;
+
+            lastMessageTime = now;
+
+            // Hapus notifikasi sebelumnya
+            const existingNotifications = document.querySelectorAll('.message-notification');
+            existingNotifications.forEach(notification => {
                 notification.style.animation = 'slideOut 0.3s ease forwards';
                 setTimeout(() => {
                     if (notification.parentNode) {
                         notification.parentNode.removeChild(notification);
                     }
                 }, 300);
-            }, 3000);
+            });
+
+            setTimeout(() => {
+                const notification = document.createElement('div');
+                notification.className = `message-notification ${type}`;
+                notification.textContent = text;
+
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease forwards';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 300);
+                }, duration);
+            }, 100);
         }
-        
+
         // ==================== ANIMASI SUKSES ====================
-        
+
         function showSuccessAnimation() {
             successAnimation.style.display = 'flex';
-            
-            for (let i = 0; i < 8; i++) {
-                setTimeout(() => {
-                    createFloatingSuccessHeart();
-                }, i * 100);
-            }
-            
+
             setTimeout(() => {
                 successAnimation.style.display = 'none';
             }, 2000);
         }
-        
-        function createFloatingSuccessHeart() {
-            const heart = document.createElement('div');
-            heart.innerHTML = '<i class="fas fa-heart"></i>';
-            heart.style.cssText = `
-                position: fixed;
-                color: var(--primary-color);
-                font-size: ${1 + Math.random() * 1}rem;
-                top: 50%;
-                left: 50%;
-                z-index: 2501;
-                animation: floatSuccessHeart 1.5s ease forwards;
-            `;
-            
-            document.body.appendChild(heart);
-            
-            setTimeout(() => {
-                if (heart.parentNode) {
-                    heart.parentNode.removeChild(heart);
-                }
-            }, 1500);
-        }
-        
-        // Tambahkan keyframe untuk animasi success heart
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes floatSuccessHeart {
-                0% {
-                    transform: translate(-50%, -50%) scale(0.5);
-                    opacity: 1;
-                }
-                100% {
-                    transform: translate(${Math.random() * 200 - 100}px, ${Math.random() * -100 - 50}px) scale(1);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-        
+
         // ==================== LOAD KONTEN ====================
-        
+
         function loadContent() {
             if (isGalleryView) {
                 loadMasonryItems();
@@ -1889,69 +2574,67 @@
                 loadGridItems();
             }
         }
-        
+
         function loadGridItems() {
             albumGridContainer.innerHTML = '';
             const filteredItems = filterItems(allItems);
-            
+
             if (filteredItems.length === 0) {
                 albumGridContainer.innerHTML = createEmptyState('Tidak ada kenangan yang sesuai filter');
                 return;
             }
-            
+
             filteredItems.forEach((item, index) => {
                 const card = createCardElement(item);
                 card.style.animationDelay = `${index * 0.05}s`;
                 albumGridContainer.appendChild(card);
             });
         }
-        
+
         function loadMasonryItems() {
             masonryContainer.innerHTML = '';
             const filteredItems = filterItems(allItems);
-            
+
             if (filteredItems.length === 0) {
                 masonryContainer.innerHTML = createEmptyState('Tidak ada kenangan yang sesuai filter');
                 return;
             }
-            
+
             filteredItems.forEach((item, index) => {
                 const masonryItem = createMasonryElement(item);
                 masonryItem.style.animationDelay = `${index * 0.05}s`;
                 masonryContainer.appendChild(masonryItem);
             });
         }
-        
+
         function filterItems(items) {
             if (currentFilter === 'all') return items;
             if (currentFilter === 'favorites') return items.filter(item => item.favorite);
             return items.filter(item => item.category === currentFilter);
         }
-        
+
         // ==================== ELEMEN KREATOR ====================
-        
+
         function createCardElement(item) {
             const card = document.createElement('div');
             card.className = 'album-card';
             card.dataset.id = item.id;
             card.dataset.type = item.category;
-            
+
             const isVideo = item.category === 'videos';
             const isMemory = item.category === 'memories';
             const typeIcon = isVideo ? 'fas fa-play' : (isMemory ? 'fas fa-heart' : 'fas fa-camera');
-            
+
             let imgSrc = item.src;
             let isYouTube = false;
             let hasThumbnail = false;
-            
+
             // Handle video thumbnail
             if (isVideo) {
-                // Cek apakah ada thumbnail
                 if (item.thumbnail) {
                     imgSrc = item.thumbnail;
                     hasThumbnail = true;
                 } else if (item.src.includes('youtube.com') || item.src.includes('youtu.be')) {
-                    // Generate YouTube thumbnail
                     const videoId = extractYouTubeId(item.src);
                     if (videoId) {
                         imgSrc = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
@@ -1959,32 +2642,30 @@
                         hasThumbnail = true;
                     }
                 }
-                
-                // Jika tidak ada thumbnail, gunakan fallback
+
                 if (!hasThumbnail) {
                     imgSrc = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY3ZWVhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPjx0c3BhbiBkeT0iLTAuNWVtIj7inaTvuI88L3RzcGFuPjx0c3BhbiBkeT0iMC41ZW0iPlZpZGVvPC90c3Bhbj48L3RleHQ+PC9zdmc+';
                 }
             } else {
-                // Untuk foto dan memori
                 if (!imgSrc || imgSrc === '') {
                     imgSrc = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
                 }
             }
-            
+
             card.innerHTML = `
                 <div class="type-indicator">
                     <i class="${typeIcon}"></i>
                 </div>
-                
+
                 <div class="card-media">
                     ${isVideo ? `
                         <div class="video-thumbnail-container">
-                            ${hasThumbnail ? 
-                                `<img src="${imgSrc}" alt="${item.title || 'Video'}" class="${isYouTube ? 'youtube-thumbnail' : 'video-thumbnail'}" loading="lazy">` :
-                                `<div class="video-thumbnail-fallback">
+                            ${hasThumbnail ?
+                        `<img src="${imgSrc}" alt="${item.title || 'Video'}" class="${isYouTube ? 'youtube-thumbnail' : 'video-thumbnail'}" loading="lazy">` :
+                        `<div class="video-thumbnail-fallback">
                                     <i class="fas fa-play-circle"></i>
                                 </div>`
-                            }
+                    }
                             <div class="video-play-overlay">
                                 <div class="play-button">
                                     <i class="fas fa-play"></i>
@@ -1994,7 +2675,7 @@
                     ` : `
                         <img src="${imgSrc}" alt="${item.title || 'Kenangan'}" class="card-img" loading="lazy">
                     `}
-                    
+
                     <div class="card-overlay">
                         <h3 class="card-title">${item.title || 'Tanpa Judul'}</h3>
                         <div class="card-actions">
@@ -2011,7 +2692,7 @@
                     </div>
                 </div>
             `;
-            
+
             card.querySelector('.view-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
                 if (isVideo) {
@@ -2020,8 +2701,7 @@
                     viewPhoto(item);
                 }
             });
-            
-            // Tambah event listener untuk klik di area video
+
             if (isVideo) {
                 card.querySelector('.video-thumbnail-container').addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -2032,21 +2712,21 @@
                     viewPhoto(item);
                 });
             }
-            
+
             card.querySelector('.favorite-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
                 toggleFavorite(item, card);
             });
-            
+
             card.querySelector('.delete-btn').addEventListener('click', (e) => {
                 e.stopPropagation();
                 deleteItem(item, card);
             });
-            
+
             // Handle image error
             const imgElement = card.querySelector('img');
             if (imgElement) {
-                imgElement.onerror = function() {
+                imgElement.onerror = function () {
                     if (isVideo) {
                         this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY3ZWVhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPjx0c3BhbiBkeT0iLTAuNWVtIj7inaTvuI88L3RzcGFuPjx0c3BhbiBkeT0iMC41ZW0iPlZpZGVvPC90c3Bhbj48L3RleHQ+PC9zdmc+';
                         this.style.objectFit = 'contain';
@@ -2058,21 +2738,20 @@
                     }
                 };
             }
-            
+
             return card;
         }
-        
+
         function createMasonryElement(item) {
             const masonryItem = document.createElement('div');
             masonryItem.className = 'masonry-item';
             masonryItem.dataset.id = item.id;
             masonryItem.dataset.type = item.category;
-            
+
             const isVideo = item.category === 'videos';
-            
+
             let imgSrc = item.src;
-            
-            // Handle video thumbnail untuk masonry
+
             if (isVideo) {
                 if (item.thumbnail) {
                     imgSrc = item.thumbnail;
@@ -2082,26 +2761,26 @@
                         imgSrc = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
                     }
                 }
-                
+
                 if (!imgSrc || imgSrc === item.src) {
-                    imgSrc = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY3ZWVhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPlZpZGVvPC90c3Bhbj48L3RleHQ+PC9zdmc+';
+                    imgSrc = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY3ZWVhIi8+PHRleHQgeD0iNUMlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPlZpZGVvPC90c3Bhbj48L3RleHQ+PC9zdmc+';
                 }
             } else {
                 if (!imgSrc || imgSrc === '') {
                     imgSrc = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNUMlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
                 }
             }
-            
+
             masonryItem.innerHTML = `
                 <img src="${imgSrc}" alt="${item.title || 'Kenangan'}" class="masonry-img" loading="lazy">
-                ${isVideo ? 
+                ${isVideo ?
                     `<div style="position: absolute; top: 5px; right: 5px; background: var(--primary-color); color: white; padding: 3px 8px; border-radius: 15px; font-size: 0.7rem;">
                         <i class="fas fa-play"></i>
-                    </div>` : 
+                    </div>` :
                     ''
                 }
             `;
-            
+
             masonryItem.addEventListener('click', () => {
                 if (isVideo) {
                     playVideo(item);
@@ -2109,18 +2788,18 @@
                     viewPhoto(item);
                 }
             });
-            
-            masonryItem.querySelector('.masonry-img').onerror = function() {
+
+            masonryItem.querySelector('.masonry-img').onerror = function () {
                 if (isVideo) {
-                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY3ZWVhIi8+PHRleHQgeD0iNUMlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPlZpZGVvPC90c3Bhbj48L3RleHQ+PC9zdmc+';
+                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwM00vc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY3ZWVhIi8+PHRleHQgeD0iNUMlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPlZpZGVvPC90c3Bhbj48L3RleHQ+PC9zdmc+';
                 } else {
                     this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNUMlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
                 }
             };
-            
+
             return masonryItem;
         }
-        
+
         function createEmptyState(message) {
             return `
                 <div class="empty-state">
@@ -2135,12 +2814,13 @@
                 </div>
             `;
         }
-        
+
         // ==================== HAPUS KONTEN ====================
-        
-        function deleteItem(item, cardElement) {
+
+        async function deleteItem(item, cardElement) {
             if (!confirm(`Hapus "${item.title || 'kenangan ini'}"?`)) return;
-            
+
+            // Hapus dari memory
             if (item.category === 'photos') {
                 const index = albumData.photos.findIndex(photo => photo.id === item.id);
                 if (index !== -1) albumData.photos.splice(index, 1);
@@ -2151,30 +2831,38 @@
                 const index = albumData.memories.findIndex(memory => memory.id === item.id);
                 if (index !== -1) albumData.memories.splice(index, 1);
             }
-            
-            saveData();
+
+            // Hapus dari IndexedDB
+            try {
+                await deleteFromIndexedDB(item.id, item.type);
+            } catch (error) {
+                console.error('Error deleting from IndexedDB:', error);
+            }
+
+            // Update localStorage
+            await saveData();
             prepareAllItems();
-            
+
             cardElement.style.animation = 'fadeOut 0.3s ease forwards';
-            
+
             setTimeout(() => {
                 if (cardElement.parentNode) {
                     cardElement.parentNode.removeChild(cardElement);
                 }
                 loadContent();
-                
+
                 const filteredItems = filterItems(allItems);
                 if (filteredItems.length === 0) {
                     loadContent();
                 }
             }, 300);
         }
-        
+
         // ==================== FAVORITE SYSTEM ====================
-        
-        function toggleFavorite(item, cardElement) {
+
+        async function toggleFavorite(item, cardElement) {
             item.favorite = !item.favorite;
-            
+
             if (item.category === 'photos') {
                 const photoIndex = albumData.photos.findIndex(photo => photo.id === item.id);
                 if (photoIndex !== -1) albumData.photos[photoIndex].favorite = item.favorite;
@@ -2185,9 +2873,16 @@
                 const memoryIndex = albumData.memories.findIndex(memory => memory.id === item.id);
                 if (memoryIndex !== -1) albumData.memories[memoryIndex].favorite = item.favorite;
             }
-            
-            saveData();
-            
+
+            // Update di IndexedDB
+            try {
+                await saveToIndexedDB(item);
+            } catch (error) {
+                console.error('Error updating favorite in IndexedDB:', error);
+            }
+
+            await saveData();
+
             const favoriteBtn = cardElement.querySelector('.favorite-btn');
             if (item.favorite) {
                 favoriteBtn.innerHTML = '<i class="fas fa-heart"></i>';
@@ -2198,29 +2893,29 @@
                 favoriteBtn.dataset.favorite = 'false';
                 favoriteBtn.title = 'Tambah ke favorit';
             }
-            
+
             if (currentFilter === 'favorites') {
                 setTimeout(() => {
                     loadContent();
                 }, 300);
             }
         }
-        
+
         // ==================== MODAL FUNCTIONS ====================
-        
+
         function viewPhoto(item) {
             modalImg.src = item.src;
             photoModal.style.display = 'flex';
         }
-        
+
         function playVideo(video) {
             const videoId = extractYouTubeId(video.src);
-            
+
             if (videoId) {
                 videoModalPlayer.innerHTML = `
-                    <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen
                             style="width:100%; height:100%; min-height: 300px;">
                     </iframe>
@@ -2233,31 +2928,89 @@
                     </video>
                 `;
             }
-            
+
             videoModal.style.display = 'flex';
         }
-        
+
         // ==================== UPLOAD SYSTEM ====================
-        
+
         function setupUploadSystem() {
+            // Opsi Unggah File (mode gallery)
             uploadOption1.addEventListener('click', () => {
                 setUploadMode('gallery');
-                fileInput.value = '';
-                setTimeout(() => fileInput.click(), 100);
+                openSourceSelector();
             }, { passive: true });
-            
+
+            // Opsi URL
             uploadOption2.addEventListener('click', () => {
                 setUploadMode('url');
             }, { passive: true });
-            
-            fileInput.addEventListener('change', handleFileSelect, { passive: true });
+
+            // File input handlers
+            fileInputGallery.addEventListener('change', handleFileSelect, { passive: true });
+            fileInputCamera.addEventListener('change', handleFileSelect, { passive: true });
+
+            // Type selector event listeners
+            typeOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    // Remove active class from all
+                    typeOptions.forEach(opt => opt.classList.remove('active'));
+                    // Add active class to clicked
+                    option.classList.add('active');
+
+                    // Set item type
+                    const selectedType = option.dataset.type;
+                    itemType.value = selectedType;
+                }, { passive: true });
+            });
+
+            // Source selector event listeners
+            selectGallery.addEventListener('click', () => {
+                sourceSelectorModal.style.display = 'none';
+                // Set file input untuk gallery
+                fileInputGallery.accept = "image/*,video/*,.mp4,.mov,.avi,.webm,.mkv,.3gp,.m4v,.wmv,.flv";
+                fileInputGallery.capture = null;
+                setTimeout(() => fileInputGallery.click(), 100);
+            }, { passive: true });
+
+            selectCamera.addEventListener('click', () => {
+                sourceSelectorModal.style.display = 'none';
+                // Set file input untuk camera
+                fileInputCamera.accept = "image/*,video/*";
+                fileInputCamera.capture = "environment";
+                setTimeout(() => fileInputCamera.click(), 100);
+            }, { passive: true });
+
+            cancelSource.addEventListener('click', () => {
+                sourceSelectorModal.style.display = 'none';
+            }, { passive: true });
+
+            // Close source selector modal when clicking outside
+            sourceSelectorModal.addEventListener('click', (e) => {
+                if (e.target === sourceSelectorModal) {
+                    sourceSelectorModal.style.display = 'none';
+                }
+            }, { passive: true });
         }
-        
+
+        // Fungsi untuk membuka source selector (mobile only)
+        function openSourceSelector() {
+            // Jika desktop, langsung pilih file
+            if (!isMobile || window.innerWidth > 768) {
+                fileInputGallery.click();
+                return;
+            }
+
+            // Jika mobile, tampilkan modal pilihan
+            sourceSelectorModal.style.display = 'flex';
+        }
+
+        // Set upload mode
         function setUploadMode(mode) {
             currentUploadMode = mode;
-            
+
             [uploadOption1, uploadOption2].forEach(btn => btn.classList.remove('active'));
-            
+
             if (mode === 'gallery') {
                 uploadOption1.classList.add('active');
                 uploadPreview.style.display = uploadedFiles.length > 0 ? 'block' : 'none';
@@ -2270,123 +3023,105 @@
                 clearPreview();
             }
         }
-        
+
         async function handleFileSelect(e) {
             if (isUploading) {
                 showMessage('Upload sedang berlangsung, tunggu hingga selesai', 'warning');
                 e.target.value = '';
                 return;
             }
-            
+
             const files = Array.from(e.target.files);
             if (files.length === 0) return;
-            
-            if (isMobile && files.length > MAX_FILES) {
-                showMessage(`Maksimal ${MAX_FILES} file untuk mobile`, 'warning');
-                e.target.value = '';
-                return;
-            }
-            
+
+            // TIDAK ADA BATASAN JUMLAH FILE
             const validFiles = files.filter(file => {
-                const isImage = file.type.startsWith('image/') || 
-                               /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(file.name);
-                const isVideo = file.type.startsWith('video/') || 
-                               /\.(mp4|mov|avi|webm|mkv|flv|wmv)$/i.test(file.name);
+                const isImage = file.type.startsWith('image/') ||
+                    /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(file.name);
+                const isVideo = file.type.startsWith('video/') ||
+                    /\.(mp4|mov|avi|webm|mkv|flv|wmv|3gp|m4v)$/i.test(file.name);
                 return isImage || isVideo;
             });
-            
+
             if (validFiles.length < files.length) {
-                showMessage('Beberapa file tidak didukung. Hanya gambar (JPG, PNG, GIF) dan video (MP4, MOV, AVI) yang diperbolehkan.', 'warning');
+                showMessage('Beberapa file tidak didukung. Hanya gambar (JPG, PNG, GIF, WEBP) dan video (MP4, MOV, AVI, 3GP, M4V) yang diperbolehkan.', 'warning');
             }
-            
+
             if (validFiles.length === 0) {
                 e.target.value = '';
                 return;
             }
-            
-            const oversizedFiles = validFiles.filter(file => file.size > MAX_FILE_SIZE);
-            if (oversizedFiles.length > 0) {
-                showMessage(`Beberapa file melebihi 20MB: ${oversizedFiles.map(f => f.name).join(', ')}`, 'error');
-                const validSizedFiles = validFiles.filter(file => file.size <= MAX_FILE_SIZE);
-                if (validSizedFiles.length === 0) {
-                    e.target.value = '';
-                    return;
-                }
-                await processFiles(validSizedFiles);
-            } else {
-                await processFiles(validFiles);
-            }
-            
+
+            // LANGSUNG PROSES FILE TANPA PENGECEKAN UKURAN
+            await processFiles(validFiles);
+
             e.target.value = '';
         }
-        
+
         async function processFiles(files) {
             isUploading = true;
             clearPreview();
-            
+
             uploadedFiles = [...files];
             uploadedPreviewURLs = [];
-            
+
             uploadLoading.classList.add('active');
             totalCount.textContent = files.length;
             loadingCount.textContent = '0';
             progressBar.style.width = '0%';
-            
+
             saveBtn.disabled = true;
             saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
-            
+
             let processedCount = 0;
-            
+
             for (let i = 0; i < files.length; i++) {
                 try {
                     const file = files[i];
                     const objectURL = URL.createObjectURL(file);
                     uploadedPreviewURLs[i] = objectURL;
-                    
+
                     addPreview(file, objectURL, i);
-                    
+
                     processedCount++;
                     loadingCount.textContent = processedCount;
                     progressBar.style.width = `${(processedCount / files.length) * 100}%`;
-                    
-                    if (isMobile) {
-                        await delay(50);
-                    }
-                    
+
+                    // Beri waktu untuk browser
+                    await delay(50);
+
                 } catch (error) {
                     console.error('Error processing file:', error);
                     showMessage(`Gagal memproses file ke-${i + 1}`, 'error');
                 }
             }
-            
+
             uploadLoading.classList.remove('active');
             saveBtn.disabled = false;
             saveBtn.innerHTML = '<i class="fas fa-save"></i> Simpan';
             isUploading = false;
-            
+
             uploadPreview.classList.add('active');
-            
-            showMessage(`Siap menyimpan ${files.length} file`, 'success');
         }
-        
+
         function delay(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
-        
+
         function addPreview(file, previewURL, index) {
             const preview = document.createElement('div');
-            preview.className = 'preview-item mobile-optimized';
+            preview.className = 'preview-item';
             preview.dataset.index = index;
-            
-            const isVideo = file.type.startsWith('video/') || 
-                           /\.(mp4|mov|avi|webm|mkv|flv|wmv)$/i.test(file.name);
-            
-            const isImage = file.type.startsWith('image/') || 
-                           /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(file.name);
-            
+
+            const isVideo = file.type.startsWith('video/') ||
+                /\.(mp4|mov|avi|webm|mkv|flv|wmv|3gp|m4v)$/i.test(file.name);
+
+            const isImage = file.type.startsWith('image/') ||
+                /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(file.name);
+
             const fileName = file.name.length > 10 ? file.name.substring(0, 10) + '...' : file.name;
             const fileSize = (file.size / (1024 * 1024)).toFixed(2);
-            
+
             if (isVideo) {
                 preview.innerHTML = `
                     <video class="preview-video" preload="metadata">
@@ -2405,60 +3140,61 @@
                     <button class="remove-preview" data-index="${index}">&times;</button>
                 `;
             }
-            
+
             previewContainer.appendChild(preview);
-            
+
             preview.querySelector('.remove-preview').addEventListener('click', (e) => {
                 e.stopPropagation();
                 e.preventDefault();
                 removeFile(index);
             }, { passive: false });
         }
-        
+
         function removeFile(index) {
             if (isUploading) {
                 showMessage('Tunggu upload selesai sebelum menghapus file', 'warning');
                 return;
             }
-            
+
             if (uploadedPreviewURLs[index]) {
                 URL.revokeObjectURL(uploadedPreviewURLs[index]);
             }
-            
+
             uploadedFiles.splice(index, 1);
             uploadedPreviewURLs.splice(index, 1);
-            
+
             clearPreview();
-            
+
             if (uploadedFiles.length === 0) {
                 uploadPreview.classList.remove('active');
                 return;
             }
-            
+
             uploadedFiles.forEach((file, idx) => {
                 addPreview(file, uploadedPreviewURLs[idx], idx);
             });
-            
+
             totalCount.textContent = uploadedFiles.length;
             loadingCount.textContent = uploadedFiles.length;
         }
-        
+
         function clearPreview() {
             uploadedPreviewURLs.forEach(url => {
                 if (url && url.startsWith('blob:')) {
                     URL.revokeObjectURL(url);
                 }
             });
-            
+
             previewContainer.innerHTML = '';
         }
-        
+
         function resetUploadForm() {
             clearPreview();
-            
+
             uploadedFiles = [];
             uploadedPreviewURLs = [];
-            fileInput.value = '';
+            fileInputGallery.value = '';
+            fileInputCamera.value = '';
             uploadPreview.classList.remove('active');
             uploadLoading.classList.remove('active');
             urlInputGroup.style.display = 'none';
@@ -2469,174 +3205,152 @@
             loadingCount.textContent = '0';
             totalCount.textContent = '0';
             progressBar.style.width = '0%';
+
+            // Reset type selection to photos
+            typeOptions.forEach(opt => opt.classList.remove('active'));
+            typeOptions[0].classList.add('active'); // Foto
+            itemType.value = 'photos';
         }
-        
+
         // ==================== FORM HANDLING ====================
-        
+
         function openAddForm() {
             resetUploadForm();
             isEditing = false;
             currentEditId = null;
             currentEditType = null;
-            
+
             itemForm.reset();
             itemId.value = '';
             itemType.value = 'photos';
             setUploadMode('gallery');
-            
+
             formTitle.textContent = 'Tambah Kenangan';
             addContentModal.style.display = 'flex';
         }
-        
-        itemForm.addEventListener('submit', async function(e) {
+
+        itemForm.addEventListener('submit', async function (e) {
             e.preventDefault();
             e.stopPropagation();
-            
+
+            if (isSaving) {
+                showMessage('Sedang menyimpan, tunggu sebentar...', 'warning');
+                return;
+            }
+
             if (saveBtn.disabled) return;
-            
+
             if (isUploading) {
                 showMessage('File masih diproses, tunggu sebentar!', 'warning');
                 return;
             }
-            
+
             const type = itemType.value;
             const title = itemTitle.value.trim();
             const description = itemDescription.value.trim();
             const url = itemUrl.value.trim();
-            
+
             if (currentUploadMode === 'url') {
                 if (!url) {
                     showMessage('URL wajib diisi!', 'warning');
                     return;
                 }
-                
+
                 if (!isValidURL(url)) {
                     showMessage('URL tidak valid. Harus dimulai dengan http://, https://, atau data:', 'warning');
                     return;
                 }
-                
-                let itemTypeToUse = type;
-                let thumbnail = null;
-                
-                if (!type || type === 'photos') {
-                    if (url.includes('youtube.com') || url.includes('youtu.be') || url.includes('.mp4') || url.includes('.webm')) {
-                        itemTypeToUse = 'videos';
-                        // Generate thumbnail untuk YouTube
-                        if (url.includes('youtube.com') || url.includes('youtu.be')) {
-                            thumbnail = getYouTubeThumbnail(url);
-                        }
-                    } else if (url.includes('.jpg') || url.includes('.png') || url.includes('.jpeg') || url.includes('.gif')) {
-                        itemTypeToUse = 'photos';
-                    }
+
+                const saved = await saveItemWithThumbnail(type, title || 'Kenangan Baru', description, url);
+                if (saved) {
+                    addContentModal.style.display = 'none';
+                    showSuccessAnimation();
                 }
-                
-                saveItemWithThumbnail(itemTypeToUse, title || 'Kenangan Baru', description, url, thumbnail);
-                addContentModal.style.display = 'none';
-                
-                showSuccessAnimation();
                 return;
             }
-            
+
             if (uploadedFiles.length === 0) {
                 showMessage('Pilih file terlebih dahulu!', 'warning');
                 return;
             }
-            
+
+            isSaving = true;
             saveBtn.disabled = true;
             saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
-            
-            await saveFilesDirect(uploadedFiles, type, title, description);
-            
-            itemForm.reset();
-            resetUploadForm();
-            
-            setTimeout(() => {
-                addContentModal.style.display = 'none';
+
+            try {
+                const savedCount = await saveFilesDirect(uploadedFiles, type, title, description);
+
+                if (savedCount > 0) {
+                    showMessage(`Berhasil menyimpan ${savedCount} kenangan!`, 'success');
+                    itemForm.reset();
+                    resetUploadForm();
+                    addContentModal.style.display = 'none';
+                    showSuccessAnimation();
+                } else {
+                    showMessage('Gagal menyimpan file', 'error');
+                }
+            } catch (error) {
+                console.error('Error saving files:', error);
+                showMessage('Gagal menyimpan file', 'error');
+            } finally {
+                isSaving = false;
                 saveBtn.disabled = false;
                 saveBtn.innerHTML = '<i class="fas fa-save"></i> Simpan';
-                showSuccessAnimation();
-            }, 500);
+            }
         });
-        
+
         async function saveFilesDirect(files, type, title, description) {
             let savedCount = 0;
-            
+
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
-                
+
                 try {
-                    const dataUrl = await readFileAsDataURLChunked(file);
-                    
-                    const isVideoFile = file.type.startsWith('video/') || 
-                                       /\.(mp4|mov|avi|webm|mkv|flv|wmv)$/i.test(file.name);
-                    const isImageFile = file.type.startsWith('image/') || 
-                                       /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(file.name);
-                    
-                    let itemTypeToUse = type;
-                    let thumbnail = null;
-                    
-                    if (!type || type === 'photos') {
-                        if (isVideoFile) {
-                            itemTypeToUse = 'videos';
-                            // Generate thumbnail untuk video
-                            thumbnail = await generateVideoThumbnail(dataUrl);
-                        } else if (isImageFile) {
-                            itemTypeToUse = 'photos';
-                        }
-                    }
-                    
+                    // Baca file sebagai Data URL
+                    const dataUrl = await readFileAsDataURL(file);
+
                     let itemTitleText = title;
                     if (!itemTitleText) {
-                        if (isImageFile) {
-                            itemTitleText = itemTypeToUse === 'photos' ? 'Foto' : 'Memori Spesial';
-                        } else if (isVideoFile) {
-                            itemTitleText = 'Video';
-                        } else {
-                            itemTitleText = 'File Kenangan';
+                        if (type === 'photos') {
+                            itemTitleText = files.length > 1 ? `Foto ${i + 1}` : 'Foto';
+                        } else if (type === 'videos') {
+                            itemTitleText = files.length > 1 ? `Video ${i + 1}` : 'Video';
+                        } else if (type === 'memories') {
+                            itemTitleText = files.length > 1 ? `Memori ${i + 1}` : 'Memori Spesial';
                         }
                     }
-                    
+
                     if (files.length > 1 && title) {
                         itemTitleText = `${title} (${i + 1})`;
-                    } else if (files.length > 1 && !title) {
-                        itemTitleText = isImageFile ? `Foto ${i + 1}` : `Video ${i + 1}`;
                     }
-                    
-                    saveItemWithThumbnail(itemTypeToUse, itemTitleText, description, dataUrl, thumbnail);
-                    savedCount++;
-                    
-                    await delay(isMobile ? 100 : 50);
-                    
+
+                    const saved = await saveItemWithThumbnail(type, itemTitleText, description, dataUrl);
+                    if (saved) {
+                        savedCount++;
+                    }
+
+                    // Beri jeda untuk menghindari freeze browser
+                    await delay(100);
+
                 } catch (error) {
                     console.error('Error saving file:', error);
-                    showMessage(`Gagal menyimpan ${file.name}`, 'error');
+                    showMessage(`Gagal menyimpan file ${i + 1}: ${error.message}`, 'error');
                 }
             }
-            
-            showMessage(`Berhasil menyimpan ${savedCount} dari ${files.length} file`, 'success');
+
+            return savedCount;
         }
-        
-        function readFileAsDataURLChunked(file) {
+
+        function readFileAsDataURL(file) {
             return new Promise((resolve, reject) => {
-                if (file.size < 2 * 1024 * 1024) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => resolve(e.target.result);
-                    reader.onerror = reject;
-                    reader.readAsDataURL(file);
-                    return;
-                }
-                
-                if (isMobile) {
-                    showMessage(`Memproses ${file.name} (file besar)...`, 'info');
-                }
-                
                 const reader = new FileReader();
                 reader.onload = (e) => resolve(e.target.result);
-                reader.onerror = reject;
+                reader.onerror = (e) => reject(new Error('Gagal membaca file'));
                 reader.readAsDataURL(file);
             });
         }
-        
+
         function isValidURL(string) {
             try {
                 new URL(string);
@@ -2645,59 +3359,67 @@
                 return string.startsWith('data:');
             }
         }
-        
-        // Fungsi baru: Simpan item dengan thumbnail
-        function saveItemWithThumbnail(type, title, description, mediaUrl, thumbnail = null) {
-            let newId = 1;
-            
-            if (type === 'photos' && albumData.photos.length > 0) {
-                newId = Math.max(...albumData.photos.map(item => item.id)) + 1;
-            } else if (type === 'videos' && albumData.videos.length > 0) {
-                newId = Math.max(...albumData.videos.map(item => item.id)) + 1;
-            } else if (type === 'memories' && albumData.memories.length > 0) {
-                newId = Math.max(...albumData.memories.map(item => item.id)) + 1;
-            }
-            
-            const today = new Date();
-            const formattedDate = `${today.getDate().toString().padStart(2, '0')}-${(today.getMonth()+1).toString().padStart(2, '0')}-${today.getFullYear()}`;
-            
-            const newItem = {
-                id: newId,
-                title: title || (type === 'photos' ? 'Foto' : type === 'videos' ? 'Video' : 'Memori Spesial'),
-                description: description || '',
-                date: formattedDate,
-                type: type,
-                favorite: false
-            };
-            
-            if (type === 'memories') {
-                newItem.photo = mediaUrl;
-            } else {
-                newItem.src = mediaUrl;
-                // Tambah thumbnail untuk video
-                if (type === 'videos' && thumbnail) {
-                    newItem.thumbnail = thumbnail;
+
+        async function saveItemWithThumbnail(type, title, description, mediaUrl, thumbnail = null) {
+            try {
+                let newId = Date.now() + Math.floor(Math.random() * 1000);
+
+                const newItem = {
+                    id: newId,
+                    title: title || (type === 'photos' ? 'Foto' : type === 'videos' ? 'Video' : 'Memori Spesial'),
+                    description: description || '',
+                    date: getCurrentDate(),
+                    type: type,
+                    favorite: false
+                };
+
+                if (type === 'memories') {
+                    newItem.photo = mediaUrl;
+                } else {
+                    newItem.src = mediaUrl;
+                    if (type === 'videos') {
+                        // Untuk video, coba buat thumbnail dari frame pertama
+                        newItem.thumbnail = thumbnail || '';
+                    }
                 }
+
+                // Simpan ke IndexedDB (UNLIMITED STORAGE)
+                try {
+                    await saveToIndexedDB(newItem);
+                    console.log('Item saved to IndexedDB:', newId);
+                } catch (error) {
+                    console.error('Error saving to IndexedDB:', error);
+                }
+
+                // Update memory state
+                if (type === 'photos') {
+                    albumData.photos.push(newItem);
+                } else if (type === 'videos') {
+                    albumData.videos.push(newItem);
+                } else if (type === 'memories') {
+                    albumData.memories.push(newItem);
+                }
+
+                // Update localStorage (untuk metadata ringan)
+                await saveData();
+
+                // Update UI
+                prepareAllItems();
+                loadContent();
+
+                return true;
+            } catch (error) {
+                console.error('Error saving item:', error);
+                showMessage('Gagal menyimpan: ' + error.message, 'error');
+                return false;
             }
-            
-            if (type === 'photos') {
-                albumData.photos.push(newItem);
-            } else if (type === 'videos') {
-                albumData.videos.push(newItem);
-            } else if (type === 'memories') {
-                albumData.memories.push(newItem);
-            }
-            
-            saveData();
-            prepareAllItems();
-            loadContent();
         }
-        
+
         // ==================== VIEW TOGGLE ====================
-        
+
         function toggleView() {
             isGalleryView = !isGalleryView;
-            
+
             if (isGalleryView) {
                 gridView.style.display = 'none';
                 galleryView.classList.add('active');
@@ -2712,24 +3434,24 @@
                 loadGridItems();
             }
         }
-        
+
         // ==================== FUNGSI HOME BUTTON ====================
-        
+
         function goToHomePage() {
             loadingScreen.classList.remove('hidden');
             loadingScreen.style.opacity = '1';
-            
+
             setTimeout(() => {
                 window.location.href = 'index.html';
             }, 800);
         }
-        
+
         // ==================== EVENT LISTENERS ====================
-        
+
         function setupEventListeners() {
             backBtn.addEventListener('click', goToHomePage, { passive: true });
             addContentBtn.addEventListener('click', openAddForm, { passive: true });
-            
+
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     filterBtns.forEach(b => b.classList.remove('active'));
@@ -2738,82 +3460,71 @@
                     loadContent();
                 }, { passive: true });
             });
-            
+
             viewToggleBtn.addEventListener('click', toggleView, { passive: true });
-            
+
             modalClose.addEventListener('click', () => {
                 photoModal.style.display = 'none';
             }, { passive: true });
-            
+
             photoModal.addEventListener('click', (e) => {
                 if (e.target === photoModal) {
                     photoModal.style.display = 'none';
                 }
             }, { passive: true });
-            
+
             videoModalClose.addEventListener('click', () => {
                 videoModal.style.display = 'none';
                 videoModalPlayer.innerHTML = '';
             }, { passive: true });
-            
+
             videoModal.addEventListener('click', (e) => {
                 if (e.target === videoModal) {
                     videoModal.style.display = 'none';
                     videoModalPlayer.innerHTML = '';
                 }
             }, { passive: true });
-            
+
             closeFormBtn.addEventListener('click', () => {
                 addContentModal.style.display = 'none';
             }, { passive: true });
-            
+
             cancelBtn.addEventListener('click', () => {
                 addContentModal.style.display = 'none';
             }, { passive: true });
-            
+
             addContentModal.addEventListener('click', (e) => {
                 if (e.target === addContentModal) {
                     addContentModal.style.display = 'none';
                 }
             }, { passive: true });
-            
+
             setupUploadSystem();
-            
+
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     photoModal.style.display = 'none';
                     videoModal.style.display = 'none';
                     addContentModal.style.display = 'none';
+                    sourceSelectorModal.style.display = 'none';
                 }
             }, { passive: true });
-            
-            let isSubmitting = false;
-            itemForm.addEventListener('submit', function(e) {
-                if (isSubmitting) {
-                    e.preventDefault();
-                    return;
-                }
-                isSubmitting = true;
-                
-                setTimeout(() => {
-                    isSubmitting = false;
-                }, 3000);
-            }, { passive: false });
         }
-        
+
         // ==================== CLEANUP ====================
-        
-        window.addEventListener('beforeunload', function() {
+
+        window.addEventListener('beforeunload', function () {
             uploadedPreviewURLs.forEach(url => {
                 if (url && url.startsWith('blob:')) {
                     URL.revokeObjectURL(url);
                 }
             });
         }, { passive: true });
-        
+
         // ==================== INITIALIZATION ====================
-        
+
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
+
 </html>
