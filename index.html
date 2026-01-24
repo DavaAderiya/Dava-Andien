@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dava & Andiena - Album Kenangan</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap">
     <style>
         :root {
             --primary-color: #ff6b8b;
@@ -84,10 +86,13 @@
         }
 
         @keyframes pulseHeart {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: scale(1);
                 color: #ff6b8b;
             }
+
             50% {
                 transform: scale(1.2);
                 color: #ff4d73;
@@ -135,10 +140,13 @@
         }
 
         @keyframes ctaPulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: scale(1);
                 box-shadow: 0 0.8rem 2rem rgba(255, 107, 139, 0.5);
             }
+
             50% {
                 transform: scale(1.05);
                 box-shadow: 0 1rem 2.5rem rgba(255, 107, 139, 0.7);
@@ -161,9 +169,12 @@
         }
 
         @keyframes heartBeat {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: scale(1);
             }
+
             50% {
                 transform: scale(1.3);
             }
@@ -194,12 +205,15 @@
                 opacity: 0;
                 transform: translateY(100vh) rotate(0deg) scale(0.5);
             }
+
             10% {
                 opacity: 0.7;
             }
+
             90% {
                 opacity: 0.7;
             }
+
             100% {
                 opacity: 0;
                 transform: translateY(-100px) rotate(360deg) scale(1.2);
@@ -260,6 +274,7 @@
                 opacity: 0;
                 transform: translateY(30px) rotate(-5deg);
             }
+
             100% {
                 opacity: 1;
                 transform: translateY(0) rotate(0deg);
@@ -271,6 +286,7 @@
                 opacity: 1;
                 transform: translateY(0) scale(1);
             }
+
             100% {
                 opacity: 0;
                 transform: translateY(-20px) scale(0.95);
@@ -313,12 +329,15 @@
                 opacity: 0;
                 transform: translateY(0) rotate(0deg) scale(0.5);
             }
+
             10% {
                 opacity: 1;
             }
+
             90% {
                 opacity: 1;
             }
+
             100% {
                 opacity: 0;
                 transform: translateY(-100px) rotate(360deg) scale(1);
@@ -392,12 +411,15 @@
                 transform: translateY(100vh) rotate(0deg);
                 opacity: 0;
             }
+
             10% {
                 opacity: 1;
             }
+
             90% {
                 opacity: 1;
             }
+
             100% {
                 transform: translateY(-100px) rotate(360deg);
                 opacity: 0;
@@ -442,7 +464,8 @@
             font-size: 0.95rem;
         }
 
-        .nav-link:hover, .nav-link.active {
+        .nav-link:hover,
+        .nav-link.active {
             background: var(--primary-color);
             color: var(--white);
             transform: translateY(-0.1rem);
@@ -797,18 +820,23 @@
         }
 
         @keyframes floatingLove {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(0) rotate(0deg);
                 opacity: 0.2;
             }
+
             25% {
                 transform: translateY(-20px) rotate(5deg);
                 opacity: 0.3;
             }
+
             50% {
                 transform: translateY(0) rotate(0deg);
                 opacity: 0.2;
             }
+
             75% {
                 transform: translateY(-15px) rotate(-5deg);
                 opacity: 0.3;
@@ -923,9 +951,12 @@
         }
 
         @keyframes heartbeat {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: scale(1);
             }
+
             50% {
                 transform: scale(1.2);
             }
@@ -1028,6 +1059,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Welcome Screen -->
     <div class="welcome-screen" id="welcomeScreen">
@@ -1042,7 +1074,8 @@
                 <i class="fas fa-heart"></i>
             </div>
             <h1 class="welcome-title">Dava & Andien</h1>
-            <p class="welcome-subtitle">Selamat datang di kenangan indah Dava & Andien.Setiap kenangan adalah bagian dari cinta yang abadi</p>
+            <p class="welcome-subtitle">Selamat datang di kenangan indah Dava & Andien.Setiap kenangan adalah bagian
+                dari cinta yang abadi</p>
 
             <button class="main-cta-button" id="enterButton">
                 <i class="fas fa-heart"></i>
@@ -1062,7 +1095,8 @@
             <span class="title-word" id="word3">Andiena's</span>
             <span class="title-word" id="word4">Story</span>
         </div>
-        <p class="subtitle-text" id="subtitleText">Setiap momen bersamamu adalah momen indah yang tak terlupakan dan harta yang tak ternilai.</p>
+        <p class="subtitle-text" id="subtitleText">Setiap momen bersamamu adalah momen indah yang tak terlupakan dan
+            harta yang tak ternilai.</p>
 
         <!-- ANIMASI LOVE YANG BERTERBANGAN SETELAH KLIK TOMBOL -->
         <div class="heart-animation" style="top: 15%; left: 8%; animation-delay: 0s;">❤</div>
@@ -1094,9 +1128,11 @@
         <!-- Navigation -->
         <nav class="nav-container">
             <ul class="nav-list">
-                <li class="nav-item"><a href="#hero" class="nav-link active"><i class="fas fa-heart"></i> Beranda</a></li>
+                <li class="nav-item"><a href="#hero" class="nav-link active"><i class="fas fa-heart"></i> Beranda</a>
+                </li>
                 <li class="nav-item"><a href="#featured" class="nav-link"><i class="fas fa-star"></i> Memori</a></li>
-                <li class="nav-item"><a href="p.html" class="nav-link"><i class="fas fa-book"></i> Album Lengkap</a></li>
+                <li class="nav-item"><a href="p.html" class="nav-link"><i class="fas fa-book"></i> Album Lengkap</a>
+                </li>
             </ul>
         </nav>
 
@@ -1132,7 +1168,8 @@
         <!-- Quote Section -->
         <section class="quote-section">
             <div class="quote-text" id="quoteText">
-                "Cinta sejati bukan tentang menemukan orang yang sempurna, tapi tentang melihat orang yang tidak sempurna dengan cara yang sempurna."
+                "Cinta sejati bukan tentang menemukan orang yang sempurna, tapi tentang melihat orang yang tidak
+                sempurna dengan cara yang sempurna."
             </div>
             <div class="quote-author">- Dava untuk Andiena -</div>
         </section>
@@ -1140,13 +1177,14 @@
         <!-- Tombol Lihat Semua -->
         <section class="view-all-section">
             <h3 class="view-all-title">Lihat cerita Dava & Andien Lebih Banyak</h3>
-            <p class="view-all-subtitle">Masih banyak foto dan kenangan indah lainnya yang menunggu untuk dilihat di album lengkap Dava & Andien.</p>
+            <p class="view-all-subtitle">Masih banyak foto dan kenangan indah lainnya yang menunggu untuk dilihat di
+                album lengkap Dava & Andien.</p>
             <a href="p.html" class="view-all-button" id="viewAllBtn">
                 <i class="fas fa-heart"></i> Lihat Album Lengkap
             </a>
         </section>
 
-         <!-- Footer -->
+        <!-- Footer -->
         <footer>
             <!-- ICON LOVE YANG BERGERAK di pojok kiri dan kanan -->
             <div class="footer-decoration decoration-left">❤</div>
@@ -1155,9 +1193,11 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3 class="footer-title">Dava & Andiena</h3>
-                    <p class="footer-text">Website ini dibuat sebagai tempat menyimpan kenangan indah kita bersama. Setiap foto, video, dan cerita adalah bagian dari perjalanan cinta kita yang tak ternilai.</p>
+                    <p class="footer-text">Website ini dibuat sebagai tempat menyimpan kenangan indah kita bersama.
+                        Setiap foto, video, dan cerita adalah bagian dari perjalanan cinta kita yang tak ternilai.</p>
                     <div class="footer-quote">
-                        "Cinta sejati bukan tentang menemukan orang yang sempurna, tapi tentang melihat orang yang tidak sempurna dengan cara yang sempurna."
+                        "Cinta sejati bukan tentang menemukan orang yang sempurna, tapi tentang melihat orang yang tidak
+                        sempurna dengan cara yang sempurna."
                     </div>
                 </div>
 
@@ -1173,9 +1213,12 @@
 
                 <div class="footer-section">
                     <h3 class="footer-title">Kisah Kita</h3>
-                    <p class="footer-text">Setiap hari bersamamu adalah halaman baru dalam buku kehidupan kita. Mari terus tulis kisah indah ini bersama-sama, menciptakan kenangan yang takkan pernah terlupakan.</p>
+                    <p class="footer-text">Setiap hari bersamamu adalah halaman baru dalam buku kehidupan kita. Mari
+                        terus tulis kisah indah ini bersama-sama, menciptakan kenangan yang takkan pernah terlupakan.
+                    </p>
                     <div class="footer-quote">
-                        "Aku tidak butuh surga jika aku punya kamu di sisiku. Kamu adalah dunia kecilku yang paling sempurna."
+                        "Aku tidak butuh surga jika aku punya kamu di sisiku. Kamu adalah dunia kecilku yang paling
+                        sempurna."
                     </div>
                 </div>
             </div>
@@ -1197,150 +1240,150 @@
     </div>
 
     <script>
-    // ================================================
-    // DI SINI ANDA BISA MENGUBAH FOTO DAN MEMORI
-    // ================================================
+        // ================================================
+        // DI SINI ANDA BISA MENGUBAH FOTO DAN MEMORI
+        // ================================================
 
-    // 1. DATA FOTO UNTUK CAROUSEL (Tampilan utama)
-    const carouselPhotos = [
-        {
+        // 1. DATA FOTO UNTUK CAROUSEL (Tampilan utama)
+        const carouselPhotos = [
+            {
+                id: 1,
+                src: "WhatsApp Image 2026-01-24 at 10.04.51 (1).jpeg"
+            },
+            {
+                id: 2,
+                src: "WhatsApp Image 2026-01-24 at 10.04.52.jpeg"
+            },
+            {
+                id: 3,
+                src: "WhatsApp Image 2026-01-24 at 10.04.51.jpeg"
+            }
+        ];
+
+        // 2. DATA MEMORI SPESIAL (Card di tengah)
+        const memoryData = {
             id: 1,
-            src: "WhatsApp Image 2026-01-24 at 10.04.51 (1).jpeg"
-        },
-        {
-            id: 2,
-            src: "WhatsApp Image 2026-01-24 at 10.04.52.jpeg"
-        },
-        {
-            id: 3,
-            src: "WhatsApp Image 2026-01-24 at 10.04.51.jpeg"
-        }
-    ];
+            photo: "WhatsApp Image 2026-01-24 at 10.06.55.jpeg",
+            title: "Pesan untuk andien",
+            description: "Aira Andiena Dieka. Makasi ya sudah hadir dihidup dava, membawa kebahagiaan dihidup dava, dava beruntung bisa nemenin perjalanan hidup andien, semoga andien bisa nemnin dava selamanya, soalnya dava selalu aman dan beruntung kalo andien bakal terus disamping dava, dava juga selalu ada disisi andien selamanya. I Love UU",
+            date: "24 Januari 2026"
+        };
 
-    // 2. DATA MEMORI SPESIAL (Card di tengah)
-    const memoryData = {
-        id: 1,
-        photo: "WhatsApp Image 2026-01-24 at 10.06.55.jpeg",
-        title: "Pesan untuk andien",
-        description: "Aira Andiena Dieka. Makasi ya sudah hadir dihidup dava, membawa kebahagiaan dihidup dava, dava beruntung bisa nemenin perjalanan hidup andien, semoga andien bisa nemnin dava selamanya, soalnya dava selalu aman dan beruntung kalo andien bakal terus disamping dava, dava juga selalu ada disisi andien selamanya. I Love UU",
-        date: "24 Januari 2026"
-    };
+        // ================================================
+        // CARA MENGUBAH DATA:
+        // ================================================
+        // 1. Untuk Foto Carousel: Ganti 'src' dengan URL foto Anda
+        //    Contoh: "https://drive.google.com/uc?id=ID_FOTO_ANDA"
+        //            "https://i.imgur.com/ID_FOTO_ANDA.jpg"
+        // 2. Untuk Memori: Ganti 'photo', 'title', 'description', dan 'date'
+        // ================================================
 
-    // ================================================
-    // CARA MENGUBAH DATA:
-    // ================================================
-    // 1. Untuk Foto Carousel: Ganti 'src' dengan URL foto Anda
-    //    Contoh: "https://drive.google.com/uc?id=ID_FOTO_ANDA"
-    //            "https://i.imgur.com/ID_FOTO_ANDA.jpg"
-    // 2. Untuk Memori: Ganti 'photo', 'title', 'description', dan 'date'
-    // ================================================
+        // Variabel aplikasi
+        let currentSlide = 0;
+        let carouselInterval = null;
 
-    // Variabel aplikasi
-    let currentSlide = 0;
-    let carouselInterval = null;
+        // Elemen DOM
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const titleAnimation = document.getElementById('titleAnimation');
+        const mainContent = document.getElementById('mainContent');
+        const enterButton = document.getElementById('enterButton');
+        const carouselTrack = document.getElementById('carouselTrack');
+        const carouselDots = document.getElementById('carouselDots');
 
-    // Elemen DOM
-    const welcomeScreen = document.getElementById('welcomeScreen');
-    const titleAnimation = document.getElementById('titleAnimation');
-    const mainContent = document.getElementById('mainContent');
-    const enterButton = document.getElementById('enterButton');
-    const carouselTrack = document.getElementById('carouselTrack');
-    const carouselDots = document.getElementById('carouselDots');
+        // Fungsi untuk masuk ke website
+        function enterWebsite() {
+            welcomeScreen.classList.add('hidden');
 
-    // Fungsi untuk masuk ke website
-    function enterWebsite() {
-        welcomeScreen.classList.add('hidden');
-
-        setTimeout(() => {
-            playTitleAnimation();
-        }, 500);
-    }
-
-    // Animasi judul dengan hati yang berterbangan
-    function playTitleAnimation() {
-        titleAnimation.classList.add('visible');
-
-        // Animasi kata-kata judul
-        const words = [word1, word2, word3, word4];
-        words.forEach((word, index) => {
             setTimeout(() => {
-                word.style.animation = 'titleWordIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-            }, 200 + (index * 200));
-        });
+                playTitleAnimation();
+            }, 500);
+        }
 
-        // Tampilkan subtitle
-        setTimeout(() => {
-            const subtitle = document.getElementById('subtitleText');
-            subtitle.style.opacity = '1';
-            subtitle.style.transform = 'translateY(0)';
-        }, 1000);
+        // Animasi judul dengan hati yang berterbangan
+        function playTitleAnimation() {
+            titleAnimation.classList.add('visible');
 
-        // Tambah lebih banyak hati selama animasi berlangsung
-        createFlyingHeartsDuringAnimation();
-
-        setTimeout(() => {
+            // Animasi kata-kata judul
+            const words = [word1, word2, word3, word4];
             words.forEach((word, index) => {
                 setTimeout(() => {
-                    word.style.animation = 'titleWordOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards';
-                }, index * 100);
+                    word.style.animation = 'titleWordIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                }, 200 + (index * 200));
             });
 
+            // Tampilkan subtitle
             setTimeout(() => {
-                titleAnimation.classList.remove('visible');
-                titleAnimation.classList.add('hidden');
+                const subtitle = document.getElementById('subtitleText');
+                subtitle.style.opacity = '1';
+                subtitle.style.transform = 'translateY(0)';
+            }, 1000);
+
+            // Tambah lebih banyak hati selama animasi berlangsung
+            createFlyingHeartsDuringAnimation();
+
+            setTimeout(() => {
+                words.forEach((word, index) => {
+                    setTimeout(() => {
+                        word.style.animation = 'titleWordOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                    }, index * 100);
+                });
 
                 setTimeout(() => {
-                    mainContent.classList.add('visible');
-                    loadContent();
-                    createFloatingHearts();
-                }, 300);
-            }, 800);
-        }, 2500);
-    }
+                    titleAnimation.classList.remove('visible');
+                    titleAnimation.classList.add('hidden');
 
-    // Buat hati berterbangan selama animasi
-    function createFlyingHeartsDuringAnimation() {
-        const titleAnim = document.getElementById('titleAnimation');
-
-        // Buat 20 hati tambahan selama animasi
-        for (let i = 0; i < 20; i++) {
-            setTimeout(() => {
-                const heart = document.createElement('div');
-                heart.className = 'heart-animation';
-                heart.innerHTML = '❤';
-
-                // Posisi acak
-                heart.style.left = `${Math.random() * 90}%`;
-                heart.style.top = `${Math.random() * 90}%`;
-                heart.style.animationDelay = `${Math.random() * 2}s`;
-                heart.style.fontSize = `${1 + Math.random()}rem`;
-                heart.style.color = `rgba(255, ${184 + Math.random() * 71}, ${198 + Math.random() * 57}, ${0.6 + Math.random() * 0.4})`;
-
-                titleAnim.appendChild(heart);
-
-                // Hapus hati setelah animasi selesai
-                setTimeout(() => {
-                    if (heart.parentNode) {
-                        heart.remove();
-                    }
-                }, 3000);
-            }, i * 200);
+                    setTimeout(() => {
+                        mainContent.classList.add('visible');
+                        loadContent();
+                        createFloatingHearts();
+                    }, 300);
+                }, 800);
+            }, 2500);
         }
-    }
 
-    // Load semua konten
-    function loadContent() {
-        loadCarousel();
-        loadFeaturedMemory();
-        setupCarouselAutoSlide();
-    }
+        // Buat hati berterbangan selama animasi
+        function createFlyingHeartsDuringAnimation() {
+            const titleAnim = document.getElementById('titleAnimation');
 
-    // Load carousel
-    function loadCarousel() {
-        carouselTrack.innerHTML = '';
+            // Buat 20 hati tambahan selama animasi
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart-animation';
+                    heart.innerHTML = '❤';
 
-        if (carouselPhotos.length === 0) {
-            carouselTrack.innerHTML = `
+                    // Posisi acak
+                    heart.style.left = `${Math.random() * 90}%`;
+                    heart.style.top = `${Math.random() * 90}%`;
+                    heart.style.animationDelay = `${Math.random() * 2}s`;
+                    heart.style.fontSize = `${1 + Math.random()}rem`;
+                    heart.style.color = `rgba(255, ${184 + Math.random() * 71}, ${198 + Math.random() * 57}, ${0.6 + Math.random() * 0.4})`;
+
+                    titleAnim.appendChild(heart);
+
+                    // Hapus hati setelah animasi selesai
+                    setTimeout(() => {
+                        if (heart.parentNode) {
+                            heart.remove();
+                        }
+                    }, 3000);
+                }, i * 200);
+            }
+        }
+
+        // Load semua konten
+        function loadContent() {
+            loadCarousel();
+            loadFeaturedMemory();
+            setupCarouselAutoSlide();
+        }
+
+        // Load carousel
+        function loadCarousel() {
+            carouselTrack.innerHTML = '';
+
+            if (carouselPhotos.length === 0) {
+                carouselTrack.innerHTML = `
                 <div class="carousel-slide">
                     <div style="background: linear-gradient(135deg, var(--primary-color), #ff99ac); height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
                         <div style="text-align: center; padding: 2rem;">
@@ -1350,34 +1393,34 @@
                     </div>
                 </div>
             `;
-            createCarouselDots(1);
-            return;
-        }
+                createCarouselDots(1);
+                return;
+            }
 
-        carouselPhotos.forEach((photo, index) => {
-            const slide = document.createElement('div');
-            slide.className = 'carousel-slide';
-            slide.innerHTML = `
+            carouselPhotos.forEach((photo, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'carousel-slide';
+                slide.innerHTML = `
                 <img src="${photo.src}" alt="Foto ${index + 1}" class="carousel-img">
             `;
 
-            // Klik pada foto untuk membuka modal
-            slide.querySelector('img').addEventListener('click', () => {
-                openPhotoModal(photo);
+                // Klik pada foto untuk membuka modal
+                slide.querySelector('img').addEventListener('click', () => {
+                    openPhotoModal(photo);
+                });
+
+                carouselTrack.appendChild(slide);
             });
 
-            carouselTrack.appendChild(slide);
-        });
+            createCarouselDots(carouselPhotos.length);
+            updateCarousel();
+        }
 
-        createCarouselDots(carouselPhotos.length);
-        updateCarousel();
-    }
+        // Load memori spesial
+        function loadFeaturedMemory() {
+            const container = document.getElementById('featuredMemory');
 
-    // Load memori spesial
-    function loadFeaturedMemory() {
-        const container = document.getElementById('featuredMemory');
-
-        container.innerHTML = `
+            container.innerHTML = `
             <div class="memory-image">
                 <img src="${memoryData.photo}" alt="${memoryData.title}">
             </div>
@@ -1390,145 +1433,146 @@
             </div>
         `;
 
-        // Klik pada gambar memori untuk membuka modal
-        container.querySelector('.memory-image img').addEventListener('click', () => {
-            openPhotoModal(memoryData);
-        });
-    }
-
-    // Fungsi carousel
-    function createCarouselDots(count) {
-        carouselDots.innerHTML = '';
-
-        for (let i = 0; i < count; i++) {
-            const dot = document.createElement('button');
-            dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
-            dot.addEventListener('click', () => {
-                goToSlide(i);
-                resetCarouselInterval();
+            // Klik pada gambar memori untuk membuka modal
+            container.querySelector('.memory-image img').addEventListener('click', () => {
+                openPhotoModal(memoryData);
             });
-            carouselDots.appendChild(dot);
-        }
-    }
-
-    function setupCarouselAutoSlide() {
-        carouselInterval = setInterval(() => {
-            goToSlide(currentSlide + 1);
-        }, 5000);
-    }
-
-    function goToSlide(slideIndex) {
-        const slides = document.querySelectorAll('.carousel-slide');
-        const dots = document.querySelectorAll('.carousel-dot');
-
-        if (slides.length === 0) return;
-
-        if (slideIndex >= slides.length) {
-            currentSlide = 0;
-        } else if (slideIndex < 0) {
-            currentSlide = slides.length - 1;
-        } else {
-            currentSlide = slideIndex;
         }
 
-        updateCarousel();
-    }
+        // Fungsi carousel
+        function createCarouselDots(count) {
+            carouselDots.innerHTML = '';
 
-    function updateCarousel() {
-        const slides = document.querySelectorAll('.carousel-slide');
-        const dots = document.querySelectorAll('.carousel-dot');
-
-        if (slides.length === 0) return;
-
-        carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
-
-        dots.forEach((dot, index) => {
-            dot.classList.toggle('active', index === currentSlide);
-        });
-    }
-
-    function resetCarouselInterval() {
-        if (carouselInterval) {
-            clearInterval(carouselInterval);
-        }
-
-        carouselInterval = setInterval(() => {
-            goToSlide(currentSlide + 1);
-        }, 5000);
-    }
-
-    // Fungsi bantu
-    function openPhotoModal(photo) {
-        const modal = document.getElementById('photoModal');
-        const modalImg = document.getElementById('modalImg');
-        modalImg.src = photo.src || photo.photo;
-        modalImg.alt = photo.title || "Foto Kenangan";
-        modal.style.display = 'flex';
-    }
-
-    function createFloatingHearts() {
-        const floatingHearts = document.getElementById('floatingHearts');
-        floatingHearts.innerHTML = '';
-
-        for (let i = 0; i < 15; i++) {
-            const heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.innerHTML = '<i class="fas fa-heart"></i>';
-
-            heart.style.left = `${Math.random() * 100}%`;
-            heart.style.animationDelay = `${Math.random() * 5}s`;
-            heart.style.animationDuration = `${5 + Math.random() * 3}s`;
-
-            floatingHearts.appendChild(heart);
-        }
-    }
-
-    // Setup modals
-    function setupModals() {
-        // Close photo modal
-        document.getElementById('modalClose').addEventListener('click', () => {
-            document.getElementById('photoModal').style.display = 'none';
-        });
-
-        document.getElementById('photoModal').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('photoModal')) {
-                document.getElementById('photoModal').style.display = 'none';
+            for (let i = 0; i < count; i++) {
+                const dot = document.createElement('button');
+                dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
+                dot.addEventListener('click', () => {
+                    goToSlide(i);
+                    resetCarouselInterval();
+                });
+                carouselDots.appendChild(dot);
             }
-        });
-    }
+        }
 
-    // Setup navigation
-    function setupNavigation() {
-        const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                if (this.getAttribute('href').startsWith('#')) {
-                    e.preventDefault();
+        function setupCarouselAutoSlide() {
+            carouselInterval = setInterval(() => {
+                goToSlide(currentSlide + 1);
+            }, 5000);
+        }
 
-                    navLinks.forEach(item => item.classList.remove('active'));
-                    this.classList.add('active');
+        function goToSlide(slideIndex) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
 
-                    const targetId = this.getAttribute('href');
-                    const target = document.querySelector(targetId);
-                    if (target) {
-                        window.scrollTo({
-                            top: target.offsetTop - 60,
-                            behavior: 'smooth'
-                        });
-                    }
+            if (slides.length === 0) return;
+
+            if (slideIndex >= slides.length) {
+                currentSlide = 0;
+            } else if (slideIndex < 0) {
+                currentSlide = slides.length - 1;
+            } else {
+                currentSlide = slideIndex;
+            }
+
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
+
+            if (slides.length === 0) return;
+
+            carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function resetCarouselInterval() {
+            if (carouselInterval) {
+                clearInterval(carouselInterval);
+            }
+
+            carouselInterval = setInterval(() => {
+                goToSlide(currentSlide + 1);
+            }, 5000);
+        }
+
+        // Fungsi bantu
+        function openPhotoModal(photo) {
+            const modal = document.getElementById('photoModal');
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = photo.src || photo.photo;
+            modalImg.alt = photo.title || "Foto Kenangan";
+            modal.style.display = 'flex';
+        }
+
+        function createFloatingHearts() {
+            const floatingHearts = document.getElementById('floatingHearts');
+            floatingHearts.innerHTML = '';
+
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '<i class="fas fa-heart"></i>';
+
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.animationDelay = `${Math.random() * 5}s`;
+                heart.style.animationDuration = `${5 + Math.random() * 3}s`;
+
+                floatingHearts.appendChild(heart);
+            }
+        }
+
+        // Setup modals
+        function setupModals() {
+            // Close photo modal
+            document.getElementById('modalClose').addEventListener('click', () => {
+                document.getElementById('photoModal').style.display = 'none';
+            });
+
+            document.getElementById('photoModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('photoModal')) {
+                    document.getElementById('photoModal').style.display = 'none';
                 }
             });
-        });
-    }
+        }
 
-    // Initialize
-    function init() {
-        enterButton.addEventListener('click', enterWebsite);
-        setupNavigation();
-        setupModals();
-    }
+        // Setup navigation
+        function setupNavigation() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    if (this.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
 
-    document.addEventListener('DOMContentLoaded', init);
+                        navLinks.forEach(item => item.classList.remove('active'));
+                        this.classList.add('active');
+
+                        const targetId = this.getAttribute('href');
+                        const target = document.querySelector(targetId);
+                        if (target) {
+                            window.scrollTo({
+                                top: target.offsetTop - 60,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+        }
+
+        // Initialize
+        function init() {
+            enterButton.addEventListener('click', enterWebsite);
+            setupNavigation();
+            setupModals();
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
+
 </html>
