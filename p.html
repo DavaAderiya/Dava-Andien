@@ -1912,8 +1912,21 @@
         const INDEXED_DB_NAME = 'DavaAndienaAlbumDB';
         const INDEXED_DB_VERSION = 1;
 
-        // Deteksi device
+        // Deteksi device yang lebih akurat
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        const isIOSSafari = isIOS && isSafari;
+        const isAndroidChrome = /Android.*Chrome/.test(navigator.userAgent);
+
+        console.log('Device Detection:', {
+            isMobile,
+            isIOS,
+            isSafari,
+            isIOSSafari,
+            isAndroidChrome,
+            userAgent: navigator.userAgent
+        });
 
         // Data default dengan video thumbnail
         const defaultData = {
@@ -2793,7 +2806,7 @@
                 if (isVideo) {
                     this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwM00vc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjNjY3ZWVhIi8+PHRleHQgeD0iNUMlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPlZpZGVvPC90c3Bhbj48L3RleHQ+PC9zdmc+';
                 } else {
-                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNUMlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
+                    this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmY4NWEyIi8+PHRleHQgeD0iNUMlIiB5PSI50MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiPkZvdG8gS2VuYW5nYW48L3RleHQ+PC9zdmc+';
                 }
             };
 
@@ -2932,7 +2945,7 @@
             videoModal.style.display = 'flex';
         }
 
-        // ==================== UPLOAD SYSTEM ====================
+        // ==================== UPLOAD SYSTEM - PERBAIKAN UNTUK iOS ====================
 
         function setupUploadSystem() {
             // Opsi Unggah File (mode gallery)
@@ -2964,21 +2977,29 @@
                 }, { passive: true });
             });
 
-            // Source selector event listeners
+            // Source selector event listeners - PERBAIKAN UNTUK iOS
             selectGallery.addEventListener('click', () => {
                 sourceSelectorModal.style.display = 'none';
-                // Set file input untuk gallery
-                fileInputGallery.accept = "image/*,video/*,.mp4,.mov,.avi,.webm,.mkv,.3gp,.m4v,.wmv,.flv";
-                fileInputGallery.capture = null;
-                setTimeout(() => fileInputGallery.click(), 100);
+
+                if (isIOSSafari) {
+                    // iOS Safari: Buat input file baru untuk galeri
+                    createIOSFileInput(false);
+                } else {
+                    // Non-iOS: Gunakan input biasa
+                    setTimeout(() => fileInputGallery.click(), 100);
+                }
             }, { passive: true });
 
             selectCamera.addEventListener('click', () => {
                 sourceSelectorModal.style.display = 'none';
-                // Set file input untuk camera
-                fileInputCamera.accept = "image/*,video/*";
-                fileInputCamera.capture = "environment";
-                setTimeout(() => fileInputCamera.click(), 100);
+
+                if (isIOSSafari) {
+                    // iOS Safari: Buat input file dengan capture untuk kamera
+                    createIOSFileInput(true);
+                } else {
+                    // Non-iOS: Gunakan input camera
+                    setTimeout(() => fileInputCamera.click(), 100);
+                }
             }, { passive: true });
 
             cancelSource.addEventListener('click', () => {
@@ -2993,16 +3014,64 @@
             }, { passive: true });
         }
 
-        // Fungsi untuk membuka source selector (mobile only)
+        // Fungsi untuk membuat input file dinamis untuk iOS
+        function createIOSFileInput(forCamera = false) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*,video/*';
+            input.multiple = true;
+            input.style.display = 'none';
+
+            // Untuk kamera, tambahkan atribut capture
+            if (forCamera) {
+                const selectedType = itemType.value;
+                if (selectedType === 'photos') {
+                    input.capture = 'environment'; // Kamera belakang
+                } else if (selectedType === 'videos') {
+                    input.capture = 'environment'; // Untuk video
+                } else {
+                    input.capture = 'environment'; // Default
+                }
+            }
+
+            input.onchange = (e) => {
+                handleFileSelect(e);
+                // Bersihkan input setelah digunakan
+                document.body.removeChild(input);
+            };
+
+            document.body.appendChild(input);
+            input.click();
+        }
+
+        // Fungsi untuk membuka source selector yang lebih cerdas
         function openSourceSelector() {
-            // Jika desktop, langsung pilih file
-            if (!isMobile || window.innerWidth > 768) {
+            // Desktop: langsung buka file browser
+            if (window.innerWidth > 768) {
                 fileInputGallery.click();
                 return;
             }
 
-            // Jika mobile, tampilkan modal pilihan
-            sourceSelectorModal.style.display = 'flex';
+            // Android Chrome: langsung buka galeri
+            if (isAndroidChrome) {
+                fileInputGallery.click();
+                return;
+            }
+
+            // iOS Safari: tampilkan modal pilihan
+            if (isIOSSafari) {
+                sourceSelectorModal.style.display = 'flex';
+                return;
+            }
+
+            // Mobile lainnya: tampilkan modal pilihan
+            if (isMobile) {
+                sourceSelectorModal.style.display = 'flex';
+                return;
+            }
+
+            // Fallback: langsung buka file browser
+            fileInputGallery.click();
         }
 
         // Set upload mode
